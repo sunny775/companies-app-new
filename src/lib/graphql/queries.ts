@@ -1,0 +1,90 @@
+import { gql, TypedDocumentNode } from "@apollo/client";
+import { GetCompaniesQuery, GetCompanyQuery, GetSignedDownloadUrlQuery, GetSignedUploadUrlQuery, SignedFileUploadInput } from "./types";
+
+export const COMPANY_INFO_FRAGMENT = gql`
+  fragment CompayFeilds on Company {
+    id
+    legalName
+    stateOfIncorporation
+    industry
+    totalNumberOfEmployees
+    numberOfFullTimeEmployees
+    numberOfPartTimeEmployees
+    website
+    linkedInCompanyPage
+    facebookCompanyPage
+    otherInformation
+    primaryContactPerson {
+      firstName
+      lastName
+      email
+      phone
+    }
+    logoS3Key
+    phone
+    fax
+    email
+    registeredAddress {
+      country
+      state
+      city
+      street
+      zipCode
+    }
+    mailingAddress {
+      country
+      state
+      city
+      street
+      zipCode
+    }
+  }
+`;
+
+export const GET_COMPANY: TypedDocumentNode<GetCompanyQuery, {id: string}> = gql`
+  query GetCompany($id: String!) {
+    company: getCompany (id: $id) {
+      ...CompayFeilds
+    }
+  }
+  ${COMPANY_INFO_FRAGMENT}
+`;
+
+export const GET_COMPANIES = (companyIds: string[]): TypedDocumentNode<GetCompaniesQuery> => gql`
+  query GetCompanies {
+    ${companyIds
+      .map(
+        (id, index) => `
+        company${index}: getCompany(id: "${id}") {
+          ...CompayFeilds
+        }
+      `
+      )
+      .join("\n")}
+  }
+  ${COMPANY_INFO_FRAGMENT}
+`;
+
+export const GET_COMPANIES_FROM_CACHE = gql`
+  query GetCompaniesFromCache {
+    companies @client
+  }
+`;
+
+export const GET_SIGNED_UPLOAD_URL: TypedDocumentNode<GetSignedUploadUrlQuery, {input: SignedFileUploadInput}> = gql`
+  query GetSignedUploadUrl($input: SignedFileUploadInput!) {
+    signedUploadUrl: getSignedUploadUrl(input: $input) {
+      url
+      key
+    }
+  }
+`;
+
+export const GET_SIGNED_DOWNLOAD_URL: TypedDocumentNode<GetSignedDownloadUrlQuery, {s3Key: string}> = gql`
+  query GetSignedUploadUrl($input: SignedFileUploadInput!) {
+    signedDownloadUrl: getSignedUploadUrl(input: $input) {
+      url
+      key
+    }
+  }
+`;
