@@ -1,6 +1,8 @@
 import { getCompanies } from "@/app/actions/companies.actions";
+import { companyIdsVar } from "@/lib/apolloClient";
 
 export default async function CompaniesList() {
+  console.log(companyIdsVar())
   const { data, loading, error } = await getCompanies();
 
   if (loading) return <p>Loading...</p>;

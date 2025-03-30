@@ -3,19 +3,48 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --surface: var(--background);
+  --surace-2: var(--background);
+  input:is(:-webkit-autofill, :autofill) {
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: var(--foreground);
+  }
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  --color-neon: #39ff14;
+  --color-green-50: #f0f7f7;
+  --color-green-100: #ddf0ee;
+  --color-green-200: #c5e8e5;
+  --color-green-300: #a0ded9;
+  --color-green-400: #69d6cd;
+  --color-green-500: #00ccbb;
+  --color-green-600: #00a39e;
+  --color-green-700: #007478;
+  --color-green-800: #00444d;
+  --color-green-900: #00141a;
+
+  --color-primary: var(--color-green-500);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --surface: #0f0f0f;
+    --surface-2: #242424;
+
+    input:is(:-webkit-autofill, :autofill) {
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: var(--foreground);
+    }
   }
 }
 

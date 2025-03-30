@@ -1,16 +1,16 @@
 "use client";
 import { ChangeEvent, FormEvent, useRef, useState } from "react";
 import { CloudUpload } from "lucide-react";
-
+import Button from "../Button";
 
 interface Props {
-  onBack(): void;
-  onNext: (data: FileList | null) => void;
+  onSubmit: (data: FileList | null) => void;
   defaultValue: FileList | null;
+  children?: React.ReactNode;
 }
-export default function Step4UploadLogo({
-  onNext,
-  onBack,
+export default function LogoUploadForm({
+  onSubmit,
+  children,
   defaultValue,
 }: Props) {
   const [files, setFiles] = useState<FileList | null>(defaultValue);
@@ -20,7 +20,7 @@ export default function Step4UploadLogo({
   const open = () => {
     if (inputRef.current) {
       inputRef.current.click();
-      console.log(defaultValue)
+      console.log(defaultValue);
     }
   };
 
@@ -33,8 +33,8 @@ export default function Step4UploadLogo({
 
   function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
     const files = event.target.files;
-    console.log(files)
-    console.log(event.target.value)
+    console.log(files);
+    console.log(event.target.value);
     if (files?.length) {
       if (files[0].size <= 2 * 1024 * 1024) {
         setFiles(files);
@@ -48,8 +48,11 @@ export default function Step4UploadLogo({
   function handleSubmit(evt: FormEvent<HTMLFormElement>) {
     evt.preventDefault();
     console.log(files);
-    if (!files) return;
-    onNext(files);
+    if (!files) {
+      alert("No Files selected");
+      return;
+    };
+    onSubmit(files);
   }
 
   return (
@@ -57,21 +60,21 @@ export default function Step4UploadLogo({
       <div className="col-span-full">
         <label
           htmlFor="company-logo"
-          className="block text-sm/6 font-medium text-gray-900"
+          className="block text-lg font-semibold uppercase my-8"
         >
-          Cover photo
+          Company Logo
         </label>
         <div
           onClick={open}
-          className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10"
+          className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 dark:border-gray-600/30 px-6 py-10"
         >
           <div className="text-center">
             <CloudUpload
               aria-hidden="true"
-              className="mx-auto size-12 text-gray-300"
+              className="mx-auto size-12 text-gray-300 dark:text-gray-600"
             />
-            <div className="mt-4 flex text-sm/6 cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 focus-within:outline-hidden hover:text-indigo-500">
-              <span>{(files?.[0])?.name || "Upload a file"}</span>
+            <div className="mt-4 text-center text-sm/6 cursor-pointer rounded-md font-semibold text-green-600 dark:text-green-500 hover:opacity-70">
+              <span>{files?.[0]?.name || "Upload a file"}</span>
               <input
                 ref={inputRef}
                 onChange={handleFileChange}
@@ -83,19 +86,19 @@ export default function Step4UploadLogo({
                 className="sr-only"
               />
             </div>
-            <p className="text-xs/5 text-gray-600">
+            <p className="text-xs/5 text-gray-600 dark:text-gray-400">
               (JPEG and PNG only, 2MB maximum.)
             </p>
           </div>
         </div>
       </div>
 
-      <button onClick={onBack} type="button">
-        Back
-      </button>
-      <button type="submit" className="bg-blue-500 text-white p-2">
-        Next
-      </button>
+      <div className="flex gap-2 my-4">
+        {children}
+        <Button type="submit" className="flex-1/2">
+          Next
+        </Button>
+      </div>
     </form>
   );
 }

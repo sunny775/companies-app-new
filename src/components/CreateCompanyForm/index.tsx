@@ -1,10 +1,10 @@
 "use client";
 import { useState } from "react";
 import ProgressBar from "./FormProgress";
-import Step1CompanyDetails from "./Step1CompanyDetails";
-import Step2Address from "./Step2Address";
-import Step3Contact from "./Step3Contact";
-import Step4UploadLogo from "./Step4UploadLogo";
+import CompanyDetailsForm from "./CompanyDetailsForm";
+import AddressesForm from "./AddressesForm";
+import ContactForm from "./ContactForm";
+import LogoUploadForm from "./LogoUploadForm";
 import {
   BasicAddressInput,
   CompanyBasicInfo,
@@ -13,6 +13,7 @@ import {
 } from "@/lib/graphql/types";
 import { createCompany } from "@/app/actions/companies.actions";
 import { uploadFile } from "@/app/actions/files.actions";
+import Button from "../Button";
 
 interface FormData {
   basicInfo?: CompanyBasicInfo;
@@ -31,41 +32,46 @@ export default function CreateCompanyForm() {
   const [formData, setFormData] = useState<FormData>({ files: null });
 
   const steps = [
-    <Step1CompanyDetails
+    <CompanyDetailsForm
       key="1"
-      onNext={(data: CompanyBasicInfo) => handleNext("basicInfo", data)}
-      onBack={handleBack}
+      onSubmit={(data: CompanyBasicInfo) => handleNext("basicInfo", data)}
       defaultValues={formData.basicInfo}
     />,
-    <Step2Address
+    <AddressesForm
       key="2"
-      onNext={(data: FormData["address"]) => handleNext("address", data)}
-      onBack={handleBack}
+      onSubmit={(data: FormData["address"]) => handleNext("address", data)}
       defaultValues={formData.address}
       isMailingAddressDifferent
-    />,
-    <Step3Contact
-      key="3"
-      onNext={(data: Contact) => handleNext("contact", data)}
-      onBack={handleBack}
-      defaultValues={formData.contact}
-    />,
-    <Step4UploadLogo
-      key="4"
-      onNext={(data: FileList | null) => handleNext("files", data)}
-      onBack={handleBack}
-      defaultValue={formData.files}
-    />,
-    <div key="5">
-      <button onClick={handleBack} type="button">
+    >
+      <Button onClick={handleBack} type="button" className="flex-1/2">
         Back
-      </button>
-      <button
-        onClick={handleCreateCompany}
-        className="bg-blue-500 text-white p-2"
-      >
+      </Button>
+    </AddressesForm>,
+    <ContactForm
+      key="3"
+      onSubmit={(data: Contact) => handleNext("contact", data)}
+      defaultValues={formData.contact}
+    >
+      <Button onClick={handleBack} type="button" className="flex-1/2">
+        Back
+      </Button>
+    </ContactForm>,
+    <LogoUploadForm
+      key="4"
+      onSubmit={(data: FileList | null) => handleNext("files", data)}
+      defaultValue={formData.files}
+    >
+      <Button onClick={handleBack} type="button" className="flex-1/2">
+        Back
+      </Button>
+    </LogoUploadForm>,
+    <div key="5" className="flex flex-col gap-4 mb-8 mt-12">
+      <Button onClick={handleBack} type="button">
+        Back
+      </Button>
+      <Button variant="gradient" onClick={handleCreateCompany}>
         {loading ? "Loading..." : "Submit"}
-      </button>
+      </Button>
     </div>,
   ];
 
@@ -129,7 +135,7 @@ export default function CreateCompanyForm() {
   }
 
   return (
-    <div className="max-w-3xl mx-auto bg-white dark:bg-gray-600 p-6 my-8 shadow-md">
+    <div className="max-w-3xl mx-auto bg-surface p-6 my-12 shadow-md rounded-md">
       <ProgressBar step={step} />
       {steps[step]}
     </div>
