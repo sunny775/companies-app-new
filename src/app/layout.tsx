@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ApolloWrapper } from "@/lib/ApolloWrapper";
-import { ThemeProvider } from "next-themes";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import { getTheme } from "@/lib/getTheme";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,16 +28,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: getTheme }} />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <Header />
-          <main className={"min-h-[calc(100vh-4rem)]"}>
-            <ApolloWrapper>{children}</ApolloWrapper>
-          </main>
-          <Footer />
-        </ThemeProvider>
+        <Header />
+        <main className={"min-h-[calc(100vh-4rem)]"}>
+          <ApolloWrapper>{children}</ApolloWrapper>
+        </main>
+        <Footer />
       </body>
     </html>
   );

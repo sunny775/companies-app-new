@@ -6,12 +6,13 @@ import { Menu, Home, PowerCircle } from "lucide-react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 
-const ThemeToggle = dynamic(() => import("@/components/ThemeToggle"), {
+
+const ThemeToggle = dynamic(() => import('@/components/ThemeToggle'), {
   ssr: false,
 });
 
 export interface MenuProps {
-  logout?: () => void;
+  logout: () => void;
 }
 
 const MenuDrawer = ({ logout }: MenuProps) => {
@@ -28,7 +29,7 @@ const MenuDrawer = ({ logout }: MenuProps) => {
       </Button>
 
       <Drawer isOpen={isOpen} onClose={toggleDrawer}>
-        <div className="p-4 rounded-sm flex flex-col gap-4 shadow dark:shadow-md dark:bg-black/10">
+        <div className="flex flex-col gap-4 p-4 rounded-sm shadow dark:shadow-md dark:bg-black/10">
           <div
             onClick={toggleDrawer}
             className="rounded-sm bg-sky-50 dark:bg-black/30 px-2 py-1.5 text-sky-700 p-4"
