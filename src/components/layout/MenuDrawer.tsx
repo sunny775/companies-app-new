@@ -1,22 +1,18 @@
 "use client";
-import { useState } from "react";
+import { useActionState, useState } from "react";
 import Drawer from "../Drawer";
-import Button from "../Button";
+import Button, { buttonStyles } from "../Button";
 import { Menu, Home, PowerCircle } from "lucide-react";
 import Link from "next/link";
-import dynamic from "next/dynamic";
+import { logout } from "@/app/actions/auth.actions";
+import cn from "@/lib/cn";
 
-
-const ThemeToggle = dynamic(() => import('@/components/ThemeToggle'), {
-  ssr: false,
-});
-
-export interface MenuProps {
-  logout: () => void;
-}
-
-const MenuDrawer = ({ logout }: MenuProps) => {
+const MenuDrawer = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [errorMessage, formAction, isPending] = useActionState(
+    logout,
+    undefined
+  );
 
   const toggleDrawer = () => {
     setIsOpen((prev) => !prev);
@@ -24,40 +20,46 @@ const MenuDrawer = ({ logout }: MenuProps) => {
 
   return (
     <div>
-      <Button onClick={toggleDrawer} title="Menu Button" className="p-0 size-10">
+      <Button
+        onClick={toggleDrawer}
+        title="Menu Button"
+        className="p-0 size-10"
+      >
         <Menu className="stroke-1" />
       </Button>
 
       <Drawer isOpen={isOpen} onClose={toggleDrawer}>
-        <div className="flex flex-col gap-4 p-4 rounded-sm shadow dark:shadow-md dark:bg-black/10">
+        <div className="flex flex-col gap-4 p-4">
           <div
             onClick={toggleDrawer}
-            className="rounded-sm bg-sky-50 dark:bg-black/30 px-2 py-1.5 text-sky-700 p-4"
+            className="rounded-sm bg-green-50 dark:bg-black/30 px-2 py-1.5 p-4"
           >
             <Link
               href="/companies"
               title="Home"
-              className="flex items-center gap-4"
+              className={cn(
+                buttonStyles.base,
+                buttonStyles.default,
+                "gap-4 border-0 shadow-none hover:shadow-none"
+              )}
             >
-              <Home className="size-4" />
+              <Home className="size-5" />
               <span>Companies</span>
             </Link>
           </div>
 
-          <div className="rounded-sm bg-sky-50 dark:bg-black/30 px-2 py-1.5 text-sky-700 p-4 flex  items-center gap-4">
-            <ThemeToggle />
-          </div>
-
-          <div className="rounded-sm bg-sky-50 dark:bg-black/30 px-2 py-1.5 text-sky-700 p-4 flex  items-center gap-4">
-            <form onSubmit={logout}>
-              <button
+          <div className="rounded-sm bg-green-50 dark:bg-black/30 px-2 py-1.5 p-4 flex items-center gap-4">
+            <form action={formAction}>
+              <Button
+                disabled={isPending}
                 type="submit"
-                className="flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3"
+                className="gap-4 border-0 shadow-none hover:shadow-none"
               >
-                <PowerCircle className="w-6" />
+                <PowerCircle className="size-5" />
                 <div className="hidden md:block">Sign Out</div>
-              </button>
+              </Button>
             </form>
+            {errorMessage && <div>{errorMessage}</div>}
           </div>
         </div>
       </Drawer>

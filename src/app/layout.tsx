@@ -4,7 +4,6 @@ import { ApolloWrapper } from "@/lib/ApolloWrapper";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { getTheme } from "@/lib/getTheme";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,9 +27,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: getTheme }} />
-      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

@@ -6,7 +6,7 @@ import Input from "../Input";
 
 interface Props {
   onSubmit: (data: Contact) => void;
-  children?: React.ReactNode
+  children?: React.ReactNode;
   defaultValues?: Contact;
 }
 
@@ -17,7 +17,11 @@ const splitCamelPascalCase = (str: string): string => {
 
 const keys: Array<keyof Contact> = ["firstName", "lastName", "email", "phone"];
 
-export default function ContactForm({ onSubmit, defaultValues, children }: Props) {
+export default function ContactForm({
+  onSubmit,
+  defaultValues,
+  children,
+}: Props) {
   const {
     register,
     handleSubmit,
@@ -29,27 +33,43 @@ export default function ContactForm({ onSubmit, defaultValues, children }: Props
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <fieldset className="flex flex-col gap-4">
-        <legend className="text-lg font-semibold uppercase mb-8 mt-12">Contact Person</legend>
+        <legend className="mt-12 mb-8 text-lg font-semibold uppercase">
+          Contact Person
+        </legend>
         {keys.map((key) => (
           <label key={key} className={cn("flex flex-col gap-2")}>
-          <div className="flex items-center gap-2">
-            <span>{splitCamelPascalCase(key)}</span>
-            <p
-              className={cn("invisible text-amber-600 text-xs font-extralight", {
-                visible: errors[key],
+            <div className="flex items-center gap-2">
+              <span>{splitCamelPascalCase(key)}</span>
+              <p
+                className={cn(
+                  "invisible text-amber-600 text-xs font-extralight",
+                  {
+                    visible: errors[key],
+                  }
+                )}
+              >
+                This field is required*
+              </p>
+            </div>
+            <Input
+              type={
+                key === "email" ? "email" : key === "phone" ? "tel" : "text"
+              }
+              {...register(key, {
+                required: true,
+                ...(key === "phone"
+                  ? {
+                      pattern: /^\+\d{1,3}\s\d{1,4}-\d{1,4}-\d{4}$/,
+                      maxLength: 16,
+                    }
+                  : {}),
               })}
-            >
-              This field is required*
-            </p>
-          </div>
-          <Input
-            {...register(key, { required: true })}
-            placeholder={splitCamelPascalCase(key)}
-            className={cn({
-              "border-red-600/30 dark:border-red-500/20": !!errors[key],
-            })}
-          />
-        </label>
+              placeholder={splitCamelPascalCase(key)}
+              className={cn({
+                "border-red-600/30 dark:border-red-500/20": !!errors[key],
+              })}
+            />
+          </label>
         ))}
       </fieldset>
       <div className="flex gap-2 my-4">

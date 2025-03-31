@@ -6,6 +6,7 @@ import { companyIdsVar } from "@/lib/apolloClient";
 import { CREATE_COMPANY, UPDATE_COMPANY } from "@/lib/graphql/mutations";
 import { GET_COMPANIES, GET_COMPANY } from "@/lib/graphql/queries";
 import { UpdateCompanyInput } from "@/lib/graphql/types";
+import { uploadFile } from "./files.actions";
 
 export async function getCompany(id: string) {
   try {
@@ -35,18 +36,27 @@ export async function getCompanies(companyIds: string[] = companyIdsVar()) {
   }
 }
 
-export async function createCompany(input: UpdateCompanyInput) {
+export async function createCompany(args: UpdateCompanyInput, file: File) {
   try {
+    const { data: uploadResponse, error: uploadError } = await uploadFile(file);
+
+    if (uploadError) throw uploadError;
+
+    const input: UpdateCompanyInput = {
+      ...args,
+      logoS3Key: uploadResponse.s3Key,
+    };
+
     const { data } = await getClient().mutate({
       mutation: CREATE_COMPANY,
       variables: { input },
     });
 
     console.log(data);
-    console.log("companiesVar:", companyIdsVar())
+    // console.log("companiesVar:", companyIdsVar())
 
     const company = data?.createCompany.company;
-    if (company?.id) companyIdsVar([...companyIdsVar(), company?.id]);
+    // if (company?.id) companyIdsVar([...companyIdsVar(), company?.id]);
     return { company };
   } catch (error) {
     console.log(error);

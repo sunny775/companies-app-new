@@ -46,7 +46,7 @@ export default function CompanyDetailsForm({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-      <div className="text-lg font-semibold uppercase my-4">Basic Information</div>
+      <div className="my-4 text-lg font-semibold uppercase">Basic Information</div>
       {keys.map((key) => (
         <label key={key} className={cn("flex flex-col gap-2")}>
           <div className="flex items-center gap-2">

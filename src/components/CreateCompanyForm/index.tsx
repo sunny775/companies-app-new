@@ -12,7 +12,6 @@ import {
   UpdateCompanyInput,
 } from "@/lib/graphql/types";
 import { createCompany } from "@/app/actions/companies.actions";
-import { uploadFile } from "@/app/actions/files.actions";
 import Button from "../Button";
 
 interface FormData {
@@ -26,10 +25,27 @@ interface FormData {
   files: FileList | null;
 }
 
+function normalizeInputs(formData: FormData) {
+  const input: UpdateCompanyInput = {
+    ...formData.basicInfo,
+    totalNumberOfEmployees: Number(formData.basicInfo?.totalNumberOfEmployees),
+    numberOfFullTimeEmployees: Number(
+      formData.basicInfo?.numberOfFullTimeEmployees
+    ),
+    numberOfPartTimeEmployees: Number(
+      formData.basicInfo?.numberOfPartTimeEmployees
+    ),
+    ...formData.address,
+    primaryContactPerson: formData.contact,
+  };
+  return input;
+}
+
 export default function CreateCompanyForm() {
   const [step, setStep] = useState(0);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState<FormData>({ files: null });
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const steps = [
     <CompanyDetailsForm
@@ -65,13 +81,14 @@ export default function CreateCompanyForm() {
         Back
       </Button>
     </LogoUploadForm>,
-    <div key="5" className="flex flex-col gap-4 mb-8 mt-12">
+    <div key="5" className="flex flex-col gap-4 mt-12 mb-8">
       <Button onClick={handleBack} type="button">
         Back
       </Button>
       <Button variant="gradient" onClick={handleCreateCompany}>
         {loading ? "Loading..." : "Submit"}
       </Button>
+      {errorMessage && <div>{errorMessage}</div>}
     </div>,
   ];
 
@@ -98,30 +115,11 @@ export default function CreateCompanyForm() {
     setLoading(true);
     console.log(formData);
 
-    const input: UpdateCompanyInput = {
-      ...formData.basicInfo,
-      totalNumberOfEmployees: Number(
-        formData.basicInfo?.totalNumberOfEmployees
-      ),
-      numberOfFullTimeEmployees: Number(
-        formData.basicInfo?.numberOfFullTimeEmployees
-      ),
-      numberOfPartTimeEmployees: Number(
-        formData.basicInfo?.numberOfPartTimeEmployees
-      ),
-      ...formData.address,
-      primaryContactPerson: formData.contact,
-    };
-
     if (!formData.files) return;
+
+    const input = normalizeInputs(formData);
     try {
-      const { data, error: uploadError } = await uploadFile(formData.files[0]);
-
-      if (uploadError) throw uploadError;
-
-      input.logoS3Key = data.s3Key;
-
-      const { company, error } = await createCompany(input);
+      const { company, error } = await createCompany(input, formData.files[0]);
 
       if (error) throw error;
 
@@ -129,13 +127,16 @@ export default function CreateCompanyForm() {
       console.log("Company Created!", company);
     } catch (error) {
       console.log(error);
+      setErrorMessage(() =>
+        error instanceof Error ? error.message : "Error creating company"
+      );
     } finally {
       setLoading(false);
     }
   }
 
   return (
-    <div className="max-w-3xl mx-auto bg-surface p-6 my-12 shadow-md rounded-md">
+    <div className="max-w-3xl p-6 mx-auto my-12 rounded-md shadow-md bg-surface">
       <ProgressBar step={step} />
       {steps[step]}
     </div>
