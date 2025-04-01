@@ -1,14 +1,19 @@
-import cn from "@/lib/cn";
 import { BasicAddressInput } from "@/lib/graphql/types";
 import { useForm } from "react-hook-form";
 import Button from "../Button";
-import Input from "../Input";
+import FormField, { InputType } from "./FormField";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { basicAddressSchema } from "./schema";
+import { z } from "zod";
+import { useEffect } from "react";
 
-type FormData = {
-  isMailingAddressDifferentFromRegisteredAddress?: boolean;
-  registeredAddress?: BasicAddressInput;
-  mailingAddress?: BasicAddressInput;
-};
+export const formDataSchema = z.object({
+  isMailingAddressDifferentFromRegisteredAddress: z.boolean().optional(),
+  registeredAddress: basicAddressSchema,
+  mailingAddress: basicAddressSchema.optional(),
+});
+
+type FormData = z.infer<typeof formDataSchema>;
 
 interface Props {
   onSubmit: (data: FormData) => void;
@@ -17,17 +22,12 @@ interface Props {
   isMailingAddressDifferent: boolean;
 }
 
-const splitCamelPascalCase = (str: string): string => {
-  const result = str.replace(/([a-zA-Z])([A-Z])/g, "$1 $2");
-  return result.charAt(0).toUpperCase() + result.slice(1);
-};
-
-const keys: Array<keyof BasicAddressInput> = [
-  "country",
-  "state",
-  "city",
-  "street",
-  "zipCode",
+const addressFields: { name: keyof BasicAddressInput; type: InputType }[] = [
+  { name: "country", type: "text" },
+  { name: "state", type: "text" },
+  { name: "city", type: "text" },
+  { name: "street", type: "text" },
+  { name: "zipCode", type: "text" },
 ];
 
 export default function AddressesForm({
@@ -39,14 +39,22 @@ export default function AddressesForm({
     register,
     handleSubmit,
     watch,
+    resetField,
     formState: { errors },
   } = useForm<FormData>({
     defaultValues,
+    resolver: zodResolver(formDataSchema),
   });
 
   const isMailingAddressDifferent = watch(
     "isMailingAddressDifferentFromRegisteredAddress"
   );
+
+  useEffect(() => {
+    if (!isMailingAddressDifferent) {
+      resetField("mailingAddress");
+    }
+  }, [isMailingAddressDifferent, resetField]);
 
   const _onSubmit = (data: FormData) => {
     // If mailing address is not different, copy registeredAddress
@@ -60,31 +68,18 @@ export default function AddressesForm({
   return (
     <form onSubmit={handleSubmit(_onSubmit)}>
       <fieldset className="flex flex-col gap-4">
-        <legend className="text-lg font-semibold uppercase mb-8 mt-12">Registered Address</legend>
-        {keys.map((key) => (
-          <label key={key} className={cn("flex flex-col gap-2")}>
-            <div className="flex items-center gap-2">
-              <span>{splitCamelPascalCase(key)}</span>
-              <p
-                className={cn(
-                  "invisible text-amber-600 text-xs font-extralight",
-                  {
-                    visible: !!errors.registeredAddress?.[key],
-                  }
-                )}
-              >
-                This field is required*
-              </p>
-            </div>
-            <Input
-              {...register(`registeredAddress.${key}`, { required: true })}
-              placeholder={splitCamelPascalCase(key)}
-              className={cn({
-                "border-red-600/30 dark:border-red-500/20":
-                  !!errors.registeredAddress?.[key],
-              })}
-            />
-          </label>
+        <legend className="text-lg font-semibold uppercase mb-8 mt-12">
+          Registered Address
+        </legend>
+        {addressFields.map((field) => (
+          <FormField
+            key={`registeredAddress.${field.name}`}
+            name={`registeredAddress.${field.name}`}
+            type={field.type}
+            register={register}
+            error={!!errors.registeredAddress?.[field.name]}
+            errorMessage={errors.registeredAddress?.[field.name]?.message}
+          />
         ))}
       </fieldset>
       <div className="my-8">
@@ -100,32 +95,19 @@ export default function AddressesForm({
 
       {isMailingAddressDifferent && (
         <fieldset className="flex flex-col gap-4">
-          <legend className="text-lg font-semibold uppercase mb-8 mt-12">Mailing Address</legend>
+          <legend className="text-lg font-semibold uppercase mb-8 mt-12">
+            Mailing Address
+          </legend>
 
-          {keys.map((key) => (
-            <label key={key} className={cn("flex flex-col gap-2")}>
-              <div className="flex items-center gap-2">
-                <span>{splitCamelPascalCase(key)}</span>
-                <p
-                  className={cn(
-                    "invisible text-amber-600 text-xs font-extralight",
-                    {
-                      visible: !!errors.mailingAddress?.[key],
-                    }
-                  )}
-                >
-                  This field is required*
-                </p>
-              </div>
-              <Input
-                {...register(`mailingAddress.${key}`, { required: true })}
-                placeholder={splitCamelPascalCase(key)}
-                className={cn({
-                  "border-red-600/30 dark:border-red-500/20":
-                    !!errors.mailingAddress?.[key],
-                })}
-              />
-            </label>
+          {addressFields.map((field) => (
+            <FormField
+              key={`mailingAddress.${field.name}`}
+              name={`mailingAddress.${field.name}`}
+              type={field.type}
+              register={register}
+              error={!!errors.mailingAddress?.[field.name]}
+              errorMessage={errors.mailingAddress?.[field.name]?.message}
+            />
           ))}
         </fieldset>
       )}

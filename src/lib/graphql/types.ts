@@ -11,31 +11,31 @@ export interface BasicAddress extends Partial<BasicAddressInput> {
 }
 
 export interface Contact {
-  firstName?: string;
-  lastName?: string;
-  email?: string;
-  phone?: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
 }
 
 export interface CompanyBasicInfo {
-  legalName?: string;
-  stateOfIncorporation?: string;
-  industry?: string;
-  totalNumberOfEmployees?: number;
-  numberOfFullTimeEmployees?: number;
-  numberOfPartTimeEmployees?: number;
-  website?: string;
-  linkedInCompanyPage?: string;
-  facebookCompanyPage?: string;
+  legalName: string;
+  stateOfIncorporation: string;
+  industry: string;
+  totalNumberOfEmployees: number;
+  numberOfFullTimeEmployees: number;
+  numberOfPartTimeEmployees: number;
+  website: string;
+  linkedInCompanyPage: string;
+  facebookCompanyPage: string;
   otherInformation?: string;
-  logoS3Key?: string;
-  phone?: string;
-  fax?: string;
-  email?: string;
+  phone: string;
+  fax: string;
+  email: string;
 }
 
-export interface Company extends CompanyBasicInfo {
+export interface Company extends Partial<CompanyBasicInfo> {
   id: string;
+  logoS3Key?: string;
   registeredAddress?: BasicAddress;
   mailingAddress?: BasicAddress;
   primaryContactPerson?: Contact;

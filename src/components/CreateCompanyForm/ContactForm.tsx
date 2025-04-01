@@ -1,8 +1,11 @@
-import cn from "@/lib/cn";
-import { Contact } from "@/lib/graphql/types";
 import { useForm } from "react-hook-form";
 import Button from "../Button";
-import Input from "../Input";
+import FormField, { InputType } from "./FormField";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { contactSchema } from "./schema";
+import { z } from "zod";
+
+type Contact = z.infer<typeof contactSchema>;
 
 interface Props {
   onSubmit: (data: Contact) => void;
@@ -10,12 +13,12 @@ interface Props {
   defaultValues?: Contact;
 }
 
-const splitCamelPascalCase = (str: string): string => {
-  const result = str.replace(/([a-zA-Z])([A-Z])/g, "$1 $2");
-  return result.charAt(0).toUpperCase() + result.slice(1);
-};
-
-const keys: Array<keyof Contact> = ["firstName", "lastName", "email", "phone"];
+const contactFields: { name: keyof Contact; type: InputType }[] = [
+  { name: "firstName", type: "text" },
+  { name: "lastName", type: "text" },
+  { name: "phone", type: "tel" },
+  { name: "email", type: "email" },
+];
 
 export default function ContactForm({
   onSubmit,
@@ -28,6 +31,7 @@ export default function ContactForm({
     formState: { errors },
   } = useForm<Contact>({
     defaultValues,
+    resolver: zodResolver(contactSchema),
   });
 
   return (
@@ -36,40 +40,15 @@ export default function ContactForm({
         <legend className="mt-12 mb-8 text-lg font-semibold uppercase">
           Contact Person
         </legend>
-        {keys.map((key) => (
-          <label key={key} className={cn("flex flex-col gap-2")}>
-            <div className="flex items-center gap-2">
-              <span>{splitCamelPascalCase(key)}</span>
-              <p
-                className={cn(
-                  "invisible text-amber-600 text-xs font-extralight",
-                  {
-                    visible: errors[key],
-                  }
-                )}
-              >
-                This field is required*
-              </p>
-            </div>
-            <Input
-              type={
-                key === "email" ? "email" : key === "phone" ? "tel" : "text"
-              }
-              {...register(key, {
-                required: true,
-                ...(key === "phone"
-                  ? {
-                      pattern: /^\+\d{1,3}\s\d{1,4}-\d{1,4}-\d{4}$/,
-                      maxLength: 16,
-                    }
-                  : {}),
-              })}
-              placeholder={splitCamelPascalCase(key)}
-              className={cn({
-                "border-red-600/30 dark:border-red-500/20": !!errors[key],
-              })}
-            />
-          </label>
+        {contactFields.map((field) => (
+          <FormField
+            key={field.name}
+            name={field.name}
+            type={field.type}
+            register={register}
+            error={!!errors[field.name]}
+            errorMessage={errors[field.name]?.message}
+          />
         ))}
       </fieldset>
       <div className="flex gap-2 my-4">

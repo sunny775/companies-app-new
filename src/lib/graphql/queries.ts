@@ -65,10 +65,10 @@ export const GET_COMPANIES = (companyIds: string[]): TypedDocumentNode<GetCompan
   ${COMPANY_INFO_FRAGMENT}
 `;
 
-export const GET_COMPANIES_FROM_CACHE = gql`
-  query GetCompaniesFromCache {
-    companies @client
-  }
+export const GET_COMPANY_IDS: TypedDocumentNode<{companyIds: string[]}> =gql`
+query GetCompanyIds {
+  companyIds @client
+}
 `;
 
 export const GET_SIGNED_UPLOAD_URL: TypedDocumentNode<GetSignedUploadUrlQuery, {input: SignedFileUploadInput}> = gql`

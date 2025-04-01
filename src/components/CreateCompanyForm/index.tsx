@@ -13,11 +13,12 @@ import {
 } from "@/lib/graphql/types";
 import { createCompany } from "@/app/actions/companies.actions";
 import Button from "../Button";
+import Spinner from "../loaders/Spinner";
 
 interface FormData {
   basicInfo?: CompanyBasicInfo;
   address?: {
-    registeredAddress?: BasicAddressInput;
+    registeredAddress: BasicAddressInput;
     mailingAddress?: BasicAddressInput;
     isMailingAddressDifferent?: boolean;
   };
@@ -86,7 +87,7 @@ export default function CreateCompanyForm() {
         Back
       </Button>
       <Button variant="gradient" onClick={handleCreateCompany}>
-        {loading ? "Loading..." : "Submit"}
+        {loading ? <Spinner className="fill-white size-6" /> : "Submit"}
       </Button>
       {errorMessage && <div>{errorMessage}</div>}
     </div>,
@@ -123,6 +124,13 @@ export default function CreateCompanyForm() {
 
       if (error) throw error;
 
+      if (company) {
+        const companyIds = localStorage.companyIds;
+        localStorage.companyIds = JSON.stringify([
+          ...JSON.parse(companyIds || "[]"),
+          company.id,
+        ]);
+      }
       // resetForm();
       console.log("Company Created!", company);
     } catch (error) {
