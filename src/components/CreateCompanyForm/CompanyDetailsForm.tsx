@@ -4,6 +4,7 @@ import { z } from "zod";
 import Button from "../Button";
 import { companyBasicInfoSchema } from "./schema";
 import FormField, { InputType } from "./FormField";
+import { InputWithDropdown } from "../Menu";
 
 type CompanyBasicInfo = z.infer<typeof companyBasicInfoSchema>;
 
@@ -58,6 +59,7 @@ export default function CompanyDetailsForm({
           errorMessage={errors[field.name]?.message}
         />
       ))}
+      <InputWithDropdown />
       <div className="flex gap-2 my-4">
         {children}
         <Button type="submit" className="flex-1/2">

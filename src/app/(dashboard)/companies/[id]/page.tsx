@@ -1,7 +1,5 @@
 import { getCompany } from "@/app/actions/companies.actions";import { globe } from "@/assets";
 import { FacebookIcon } from "@/assets/BrandIcons";
-import { buttonStyles } from "@/components/Button";
-import cn from "@/lib/cn";
 import { Book } from "lucide-react";
 ;
 import Image from "next/image";
