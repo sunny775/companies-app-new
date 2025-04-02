@@ -7,6 +7,7 @@ import {
 } from "react-hook-form";
 import Input from "../Input";
 import Textarea from "../Textarea";
+import { splitCamelPascalCase } from "@/lib/splitCamelCasePascalCase";
 
 export type InputType =
   | "text"
@@ -19,7 +20,7 @@ export type InputType =
   | "date"
   | "textarea";
 
-interface Props<T extends FieldValues> {
+export interface FormFieldProps<T extends FieldValues> {
   type: InputType;
   name: Path<T>;
   error?: boolean;
@@ -28,11 +29,6 @@ interface Props<T extends FieldValues> {
   register: UseFormRegister<T>;
   options?: RegisterOptions<T, Path<T>>;
 }
-
-const splitCamelPascalCase = (str: string): string => {
-  const result = str.replace(/([a-zA-Z])([A-Z])/g, "$1 $2");
-  return result.charAt(0).toUpperCase() + result.slice(1);
-};
 
 const getNestedName = (name: string) => {
   const nameArr = name.split(".");
@@ -47,7 +43,7 @@ export default function FormField<T extends FieldValues>({
   error,
   errorMessage,
   placeholder,
-}: Props<T>) {
+}: FormFieldProps<T>) {
   return (
     <label key={name} className={cn("flex flex-col gap-2")}>
       <div className="flex items-center gap-2">

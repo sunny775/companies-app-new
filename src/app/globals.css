@@ -39,7 +39,7 @@
     --background: #0a0a0a;
     --foreground: #ededed;
     --surface: #0f0f0f;
-    --surface-2: #242424;
+    --surface-2: #141414;
 
     input:is(:-webkit-autofill, :autofill) {
       -webkit-background-clip: text;

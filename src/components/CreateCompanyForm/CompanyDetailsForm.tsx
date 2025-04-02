@@ -4,7 +4,7 @@ import { z } from "zod";
 import Button from "../Button";
 import { companyBasicInfoSchema } from "./schema";
 import FormField, { InputType } from "./FormField";
-import { InputWithDropdown } from "../Menu";
+import PhoneFormField from "../PhoneFormField";
 
 type CompanyBasicInfo = z.infer<typeof companyBasicInfoSchema>;
 
@@ -49,17 +49,20 @@ export default function CompanyDetailsForm({
       <div className="my-4 text-lg font-semibold uppercase">
         Basic Information
       </div>
-      {companyFields.map((field) => (
-        <FormField
-          key={field.name}
-          name={field.name}
-          type={field.type}
-          register={register}
-          error={!!errors[field.name]}
-          errorMessage={errors[field.name]?.message}
-        />
-      ))}
-      <InputWithDropdown />
+      {companyFields.map((field) =>
+        field.name === "phone" ? (
+          <PhoneFormField key={field.name} />
+        ) : (
+          <FormField
+            key={field.name}
+            name={field.name}
+            type={field.type}
+            register={register}
+            error={!!errors[field.name]}
+            errorMessage={errors[field.name]?.message}
+          />
+        )
+      )}
       <div className="flex gap-2 my-4">
         {children}
         <Button type="submit" className="flex-1/2">

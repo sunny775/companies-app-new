@@ -1,3 +1,5 @@
-export default async function CompaniesList() {
-  return <CompaniesList />;
+import CompaniesListPage from "@/components/pages/ComaniesList";
+
+export default async function Page() {
+  return <CompaniesListPage />;
 }

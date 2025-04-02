@@ -1,38 +1,32 @@
 "use client";
 
-import { useQuery } from "@apollo/client";
-import Image from "next/image";
 import Link from "next/link";
-import { GET_COMPANY_IDS } from "@/lib/graphql/queries";
 import { Company } from "@/lib/graphql/types";
 import { useEffect, useState } from "react";
 import { getCompanies } from "@/app/actions/companies.actions";
 import apiError from "@/lib/apiError";
 
 export default function CompaniesListPage() {
-  const { data: ids } = useQuery(GET_COMPANY_IDS);
   const [companies, setCompanies] = useState<Company[]>();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error>();
 
   useEffect(() => {
     (async function () {
-      if (ids) {
-        console.log(ids);
-        try {
-          setLoading(true);
-          const { data, error } = await getCompanies(ids.companyIds);
-          if (error) throw error;
+      try {
+        setLoading(true);
+        const companyIds = JSON.parse(localStorage.companyIds) || [];
+        const { data, error } = await getCompanies(companyIds);
+        if (error) throw error;
 
-          setCompanies(data);
-        } catch (error) {
-          setError(apiError(error));
-        } finally {
-          setLoading(false);
-        }
+        setCompanies(data);
+      } catch (error) {
+        setError(apiError(error));
+      } finally {
+        setLoading(false);
       }
     })();
-  }, [ids]);
+  }, []);
 
   if (loading)
     return (
@@ -60,12 +54,14 @@ export default function CompaniesListPage() {
               {/* Company Logo */}
               {company.logoS3Key ? (
                 <div className="w-full h-32 relative mb-4">
-                  <Image
+                  {/**
+                   * <Image
                     src={company.logoS3Key} // Replace with your logic to get a signed URL if necessary
                     alt={`${company.legalName} Logo`}
                     fill
                     className="object-contain rounded-md border"
                   />
+                   */}
                 </div>
               ) : (
                 <div className="w-full h-32 bg-gray-200 flex items-center justify-center mb-4 rounded">

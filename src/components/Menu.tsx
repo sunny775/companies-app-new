@@ -4,10 +4,9 @@ import Button from "./Button";
 
 interface Country {
   name: string;
-  currency: string;
-  unicodeFlag: string;
   flag: string;
-  dialCode: string;
+  code: string;
+  dial_code: string;
 }
 
 export function InputWithDropdown() {
@@ -21,22 +20,21 @@ export function InputWithDropdown() {
   const listRef = useRef<HTMLUListElement>(null);
   const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
 
-  // Fetch country data from the API
   useEffect(() => {
     async function fetchCountries() {
       try {
         const response = await fetch(
-          "https://countriesnow.space/api/v0.1/countries/info?returns=currency,flag,dialCode,unicodeFlag"
+          "https://gist.githubusercontent.com/sunny775/f6f6c6691e259fb8b432a0718b15410f/raw/449258552611926be9ee7a8b4acc2ed9b2243a97/countries.json"
         );
         const data = await response.json();
-        if (!data.error) {
-          setCountries(data.data);
-          console.log(data.data);
-        } else {
-          setError("Failed to fetch countries");
-        }
+        setCountries(data);
+        console.log(data);
       } catch (error) {
-        setError("Error fetching data");
+        if (error instanceof Error) {
+          setError(error.message);
+        } else {
+          setError("Error fetching data");
+        }
       } finally {
         setLoading(false);
       }
@@ -85,7 +83,7 @@ export function InputWithDropdown() {
     return <p className="text-red-500">{error}</p>;
   }
 
-  const { name, flag, dialCode } = countries[selectedIndex];
+  const { flag, dial_code } = countries[selectedIndex];
 
   return (
     <div className="relative flex w-full" ref={menuRef}>
@@ -95,16 +93,12 @@ export function InputWithDropdown() {
         ref={buttonRef}
         onClick={() => setMenuOpen((prev) => !prev)}
         onKeyDown={handleKeyDown}
-        className="flex h-10 items-center gap-2 rounded-r-none border border-r-0 pl-3 pr-2 focus:outline-none py-0"
+        className="flex h-10 items-center gap-2 rounded-r-none border border-r-0 pl-3 pr-2 focus:outline-none py-0 shadow-none hover:shadow-none border-black/10 dark:border-white/10"
         aria-haspopup="listbox"
         aria-expanded={menuOpen}
       >
-        <img
-          src={flag}
-          alt={name}
-          className="h-4 w-4 rounded-full object-cover"
-        />
-        +{dialCode}
+        <div className="text-3xl rounded-full">{flag}</div>
+        {dial_code}
       </Button>
 
       {/* Dropdown Menu */}
@@ -112,9 +106,9 @@ export function InputWithDropdown() {
         <ul
           ref={listRef}
           role="listbox"
-          className="absolute left-0 top-full z-10 mt-1 max-h-[20rem] max-w-[18rem] overflow-y-auto bg-surface shadow-lg border border-surface/50 rounded-md"
+          className="absolute left-0 top-full z-10 mt-1 max-h-[20rem] max-w-[18rem] overflow-y-auto bg-surface shadow-lg border border-gray-100 dark:border-gray-900/20 rounded-md"
         >
-          {countries.map(({ name, flag, dialCode }, index) => (
+          {countries.map(({ name, flag, dial_code }, index) => (
             <li
               key={name}
               role="option"
@@ -126,12 +120,8 @@ export function InputWithDropdown() {
               }}
               className={`flex items-center gap-2 px-3 py-2 cursor-pointer hover:bg-green-600/10`}
             >
-              <img
-                src={flag}
-                alt={name}
-                className="h-5 w-5 rounded-full object-cover"
-              />
-              {name} <span className="ml-auto">{dialCode}</span>
+              <div className="text-3xl rounded-full">{flag}</div>
+              {name} <span className="ml-auto">{dial_code}</span>
             </li>
           ))}
         </ul>
@@ -141,7 +131,7 @@ export function InputWithDropdown() {
       <Input
         type="tel"
         placeholder="Mobile Number"
-        className="rounded-l-none border border-t-gray-300 focus:border-t-gray-600 px-3 py-2 w-full"
+        className="rounded-l-none px-3 py-2 w-full"
       />
     </div>
   );
