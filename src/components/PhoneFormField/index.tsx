@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Menu } from "../Menu/Menu";
 import { FormFieldWithMenu } from "./FormFieldWithMenu";
+import { FormFieldProps } from "../CreateCompanyForm/FormField";
+import { FieldValues, Path } from "react-hook-form";
 
 interface Country {
   name: string;
@@ -9,7 +11,11 @@ interface Country {
   dial_code: string;
 }
 
-export default function PhoneFormField() {
+interface Props<T extends FieldValues> extends Omit<FormFieldProps<T>, "type"> {
+  reset: (field: Path<T>) => void;
+}
+
+export default function PhoneFormField<T extends FieldValues>(props: Props<T>) {
   const [countries, setCountries] = useState<Country[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -22,7 +28,6 @@ export default function PhoneFormField() {
         );
         const data = await response.json();
         setCountries(data);
-        console.log(data);
       } catch (error) {
         if (error instanceof Error) {
           setError(error.message);
@@ -40,8 +45,9 @@ export default function PhoneFormField() {
     <Menu>
       <FormFieldWithMenu
         countries={countries}
-        errorMessage={error}
+        apiError={error}
         loading={loading}
+        {...props}
       />
     </Menu>
   );

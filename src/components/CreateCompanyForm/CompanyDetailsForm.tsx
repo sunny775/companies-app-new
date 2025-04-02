@@ -37,12 +37,16 @@ export default function CompanyDetailsForm({
 }: Props) {
   const {
     register,
+    resetField,
     handleSubmit,
     formState: { errors },
   } = useForm<CompanyBasicInfo>({
     defaultValues,
     resolver: zodResolver(companyBasicInfoSchema),
   });
+
+
+
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
@@ -51,7 +55,14 @@ export default function CompanyDetailsForm({
       </div>
       {companyFields.map((field) =>
         field.name === "phone" ? (
-          <PhoneFormField key={field.name} />
+          <PhoneFormField
+            key={field.name}
+            name={field.name}
+            register={register}
+            error={!!errors[field.name]}
+            errorMessage={errors[field.name]?.message}
+            reset={(field: keyof CompanyBasicInfo) => resetField(field)}
+          />
         ) : (
           <FormField
             key={field.name}

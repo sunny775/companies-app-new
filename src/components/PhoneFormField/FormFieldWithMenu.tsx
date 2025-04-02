@@ -5,24 +5,40 @@ import { useMenu } from "../Menu/Menu";
 import { MenuList } from "../Menu/MenuList";
 import { MenuItem } from "../Menu/MenuItem";
 import { splitCamelPascalCase } from "@/lib/splitCamelCasePascalCase";
-import { FormFieldProps } from "../CreateCompanyForm/FormField";
-import { FieldValues } from "react-hook-form";
+import {
+  FormFieldProps,
+  getNestedFieldName,
+} from "../CreateCompanyForm/FormField";
+import { FieldValues, Path } from "react-hook-form";
+import cn from "@/lib/cn";
 
-export type Props<T extends FieldValues> =  {
+export type PhoneFormFieldProps<T extends FieldValues> = {
   countries: {
     name: string;
     flag: string;
     code: string;
     dial_code: string;
   }[];
-  errorMessage: string | null;
+  apiError: string | null;
   loading: boolean;
-} & FormFieldProps<T>
+  reset: (field: Path<T>) => void;
+} & Omit<FormFieldProps<T>, "type">;
 
-export function FormFieldWithMenu<T extends FieldValues>({ countries, loading, errorMessage }: Props<T>) {
+export function FormFieldWithMenu<T extends FieldValues>({
+  countries,
+  loading,
+  apiError,
+  name,
+  options,
+  register,
+  error,
+  reset,
+  errorMessage,
+  placeholder,
+}: PhoneFormFieldProps<T>) {
   const { menuOpen, openMenu } = useMenu();
 
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState<number>();
   const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
@@ -41,15 +57,16 @@ export function FormFieldWithMenu<T extends FieldValues>({ countries, loading, e
     } else if (event.key === "Enter" && focusedIndex !== null) {
       setSelectedIndex(focusedIndex);
       openMenu(false);
+      // reset(name)
     } else if (event.key === "Escape") {
       openMenu(false);
     }
   };
 
   return (
-    <label key={name} className={cn("flex flex-col gap-2")}>
+    <label key={name} className={cn("flex flex-col gap-2 w-full")}>
       <div className="flex items-center gap-2">
-        <span>{splitCamelPascalCase(getNestedName(name))}</span>
+        <span>{splitCamelPascalCase(getNestedFieldName(name))}</span>
         <p
           className={cn("invisible text-amber-600 text-xs font-extralight", {
             visible: error,
@@ -58,29 +75,44 @@ export function FormFieldWithMenu<T extends FieldValues>({ countries, loading, e
           {errorMessage}
         </p>
       </div>
-      <Button
-        type="button"
-        onClick={() => openMenu((prev) => !prev)}
-        onKeyDown={handleKeyDown}
-        className="flex h-10 items-center gap-2 rounded-r-none border border-r-0 pl-3 pr-2 focus:outline-none py-0 shadow-none hover:shadow-none border-black/10 dark:border-white/10"
-        aria-haspopup="listbox"
-        aria-expanded={menuOpen}
-      >
-        <div className="text-3xl rounded-full">
-          {countries[selectedIndex]?.flag}
-        </div>
-        {countries[selectedIndex]?.dial_code}
-      </Button>
-      <Input
-        type="tel"
-        placeholder="Mobile Number"
-        className="rounded-l-none px-3 py-2 w-full"
-      />
+      <div className="flex w-full">
+        <Button
+          type="button"
+          onClick={() => openMenu((prev) => !prev)}
+          onKeyDown={handleKeyDown}
+          className="flex h-10 min-w-16 items-center gap-2 rounded-r-none border border-r-0 pl-3 pr-2 focus:outline-none py-0 shadow-none hover:shadow-none border-black/10 dark:border-white/10"
+          aria-haspopup="listbox"
+          aria-expanded={menuOpen}
+        >
+          <div className="text-3xl rounded-full">
+            {selectedIndex
+              ? countries[selectedIndex]?.flag
+              : countries[0]?.flag}
+          </div>
+          {selectedIndex
+            ? countries[selectedIndex]?.dial_code
+            : countries[0]?.dial_code}
+        </Button>
+        <Input
+          type="tel"
+          {...register(name, {
+            ...options,
+            setValueAs: (v) =>
+              selectedIndex ? countries[selectedIndex]?.dial_code + v : v,
+          })}
+          placeholder={
+            placeholder || splitCamelPascalCase(getNestedFieldName(name))
+          }
+          className={cn("rounded-l-none px-3 py-2 w-full", {
+            "border-red-600/30 dark:border-red-500/20": error,
+          })}
+        />
+      </div>
       <MenuList>
         {loading ? (
           <p>Loading countries...</p>
-        ) : errorMessage ? (
-          <p className="text-red-500">{errorMessage}</p>
+        ) : apiError ? (
+          <p className="text-red-500">{apiError}</p>
         ) : (
           countries.map(({ name, flag, dial_code }, index) => (
             <MenuItem
@@ -91,6 +123,7 @@ export function FormFieldWithMenu<T extends FieldValues>({ countries, loading, e
                 setSelectedIndex(index);
                 openMenu(false);
               }}
+              className={cn({"focus:bg-green-600/10":index === focusedIndex})}
             >
               <div className="text-3xl rounded-full">{flag}</div>
               {name} <span className="ml-auto">{dial_code}</span>
@@ -98,7 +131,6 @@ export function FormFieldWithMenu<T extends FieldValues>({ countries, loading, e
           ))
         )}
       </MenuList>
-      </label>
-    
+    </label>
   );
 }

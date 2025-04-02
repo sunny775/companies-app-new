@@ -30,7 +30,7 @@ export interface FormFieldProps<T extends FieldValues> {
   options?: RegisterOptions<T, Path<T>>;
 }
 
-const getNestedName = (name: string) => {
+export const getNestedFieldName = (name: string) => {
   const nameArr = name.split(".");
   return nameArr[nameArr.length - 1];
 };
@@ -47,7 +47,7 @@ export default function FormField<T extends FieldValues>({
   return (
     <label key={name} className={cn("flex flex-col gap-2")}>
       <div className="flex items-center gap-2">
-        <span>{splitCamelPascalCase(getNestedName(name))}</span>
+        <span>{splitCamelPascalCase(getNestedFieldName(name))}</span>
         <p
           className={cn("invisible text-amber-600 text-xs font-extralight", {
             visible: error,
@@ -60,7 +60,7 @@ export default function FormField<T extends FieldValues>({
         <Textarea
           rows={4}
           {...register(name, options)}
-          placeholder={placeholder || splitCamelPascalCase(getNestedName(name))}
+          placeholder={placeholder || splitCamelPascalCase(getNestedFieldName(name))}
           className={cn({
             "border-red-600/30 dark:border-red-500/20": error,
           })}
@@ -72,7 +72,7 @@ export default function FormField<T extends FieldValues>({
             ...options,
             setValueAs: (v) => (type === "number" ? Number(v) : v),
           })}
-          placeholder={placeholder || splitCamelPascalCase(getNestedName(name))}
+          placeholder={placeholder || splitCamelPascalCase(getNestedFieldName(name))}
           className={cn({
             "border-red-600/30 dark:border-red-500/20": error,
           })}
