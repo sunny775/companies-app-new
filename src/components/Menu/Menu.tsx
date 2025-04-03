@@ -3,8 +3,13 @@ import React, { useState, useEffect, useRef, ReactNode } from "react";
 
 type contextValue = {
   menuOpen: boolean;
+  selectedIndex: number;
+  focusedIndex: number | null;
   menuRef: React.RefObject<HTMLDivElement | null>;
+  listRef: React.RefObject<HTMLUListElement | null>;
   openMenu: (value: React.SetStateAction<boolean>) => void;
+  setSelectedIndex: React.Dispatch<React.SetStateAction<number>>;
+  setFocusedIndex: React.Dispatch<React.SetStateAction<number | null>>;
 };
 
 export interface MenuContextProviderProps {
@@ -38,6 +43,9 @@ export function Menu({
 }: React.ComponentProps<"div">) {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const listRef = useRef<HTMLUListElement>(null);
+  const [selectedIndex, setSelectedIndex] = useState<number>(0);
+  const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -49,8 +57,21 @@ export function Menu({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  console.log("fromMenu:", menuOpen);
+
   return (
-    <MenuContextProvider value={{ menuOpen, menuRef, openMenu: setMenuOpen }}>
+    <MenuContextProvider
+      value={{
+        menuOpen,
+        menuRef,
+        listRef,
+        openMenu: setMenuOpen,
+        selectedIndex,
+        focusedIndex,
+        setSelectedIndex,
+        setFocusedIndex,
+      }}
+    >
       <div
         className={cn("relative flex w-full", className)}
         {...rest}

@@ -6,13 +6,14 @@ export function MenuList({
   children,
   className,
   ...rest
-}: React.ComponentProps<"ul">) {
-  const { menuOpen } = useMenu();
+}: React.ComponentPropsWithoutRef<"ul">) {
+  const { menuOpen, listRef } = useMenu();
 
   return (
     menuOpen && (
       <ul
         role="listbox"
+        ref={listRef}
         className={cn(
           "absolute left-0 top-full z-10 mt-1 max-h-[20rem] max-w-[18rem] overflow-y-auto bg-surface-2 shadow-lg border border-gray-100 dark:border-white/1 rounded-md",
           className

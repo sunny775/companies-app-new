@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Menu } from "../Menu/Menu";
 import { FormFieldWithMenu } from "./FormFieldWithMenu";
 import { FormFieldProps } from "../CreateCompanyForm/FormField";
-import { FieldValues, Path } from "react-hook-form";
+import { FieldValues, Path} from "react-hook-form";
 
 interface Country {
   name: string;

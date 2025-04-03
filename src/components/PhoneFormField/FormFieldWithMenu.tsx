@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import Input from "../Input";
 import Button from "../Button";
 import { useMenu } from "../Menu/Menu";
@@ -16,7 +16,6 @@ export type PhoneFormFieldProps<T extends FieldValues> = {
   countries: {
     name: string;
     flag: string;
-    code: string;
     dial_code: string;
   }[];
   apiError: string | null;
@@ -36,32 +35,12 @@ export function FormFieldWithMenu<T extends FieldValues>({
   errorMessage,
   placeholder,
 }: PhoneFormFieldProps<T>) {
-  const { menuOpen, openMenu } = useMenu();
+  const { menuOpen, openMenu, selectedIndex, focusedIndex, setSelectedIndex } =
+    useMenu();
 
-  const [selectedIndex, setSelectedIndex] = useState<number>();
-  const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
-
-  const handleKeyDown = (event: React.KeyboardEvent) => {
-    if (!menuOpen) return;
-
-    if (event.key === "ArrowDown") {
-      setFocusedIndex((prev) =>
-        prev === null ? 0 : Math.min(prev + 1, countries.length - 1)
-      );
-      event.preventDefault();
-    } else if (event.key === "ArrowUp") {
-      setFocusedIndex((prev) =>
-        prev === null ? countries.length - 1 : Math.max(prev - 1, 0)
-      );
-      event.preventDefault();
-    } else if (event.key === "Enter" && focusedIndex !== null) {
-      setSelectedIndex(focusedIndex);
-      openMenu(false);
-      // reset(name)
-    } else if (event.key === "Escape") {
-      openMenu(false);
-    }
-  };
+  useEffect(() => {
+    setSelectedIndex(234);
+  }, [setSelectedIndex]);
 
   return (
     <label key={name} className={cn("flex flex-col gap-2 w-full")}>
@@ -79,7 +58,6 @@ export function FormFieldWithMenu<T extends FieldValues>({
         <Button
           type="button"
           onClick={() => openMenu((prev) => !prev)}
-          onKeyDown={handleKeyDown}
           className="flex h-10 min-w-16 items-center gap-2 rounded-r-none border border-r-0 pl-3 pr-2 focus:outline-none py-0 shadow-none hover:shadow-none border-black/10 dark:border-white/10"
           aria-haspopup="listbox"
           aria-expanded={menuOpen}
@@ -87,12 +65,13 @@ export function FormFieldWithMenu<T extends FieldValues>({
           <div className="text-3xl rounded-full">
             {selectedIndex
               ? countries[selectedIndex]?.flag
-              : countries[0]?.flag}
+              : countries[234]?.flag}
           </div>
           {selectedIndex
             ? countries[selectedIndex]?.dial_code
-            : countries[0]?.dial_code}
+            : countries[234]?.dial_code}
         </Button>
+
         <Input
           type="tel"
           {...register(name, {
@@ -114,19 +93,26 @@ export function FormFieldWithMenu<T extends FieldValues>({
         ) : apiError ? (
           <p className="text-red-500">{apiError}</p>
         ) : (
-          countries.map(({ name, flag, dial_code }, index) => (
+          countries.map(({ name: countryName, flag, dial_code }, index) => (
             <MenuItem
-              key={name}
+              key={countryName}
               role="option"
               aria-selected={index === selectedIndex}
-              onClick={() => {
+              onClick={(evt) => {
+                evt.preventDefault();
                 setSelectedIndex(index);
                 openMenu(false);
+                reset(name);
               }}
-              className={cn({"focus:bg-green-600/10":index === focusedIndex})}
+              className={cn({
+                "focus:bg-green-600/10": index === focusedIndex,
+              })}
             >
               <div className="text-3xl rounded-full">{flag}</div>
-              {name} <span className="ml-auto">{dial_code}</span>
+              {countryName.length > 14
+                ? countryName.slice(0, 15) + " .."
+                : countryName}{" "}
+              <span className="ml-auto">{dial_code}</span>
             </MenuItem>
           ))
         )}

@@ -2,7 +2,7 @@
 import { useActionState, useState } from "react";
 import Drawer from "../Drawer";
 import Button, { buttonStyles } from "../Button";
-import { Menu, Home, PowerCircle } from "lucide-react";
+import { Menu, Home, LogOutIcon } from "lucide-react";
 import Link from "next/link";
 import { logout } from "@/app/actions/auth.actions";
 import cn from "@/lib/cn";
@@ -22,7 +22,7 @@ const MenuDrawer = () => {
     <div>
       <Button
         onClick={toggleDrawer}
-        title="Menu Button"
+        title="Menu Toggle Button"
         className="p-0 size-10"
       >
         <Menu className="stroke-1" />
@@ -55,7 +55,7 @@ const MenuDrawer = () => {
                 type="submit"
                 className="gap-4 border-0 shadow-none hover:shadow-none"
               >
-                <PowerCircle className="size-5" />
+                <LogOutIcon className="size-5" />
                 <div className="hidden md:block">Sign Out</div>
               </Button>
             </form>

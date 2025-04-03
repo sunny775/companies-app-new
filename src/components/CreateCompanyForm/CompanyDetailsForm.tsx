@@ -45,9 +45,6 @@ export default function CompanyDetailsForm({
     resolver: zodResolver(companyBasicInfoSchema),
   });
 
-
-
-
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
       <div className="my-4 text-lg font-semibold uppercase">

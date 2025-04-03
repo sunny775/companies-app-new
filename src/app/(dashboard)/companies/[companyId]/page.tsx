@@ -6,11 +6,11 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default async function CompanyProfile(props: {
-  params: Promise<{ id: string }>;
+  params: Promise<{ companyId: string }>;
 }) {
   const params = await props.params;
 
-  const { data: company, loading, error } = await getCompany(params.id);
+  const { data: company, loading, error } = await getCompany(params.companyId);
 
 
   if (loading) return <p className="text-center text-gray-600">Loading...</p>;

@@ -5,12 +5,15 @@ const phoneRegex =
 
 const urlRegex = /^(https?:\/\/)?([\w.-]+)\.([a-z]{2,6})([/\w .-]*)*\/?$/i;
 
+const faxRegex =
+  /^\+?\d{1,3}[-.\s]?\(?\d{1,4}\)?[-.\s]?\d{1,4}[-.\s]?\d{1,9}(\s?(x|ext\.?)\s?\d{1,6})?$/i;
+
 export const emailSchema = z.string().trim().email("Invalid email format");
 
 export const phoneSchema = z
   .string()
   .trim()
-  .regex(phoneRegex, "Invalid phone number format");
+  .regex(phoneRegex, "Invalid phone number format")
 
 export const companyBasicInfoSchema = z.object({
   legalName: z
@@ -61,7 +64,7 @@ export const companyBasicInfoSchema = z.object({
     .max(500, "Other information is too long")
     .optional(),
 
-  fax: z.string().trim().regex(phoneRegex, "Invalid fax number"),
+  fax: z.string().trim().regex(faxRegex, "Invalid fax number"),
 
   phone: phoneSchema,
 
