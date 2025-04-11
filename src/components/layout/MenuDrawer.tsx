@@ -1,7 +1,7 @@
 "use client";
 import { useActionState, useState } from "react";
 import Drawer from "../Drawer";
-import Button, { buttonStyles } from "../Button";
+import Button, { button as buttonStyles } from "../Button";
 import { Menu, Home, LogOutIcon } from "lucide-react";
 import Link from "next/link";
 import { logout } from "@/app/actions/auth.actions";
@@ -17,6 +17,7 @@ const MenuDrawer = () => {
   const toggleDrawer = () => {
     setIsOpen((prev) => !prev);
   };
+
 
   return (
     <div>
@@ -38,8 +39,7 @@ const MenuDrawer = () => {
               href="/companies"
               title="Home"
               className={cn(
-                buttonStyles.base,
-                buttonStyles.default,
+                buttonStyles(),
                 "gap-4 border-0 shadow-none hover:shadow-none"
               )}
             >
