@@ -6,9 +6,15 @@
   "prettier.printWidth": 120,
   "typescript.updateImportsOnFileMove.enabled": "always",
   "javascript.updateImportsOnFileMove.enabled": "always",
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit",
+    "source.sortImports": "explicit",
+    "source.removeUnusedImports": "never"
+  },
   "files.associations": {
     "*.css": "tailwindcss"
   },
   "tailwindCSS.classFunctions": ["tw", "clsx", "cn", "tv"],
-  "tailwindCSS.experimental.classRegex": [["([\"'`][^\"'`]*.*?[\"'`])", "[\"'`]([^\"'`]*).*?[\"'`]"]]
+  "tailwindCSS.experimental.classRegex": [["([\"'`][^\"'`]*.*?[\"'`])", "[\"'`]([^\"'`]*).*?[\"'`]"]],
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

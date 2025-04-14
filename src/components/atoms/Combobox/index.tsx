@@ -1,26 +1,30 @@
-import React, { ComponentProps, ReactNode } from "react";
+"use client";
+
+import cn from "@/lib/cn";
 import {
-  useFloating,
-  offset as fuiOffset,
+  autoUpdate,
   flip,
-  useListNavigation,
-  useTypeahead,
-  useInteractions,
-  useRole,
+  FloatingFocusManager,
+  FloatingOverlay,
+  offset as fuiOffset,
+  size as fuiSize,
   useClick,
   useDismiss,
-  FloatingFocusManager,
-  autoUpdate,
-  size as fuiSize,
-  FloatingOverlay,
   UseDismissProps,
+  useFloating,
+  useInteractions,
+  useListNavigation,
+  useRole,
+  useTypeahead,
 } from "@floating-ui/react";
-import { AnimatePresence, m, useIsomorphicLayoutEffect, LazyMotion, domAnimation } from "framer-motion";
 import merge from "deepmerge";
-import { SelectContextProvider, usePrevious, useSelect } from "./SelectContext";
-import { SelectOption, SelectOptionProps } from "./SelectOption";
+import { AnimatePresence, domAnimation, LazyMotion, m, useIsomorphicLayoutEffect, Variants } from "framer-motion";
+import { ChevronDown } from "lucide-react";
+import React, { ComponentProps, ReactNode } from "react";
 import { tv, VariantProps } from "tailwind-variants";
 import { Animation } from "../sharedTypes";
+import { SelectContextProvider, usePrevious, useSelect } from "./ComboboxContext";
+import { SelectOption, SelectOptionProps } from "./ComboboxItem";
 
 export interface SelectProps
   extends Omit<React.ComponentProps<"div">, "value" | "color" | "onChange">,
@@ -29,40 +33,37 @@ export interface SelectProps
   error?: boolean;
   success?: boolean;
   arrow?: ReactNode;
-  value?: string;
-  onChange?: (value?: string) => void;
-  selected?: (element?: React.ReactElement, index?: number) => React.ReactNode;
+  value: string | null;
+  onChange: (value: string | null) => void;
   dismiss?: UseDismissProps;
   animate?: Animation;
   lockScroll?: boolean;
-  labelProps?: ComponentProps<"label">;
   menuProps?: ComponentProps<"ul">;
   className?: string;
   disabled?: boolean;
   name?: string;
   children: ReactNode;
   containerProps?: ComponentProps<"div">;
+  placeholderClasses?: string;
 }
 
 const selectStyles = tv({
   slots: {
-    container: "relative w-full min-w-[200px]",
+    container: "relative w-full",
     select:
-      "peer w-full h-full bg-transparent text-blue-gray-700 font-sans font-normal text-left outline focus:outline-0 disabled:bg-blue-gray-50 disabled:border-0 disabled:cursor-not-allowed transition-all",
+      "peer w-full h-full bg-transparent font-sans font-normal rounded-md focus:outline-0 disabled:bg-gray-50 disabled:border-0 disabled:cursor-not-allowed transition-all border",
     arrow:
-      "grid place-items-center absolute top-2/4 right-2 pt-px w-5 h-5 text-blue-gray-400 rotate-0 -translate-y-2/4 transition-all",
+      "grid place-items-center absolute top-2/4 right-2 pt-px w-5 h-5 text-blue-gray-400 rotate-0 -translate-y-2/4 transition-all text-gray-300 dark:text-white/30",
     label: "flex w-full h-full select-none pointer-events-none absolute left-0 font-normal transition-all",
-    menu: "w-full max-h-96 bg-white p-3 border border-blue-gray-50 rounded-md shadow-lg shadow-blue-gray-500/10 font-sans text-sm font-normal text-blue-gray-500 overflow-auto focus:outline-none",
-    option:
-      "pt-[9px] pb-2 px-3 rounded-md leading-tight cursor-pointer select-none hover:bg-blue-gray-50 focus:bg-blue-gray-50 hover:bg-opacity-80 focus:bg-opacity-80 hover:text-blue-gray-900 focus:text-blue-gray-900 outline transition-all",
-    buttonContent: "absolute top-2/4 -translate-y-2/4 left-0 pt-3",
+    menu: "w-full max-h-96 bg-surface p-3 border border-gray-50 dark:border-white/5 rounded-md shadow-lg shadow-gray-500/10 dark:shadow-gray-500/2 font-sans text-sm font-normal text-gray-500 dark:text-gray-400 overflow-auto focus:outline-none grid gap-2",
+    buttonContent: "absolute top-2/4 -translate-y-2/4 left-0 right-0",
+    placeholder: "text-gray-400 dark:text-gray-600",
   },
 
   variants: {
     open: {
       true: {
         arrow: "rotate-180 mt-px",
-        option: "bg-blue-gray-50 bg-opacity-80 text-blue-gray-900",
       },
     },
     size: {
@@ -79,13 +80,13 @@ const selectStyles = tv({
     },
     color: {
       default: {
-        select: "border-black/10 dark:border-white/10  focus:border-green-500/50 dark:focus:border-green-500/30",
+        select: "border-black/10 dark:border-white/10 focus:border-green-500/50 dark:focus:border-green-500/30",
       },
       error: {
         select: "border-red-600/30 dark:border-red-500/20  focus:border-red-500/50 dark:focus:border-red-500/30",
       },
       success: {
-        select: "border-green-500 dark:border-green-400  focus:border-green-500/50 dark:focus:border-green-500/30",
+        select: "border-green-500/30",
       },
     },
   },
@@ -98,13 +99,12 @@ const selectStyles = tv({
 const Select = ({
   color,
   size,
-  label = "",
+  label,
   error,
   success,
   arrow,
   value,
   onChange,
-  selected,
   dismiss,
   lockScroll,
   className,
@@ -112,7 +112,7 @@ const Select = ({
   name,
   children,
   containerProps,
-  labelProps = {},
+  placeholderClasses,
   menuProps = {},
   animate = {
     unmount: {},
@@ -145,7 +145,6 @@ const Select = ({
 
   const containerClasses = styles.container({ className: containerProps?.className });
   const selectClasses = styles.select({ className });
-  const labelClasses = styles.label({ className: labelProps?.className });
   const menuClasses = styles.menu({ className: menuProps?.className });
 
   const { x, y, strategy, refs, context } = useFloating({
@@ -236,20 +235,27 @@ const Select = ({
     [selectedIndex, onChange, activeIndex, getItemProps, context.dataRef]
   );
 
-  const animation = {
+  const animation: Variants = {
     unmount: {
-      opacity: 0,
+      opacity: [1, 0.8, 0.5, 0],
+      scale: [1, 0.98, 0.96, 0.95],
       transformOrigin: "top",
-      transform: "scale(0.95)",
-      transition: { duration: 0.2, times: [0.4, 0, 0.2, 1] },
+      transition: {
+        duration: 0.2,
+        times: [0, 0.4, 0.6, 1],
+      },
     },
     mount: {
-      opacity: 1,
+      opacity: [0, 0.5, 0.8, 1],
+      scale: [0.95, 0.96, 0.98, 1],
       transformOrigin: "top",
-      transform: "scale(1)",
-      transition: { duration: 0.2, times: [0.4, 0, 0.2, 1] },
+      transition: {
+        duration: 0.2,
+        times: [0, 0.4, 0.6, 1],
+      },
     },
   };
+
   const appliedAnimation = merge(animation, animate);
 
   React.useEffect(() => {
@@ -304,18 +310,22 @@ const Select = ({
         animate={open ? "mount" : "unmount"}
         variants={appliedAnimation}
       >
-        {React.Children.map(children, (child, index) => {
+        {React.Children.map(children, (child, idx) => {
           if (!React.isValidElement(child)) return null;
 
-          const el = child as React.ReactElement<{ index: number }>;
+          const el = child as React.ReactElement<SelectOptionProps>;
 
-          return React.cloneElement(child, {
+          const { index, ...rest } = el.props;
+
+          return React.cloneElement(el, {
+            key: idx,
+            index: index || idx + 1,
             ...getItemProps({
-              ...el?.props,
-              tabIndex: activeIndex === index ? 0 : -1,
+              ...rest,
+              tabIndex: activeIndex === idx ? 0 : -1,
               role: "option",
               ref(node: HTMLLIElement) {
-                listItemsRef.current[index] = node;
+                listItemsRef.current[idx] = node;
               },
             }),
           });
@@ -327,6 +337,15 @@ const Select = ({
   return (
     <SelectContextProvider value={contextValue}>
       <div {...containerProps} className={containerClasses}>
+        <input
+          ref={inputRef}
+          value={search}
+          onChange={(e) => {
+            setSearch(e.target.value);
+            setOpen(true);
+          }}
+        />
+
         <button
           type="button"
           {...getReferenceProps({
@@ -337,33 +356,16 @@ const Select = ({
             name: name,
           })}
         >
-          {typeof selected === "function" ? (
-            <span className={styles.buttonContent()}>
-              {selected(childrenArray[selectedIndex - 1] as React.ReactElement, selectedIndex - 1)}
-            </span>
-          ) : value && !onChange ? (
-            <span className={styles.buttonContent()}>{value}</span>
-          ) : (
+          {selectedIndex ? (
             <span
               {...((childrenArray[selectedIndex - 1] as React.ReactElement)?.props as Record<string, unknown>)}
               className={styles.buttonContent()}
             />
+          ) : (
+            <span className={cn(styles.buttonContent(), styles.placeholder(), placeholderClasses)}>{label}</span>
           )}
-          <div className={styles.arrow()}>
-            {arrow ?? (
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                <path
-                  fillRule="evenodd"
-                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            )}
-          </div>
+          <div className={styles.arrow()}>{arrow ?? <ChevronDown strokeWidth={0.5} />}</div>
         </button>
-        <label {...labelProps} className={labelClasses}>
-          {label}
-        </label>
         <LazyMotion features={domAnimation}>
           <AnimatePresence>
             {open && <>{lockScroll ? <FloatingOverlay lockScroll>{selectMenu}</FloatingOverlay> : selectMenu}</>}
@@ -374,6 +376,5 @@ const Select = ({
   );
 };
 
+export { SelectOption as Option, Select, usePrevious, useSelect };
 export type { SelectOptionProps };
-export { Select, SelectOption as Option, useSelect, usePrevious };
-export default Object.assign(Select, { Option: SelectOption });

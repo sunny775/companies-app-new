@@ -1,13 +1,13 @@
-import React, { ComponentProps, ReactNode, Ref } from "react";
-import { tv, VariantProps } from "tailwind-variants";
 import cn from "@/lib/cn";
+import { ComponentProps, ReactNode } from "react";
+import { tv, VariantProps } from "tailwind-variants";
 
 const inputStyles = tv({
   slots: {
     base: "relative w-full min-w-[200px] text-gray-700 dark:text-gray-300",
     input:
       "peer h-full w-full rounded bg-transparent border text-sm focus:outline-none focus:border placeholder:text-gray-300 dark:placeholder:text-gray-700 placeholder:text-xs placeholder:italic",
-    label: "flex items-center gap-2",
+    label: "flex items-center gap-2 my-3",
     icon: "grid place-items-center absolute text-gray-500 top-2/4 right-3 -translate-y-2/4",
     errorMessage: "invisible text-amber-600 text-xs font-extralight",
   },
@@ -71,37 +71,23 @@ const inputStyles = tv({
   },
 });
 
-type BaseProps = {
-  color?: VariantProps<typeof inputStyles>["color"];
-  size?: VariantProps<typeof inputStyles>["size"];
-  error?: boolean;
-  success?: boolean;
-  icon?: ReactNode;
-  errorMessage: ReactNode;
-  containerProps?: ComponentProps<"div">;
-  labelProps?: ComponentProps<"label"> & { title: string };
-  showLabel?: boolean;
-  className?: string;
-};
-
-type InputVariantProps = Omit<ComponentProps<"input">, "size" | "color" | "ref" | "id"> & {
-  as?: "input";
-  inputRef?: Ref<HTMLInputElement>;
-  id: string;
-};
-
-type TextareaVariantProps = Omit<ComponentProps<"textarea">, "size" | "color" | "ref" | "id"> & {
-  as: "textarea";
-  inputRef?: Ref<HTMLTextAreaElement>;
-  id: string;
-};
-
-type InputProps = BaseProps & (InputVariantProps | TextareaVariantProps);
+type InputProps = Omit<ComponentProps<"input">, "size" | "color"> &
+  VariantProps<typeof inputStyles> & {
+    id: string;
+    name: string;
+    error?: boolean;
+    success?: boolean;
+    icon?: ReactNode;
+    errorMessage?: ReactNode;
+    containerProps?: ComponentProps<"div">;
+    labelProps?: ComponentProps<"label"> & { title: string };
+    showLabel?: boolean;
+    className?: string;
+  };
 
 export const Input = ({
-  as = "input",
-  color,
   size,
+  color,
   error,
   success,
   icon,
@@ -110,14 +96,14 @@ export const Input = ({
   labelProps,
   containerProps,
   className,
-  inputRef,
+  ref,
   errorMessage,
   ...rest
 }: InputProps) => {
   const styles = inputStyles({
-    size,
     icon: !!icon,
     disabled,
+    size,
     showLabel,
     color: success ? "success" : error ? "error" : color,
   });
@@ -127,7 +113,7 @@ export const Input = ({
   const labelClasses = styles.label({ className: labelProps?.className });
 
   return (
-    <div {...containerProps} className={containerClasses}>
+    <div>
       <label {...labelProps} htmlFor={rest.id} className={labelClasses}>
         <span>{labelProps?.title || rest.name}</span>
         <span
@@ -138,17 +124,10 @@ export const Input = ({
           {errorMessage}
         </span>
       </label>
-      {icon && <div className={styles.icon()}>{icon}</div>}
-      {as === "textarea" ? (
-        <textarea
-          rows={5}
-          {...(rest as TextareaVariantProps)}
-          ref={inputRef as Ref<HTMLTextAreaElement>}
-          className={inputClasses}
-        />
-      ) : (
-        <input {...(rest as InputVariantProps)} ref={inputRef as Ref<HTMLInputElement>} className={inputClasses} />
-      )}
+      <div {...containerProps} className={containerClasses}>
+        {icon && <div className={styles.icon()}>{icon}</div>}
+        <input {...rest} ref={ref} className={inputClasses} />
+      </div>
     </div>
   );
 };

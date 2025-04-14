@@ -7,19 +7,9 @@ export default function Home() {
   return (
     <div>
       <main className="flex flex-col  gap-[32px] items-center justify-center">
-        <Image
-          className="dark:invert"
-          src="/favicon.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
+        <Image className="dark:invert" src="/favicon.svg" alt="Next.js logo" width={180} height={38} priority />
 
-        <Link
-          href={"/companies"}
-          className={cn(buttonStyles.base, buttonStyles.gradient)}
-        >
+        <Link href={"/companies"} className={cn(buttonStyles({ variant: "gradient" }))}>
           Go to Companies List
         </Link>
       </main>

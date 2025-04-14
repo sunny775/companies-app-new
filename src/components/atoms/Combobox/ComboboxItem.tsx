@@ -1,29 +1,30 @@
 import React from "react";
-import { useSelect } from "./SelectContext";
 import { tv, VariantProps } from "tailwind-variants";
+import { useSelect } from "./ComboboxContext";
 
 export interface SelectOptionProps extends React.ComponentProps<"li">, VariantProps<typeof selectOptionStyles> {
-  value?: string;
+  value: string;
   index?: number;
   disabled?: boolean;
 }
 
 const selectOptionStyles = tv({
-  base: "pt-[9px] pb-2 px-3 rounded-md leading-tight cursor-pointer select-none hover:bg-blue-gray-50 focus:bg-blue-gray-50 hover:bg-opacity-80 focus:bg-opacity-80 hover:text-blue-gray-900 focus:text-blue-gray-900 outline transition-all",
+  base: "bg-surface-2 pt-[9px] pb-2 px-3 rounded-md leading-tight cursor-pointer select-none focus:bg-green-600/10 hover:bg-green-600/10 hover:text-green-500 focus:text-green-500 hover:opacity-90 focus:opacity-90 transition-all outline-0 focus:outline-0 hover:outline-0",
   variants: {
     disabled: {
-      true: {
-        option: "opacity-50 cursor-not-allowed select-none pointer-events-none",
-      },
+      true: "opacity-50 cursor-not-allowed select-none pointer-events-none",
+    },
+    selected: {
+      true: "border border-green-600/10 text-green-500",
     },
   },
 });
 
 export const SelectOption = ({
-  value = "",
+  value,
   index = 0,
   disabled = false,
-  className = "",
+  className,
   children,
   ...rest
 }: SelectOptionProps) => {
@@ -53,10 +54,7 @@ export const SelectOption = ({
     }
   }
 
-  const styles = selectOptionStyles({
-    className,
-    disabled,
-  });
+  // console.log(index)
 
   return (
     <li
@@ -69,7 +67,11 @@ export const SelectOption = ({
             },
           }
         : {})}
-      className={styles}
+      className={selectOptionStyles({
+        className,
+        disabled,
+        selected: selectedIndex === index,
+      })}
       tabIndex={activeIndex === index ? 0 : 1}
       aria-selected={activeIndex === index && selectedIndex === index}
       data-selected={selectedIndex === index}

@@ -1,7 +1,7 @@
 "use client";
 import { useActionState, useState } from "react";
 import Drawer from "../Drawer";
-import Button, { button as buttonStyles } from "../Button";
+import Button, { buttonStyles } from "../Button";
 import { Menu, Home, LogOutIcon } from "lucide-react";
 import Link from "next/link";
 import { logout } from "@/app/actions/auth.actions";

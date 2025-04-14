@@ -1,7 +1,7 @@
 import React from "react";
 import { tv, VariantProps } from "tailwind-variants";
 
-export const button = tv({
+export const buttonStyles = tv({
   base: "h-9 px-6 inline-flex items-center justify-center rounded-md transition-all py-5 font-sans text-xs font-bold uppercase shadow hover:shadow-md cursor-pointer active:opacity-[0.85] active:scale-105 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none",
   variants: {
     variant: {
@@ -23,13 +23,13 @@ export const button = tv({
   },
 });
 
-type ButtonVariants = VariantProps<typeof button>;
+type ButtonVariants = VariantProps<typeof buttonStyles>;
 
 interface ButtonpProps extends ButtonVariants, React.ComponentProps<"button"> {}
 
 const Button = ({ className, variant, ...props }: ButtonpProps) => {
   return (
-    <button className={button({ className, variant, disabled: props.disabled })} {...props} />
+    <button className={buttonStyles({ className, variant, disabled: props.disabled })} {...props} />
   );
 };
 

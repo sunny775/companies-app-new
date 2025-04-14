@@ -1,6 +1,6 @@
-import React, { ReactNode } from "react";
-import { useIsomorphicLayoutEffect } from "framer-motion";
 import { ContextData, UseInteractionsReturn } from "@floating-ui/react";
+import { useIsomorphicLayoutEffect } from "framer-motion";
+import React, { ReactNode } from "react";
 
 export type SelectContextType = contextValue;
 
@@ -9,10 +9,11 @@ export type contextValue = {
   setSelectedIndex: (index: number) => void;
   activeIndex?: number | null;
   setActiveIndex: (index: number | null) => void;
-  listRef: React.RefObject<Array<HTMLLIElement | null>> | null;
+  listRef: React.RefObject<(HTMLLIElement | null)[]>,
   setOpen: (open: boolean) => void;
-  onChange: (value: string) => void;
-  getItemProps: & UseInteractionsReturn["getItemProps"]
+  onChange: (value: string | null) => void;
+  getItemProps: UseInteractionsReturn["getItemProps"];
+  isTypingRef: React.RefObject<boolean>;
   dataRef: ContextData;
 };
 
@@ -27,9 +28,7 @@ export function useSelect() {
   const context = React.useContext(SelectContext);
 
   if (context === null) {
-    throw new Error(
-      "useSelect() must be used within a Select.",
-    );
+    throw new Error("useSelect() must be used within a Select.");
   }
 
   return context;
