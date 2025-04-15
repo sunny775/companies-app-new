@@ -4,7 +4,7 @@ import React, { ReactNode } from "react";
 export type SelectContextType = contextValue;
 
 export type contextValue = {
-  selectedIndex: number;
+  selectedIndex: number | null;
   setSelectedIndex: (index: number) => void;
   activeIndex?: number | null;
   setActiveIndex: (index: number | null) => void;

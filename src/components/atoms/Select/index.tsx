@@ -85,7 +85,7 @@ const Select = ({
   ]);
   const [open, setOpen] = React.useState(false);
   const [activeIndex, setActiveIndex] = React.useState<number | null>(null);
-  const [selectedIndex, setSelectedIndex] = React.useState(0);
+  const [selectedIndex, setSelectedIndex] = React.useState<number | null>(null);
 
   const isTypingRef = React.useRef(false);
 

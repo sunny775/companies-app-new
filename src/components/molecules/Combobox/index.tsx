@@ -17,16 +17,15 @@ import {
 import merge from "deepmerge";
 import { AnimatePresence, domAnimation, HTMLMotionProps, LazyMotion, m, Variants } from "framer-motion";
 import { ChevronDown } from "lucide-react";
-import React, { Dispatch, ReactNode, SetStateAction, useRef, useState } from "react";
+import React, { ReactNode, useRef, useState } from "react";
 import { tv, VariantProps } from "tailwind-variants";
 import { Item, ItemProps } from "./Item";
 
-interface ComboboxProps extends Omit<InputProps, "onSelect">, VariantProps<typeof selectStyles> {
-  items: string[];
-  inputValue: string;
-  setInputValue: Dispatch<SetStateAction<string>>;
+interface ComboboxProps extends Omit<InputProps, "onSelect" | "value">, VariantProps<typeof selectStyles> {
   onSelect?: (value: string | null) => void;
-  value?: string;
+  value: string | null;
+  query: string;
+  setQuery: (value: string) => void;
   animate?: Animation;
   menuProps?: HTMLMotionProps<"ul">;
   children: ReactNode;
@@ -54,10 +53,11 @@ function Combobox({
   placeholder,
   onSelect,
   onKeyDown,
-  inputValue,
-  setInputValue,
   name,
-  items,
+  value,
+  query,
+  setQuery,
+  onChange,
   children,
   menuProps = {},
   animate = {
@@ -77,6 +77,23 @@ function Combobox({
   });
 
   const menuClasses = styles.menu({ className: menuProps?.className });
+
+  const listItems = React.useMemo(
+    () =>
+      React.Children.map(children, (child) => {
+        const el = child as React.ReactElement<{ value?: string }>;
+
+        const { props } = el;
+        return props?.value;
+      }) ?? [],
+    [children]
+  );
+
+  React.useEffect(() => {
+    if (value) {
+      setActiveIndex(Math.max(0, listItems.indexOf(value)));
+    }
+  }, [value, listItems]);
 
   const { refs, floatingStyles, context, x, y, strategy } = useFloating<HTMLInputElement>({
     whileElementsMounted: autoUpdate,
@@ -110,11 +127,12 @@ function Combobox({
 
   const { getReferenceProps, getFloatingProps, getItemProps } = useInteractions([role, dismiss, click, listNav]);
 
-  function onChange(event: React.ChangeEvent<HTMLInputElement>) {
+  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     const value = event.target.value;
-    setInputValue(value);
+    setQuery(value);
     setOpen(true);
     setActiveIndex(0);
+    onChange?.(event);
   }
 
   const animation: Variants = {
@@ -148,14 +166,14 @@ function Combobox({
         {...rest}
         {...getReferenceProps({
           ref: refs.setReference,
-          onChange,
-          value: inputValue,
+          onChange: handleChange,
+          value: query,
           placeholder: placeholder || name,
           "aria-autocomplete": "list",
           onKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
-            if (event.key === "Enter" && activeIndex != null && items[activeIndex]) {
-              setInputValue(items[activeIndex]);
-              onSelect?.(items[activeIndex]);
+            if (event.key === "Enter" && activeIndex != null && listItems[activeIndex]) {
+              setQuery(listItems[activeIndex]);
+              onSelect?.(listItems[activeIndex]);
               setActiveIndex(null);
               setOpen(false);
             }
@@ -201,7 +219,7 @@ function Combobox({
                           listRef.current[index] = node;
                         },
                         onClick(e: React.MouseEvent<HTMLDivElement>) {
-                          setInputValue(value);
+                          setQuery(value);
                           onSelect?.(value);
                           setOpen(false);
                           refs.domReference.current?.focus();

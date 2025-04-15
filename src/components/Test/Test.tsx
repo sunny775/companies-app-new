@@ -14,9 +14,9 @@ import { data } from "./data";
 
 export function Test() {
   const [value, setValue] = useState<string | null>(null);
-  const [inputValue, setInputValue] = useState("");
+  const [query, setQuery] = useState("");
 
-  const items = data.filter((item) => item.toLowerCase().startsWith(inputValue.toLowerCase()));
+  const items = query === "" ? data  : data.filter((item) => item.toLowerCase().startsWith(query.toLowerCase()));
 
   return (
     <div>
@@ -35,7 +35,7 @@ export function Test() {
             }}
           >
             {items.map((option, i) => (
-              <Select.Option key={i + option} index={i} value={option}>
+              <Select.Option key={i + option} value={option}>
                 {option}
               </Select.Option>
             ))}
@@ -46,15 +46,12 @@ export function Test() {
         <div className="w-72 my-4">
           <Combobox
             showLabel
-            inputValue={inputValue}
-            setInputValue={setInputValue}
-            onSelect={(v) => {
-              console.log(v);
-              setValue(v);
-            }}
+            value={value}
+            query={query}
+            setQuery={setQuery}
+            onSelect={setValue}
             id="colors select"
             name="Select Color"
-            items={items}
           >
             {items.map((option, i) => (
               <Combobox.Item key={i + option} value={option}>

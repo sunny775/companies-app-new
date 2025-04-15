@@ -1,5 +1,6 @@
 import { useId } from "@floating-ui/react";
 import { ComponentProps } from "react";
+import { tv } from "tailwind-variants";
 
 export interface ItemProps extends ComponentProps<"div"> {
   children: React.ReactNode;
@@ -7,7 +8,11 @@ export interface ItemProps extends ComponentProps<"div"> {
   value: string;
 }
 
-export const Item = ({ children, active, ...rest }: ItemProps) => {
+const itemStyles = tv({
+  base: "py-2 px-3 rounded-md data-[active=true]:bg-green-600/10 data-[active=true]:text-green-500",
+});
+
+export const Item = ({ children, active, className, ...rest }: ItemProps) => {
   const id = useId();
 
   return (
@@ -15,13 +20,9 @@ export const Item = ({ children, active, ...rest }: ItemProps) => {
       role="option"
       id={id}
       aria-selected={active}
+      data-active={active}
+      className={itemStyles({ className })}
       {...rest}
-      style={{
-        background: active ? "rgba(0, 163, 158, 0.1)" : "",
-        color: active ? "#00ccbb" : "",
-        padding: "8px 12px",
-        borderRadius: 6,
-      }}
     >
       {children}
     </div>
