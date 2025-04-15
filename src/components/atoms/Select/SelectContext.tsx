@@ -1,5 +1,4 @@
 import { ContextData, UseInteractionsReturn } from "@floating-ui/react";
-import { useIsomorphicLayoutEffect } from "framer-motion";
 import React, { ReactNode } from "react";
 
 export type SelectContextType = contextValue;
@@ -9,7 +8,7 @@ export type contextValue = {
   setSelectedIndex: (index: number) => void;
   activeIndex?: number | null;
   setActiveIndex: (index: number | null) => void;
-  listRef: React.RefObject<(HTMLLIElement | null)[]>,
+  listRef: React.RefObject<(HTMLLIElement | null)[]>;
   setOpen: (open: boolean) => void;
   onChange: (value: string | null) => void;
   getItemProps: UseInteractionsReturn["getItemProps"];
@@ -32,16 +31,6 @@ export function useSelect() {
   }
 
   return context;
-}
-
-export function usePrevious<T>(value: T) {
-  const ref = React.useRef<T>(null);
-
-  useIsomorphicLayoutEffect(() => {
-    ref.current = value;
-  }, [value]);
-
-  return ref.current;
 }
 
 export const SelectContextProvider = ({ value, children }: SelectContextProviderProps) => {

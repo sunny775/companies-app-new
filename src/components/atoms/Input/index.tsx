@@ -2,13 +2,13 @@ import cn from "@/lib/cn";
 import { ComponentProps, ReactNode } from "react";
 import { tv, VariantProps } from "tailwind-variants";
 
-const inputStyles = tv({
+export const inputStyles = tv({
   slots: {
     base: "relative w-full min-w-[200px] text-gray-700 dark:text-gray-300",
     input:
       "peer h-full w-full rounded bg-transparent border text-sm focus:outline-none focus:border placeholder:text-gray-300 dark:placeholder:text-gray-700 placeholder:text-xs placeholder:italic",
     label: "flex items-center gap-2 my-3",
-    icon: "grid place-items-center absolute text-gray-500 top-2/4 right-3 -translate-y-2/4",
+    icon: "grid place-items-center absolute text-gray-500 top-2/4 right-3 -translate-y-2/4 transition-all",
     errorMessage: "invisible text-amber-600 text-xs font-extralight",
   },
   variants: {
@@ -71,8 +71,8 @@ const inputStyles = tv({
   },
 });
 
-type InputProps = Omit<ComponentProps<"input">, "size" | "color"> &
-  VariantProps<typeof inputStyles> & {
+export type InputProps = Omit<ComponentProps<"input">, "size" | "color"> &
+  Omit<VariantProps<typeof inputStyles>, "icon"> & {
     id: string;
     name: string;
     error?: boolean;
