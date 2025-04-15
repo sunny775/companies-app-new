@@ -10,7 +10,7 @@ export type contextValue = {
   setActiveIndex: (index: number | null) => void;
   listRef: React.RefObject<(HTMLLIElement | null)[]>;
   setOpen: (open: boolean) => void;
-  onChange: (value: string | null) => void;
+  onSelect: (value: string | null) => void;
   getItemProps: UseInteractionsReturn["getItemProps"];
   isTypingRef: React.RefObject<boolean>;
   dataRef: ContextData;

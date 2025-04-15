@@ -5,12 +5,11 @@ import {
   autoUpdate,
   flip,
   FloatingFocusManager,
-  FloatingOverlay,
+  FloatingPortal,
   offset as fuiOffset,
   size as fuiSize,
   useClick,
   useDismiss,
-  UseDismissProps,
   useFloating,
   useInteractions,
   useListNavigation,
@@ -28,17 +27,15 @@ import { SelectOption, SelectOptionProps } from "./SelectOption";
 import { selectStyles } from "./select.styles";
 
 export interface SelectProps
-  extends Omit<React.ComponentProps<"div">, "value" | "color" | "onChange">,
+  extends Omit<React.ComponentProps<"button">, "value" | "color" | "onSelect">,
     VariantProps<typeof selectStyles> {
   placeholder?: string;
   error?: boolean;
   success?: boolean;
   arrow?: ReactNode;
   value: string | null;
-  onChange: (value: string | null) => void;
-  dismiss?: UseDismissProps;
+  onSelect: (value: string | null) => void;
   animate?: Animation;
-  lockScroll?: boolean;
   menuProps?: HTMLMotionProps<"ul">;
   className?: string;
   disabled?: boolean;
@@ -55,12 +52,8 @@ const Select = ({
   success,
   arrow,
   value,
-  onChange,
-  dismiss,
-  lockScroll,
+  onSelect,
   className,
-  disabled,
-  name,
   children,
   placeholder,
   containerProps,
@@ -74,15 +67,8 @@ const Select = ({
 }: SelectProps) => {
   const childrenArray = React.Children.toArray(children);
 
-  const listItemsRef = React.useRef<Array<HTMLLIElement | null>>([]);
-  const listContentRef = React.useRef([
-    ...(React.Children.map(children, (child) => {
-      const el = child as React.ReactElement<{ value?: string }>;
+  const listRef = React.useRef<Array<HTMLLIElement | null>>([]);
 
-      const { props } = el;
-      return props?.value;
-    }) ?? []),
-  ]);
   const [open, setOpen] = React.useState(false);
   const [activeIndex, setActiveIndex] = React.useState<number | null>(null);
   const [selectedIndex, setSelectedIndex] = React.useState<number | null>(null);
@@ -119,53 +105,72 @@ const Select = ({
     ],
   });
 
+  const listItems = React.useMemo(
+    () =>
+      React.Children.map(children, (child) => {
+        const el = child as React.ReactElement<{ value?: string }>;
+
+        const { props } = el;
+        return props?.value;
+      }) ?? [],
+    [children]
+  );
+
+  const listContentRef = React.useRef(listItems);
+
   React.useEffect(() => {
     if (value) {
-      setSelectedIndex(Math.max(0, listContentRef.current.indexOf(value)));
+      setSelectedIndex(Math.max(0, listItems.indexOf(value)));
     }
-  }, [value]);
+  }, [value, listItems]);
+
+  const click = useClick(context, { event: "mousedown" });
+  const dismiss = useDismiss(context);
+  const role = useRole(context, { role: "listbox" });
+  const listNav = useListNavigation(context, {
+    listRef,
+    activeIndex,
+    selectedIndex,
+    onNavigate: setActiveIndex,
+    loop: true,
+  });
+  const typeahead = useTypeahead(context, {
+    listRef: listContentRef,
+    activeIndex,
+    selectedIndex,
+    onMatch: open ? setActiveIndex : setSelectedIndex,
+    onTypingChange(isTyping) {
+      isTypingRef.current = isTyping;
+    },
+  });
 
   const { getReferenceProps, getFloatingProps, getItemProps } = useInteractions([
-    useClick(context),
-    useRole(context, { role: "listbox" }),
-    useDismiss(context, { ...dismiss }),
-    useListNavigation(context, {
-      listRef: listItemsRef,
-      activeIndex,
-      selectedIndex,
-      onNavigate: setActiveIndex,
-      loop: true,
-    }),
-    useTypeahead(context, {
-      listRef: listContentRef,
-      activeIndex,
-      selectedIndex,
-      onMatch: open ? setActiveIndex : setSelectedIndex,
-      onTypingChange(isTyping) {
-        isTypingRef.current = isTyping;
-      },
-    }),
+    click,
+    role,
+    dismiss,
+    listNav,
+    typeahead,
   ]);
 
   const contextValue = React.useMemo(
     () => ({
       selectedIndex,
       setSelectedIndex,
-      listRef: listItemsRef,
+      listRef,
       setOpen,
-      onChange: onChange || (() => {}),
+      onSelect: onSelect || (() => {}),
       activeIndex,
       setActiveIndex,
       getItemProps,
       isTypingRef,
       dataRef: context.dataRef,
     }),
-    [selectedIndex, onChange, activeIndex, getItemProps, context.dataRef]
+    [selectedIndex, onSelect, activeIndex, getItemProps, context.dataRef]
   );
 
   function handleSelect(index: number) {
     setSelectedIndex(index);
-    onChange(value);
+    onSelect(value);
     setOpen(false);
     setActiveIndex(null);
   }
@@ -193,71 +198,16 @@ const Select = ({
 
   const appliedAnimation = merge(animation, animate);
 
-  const selectMenu = (
-    <FloatingFocusManager context={context} modal={false}>
-      <m.ul
-        {...menuProps}
-        role="listbox"
-        ref={refs.setFloating}
-        className={menuClasses}
-        style={{
-          ...floatingStyles,
-          position: strategy,
-          top: y ?? 0,
-          left: x ?? 0,
-          overflow: "auto",
-        }}
-        {...getFloatingProps()}
-        initial="unmount"
-        exit="unmount"
-        animate={open ? "mount" : "unmount"}
-        variants={appliedAnimation}
-      >
-        {React.Children.map(children, (child, idx) => {
-          if (!React.isValidElement(child)) return null;
-
-          const el = child as React.ReactElement<SelectOptionProps>;
-          const { onClick, onKeyDown, ...rest } = el.props;
-
-          return React.cloneElement(el, {
-            key: value,
-            active: activeIndex === idx,
-            selected: selectedIndex === idx,
-            ...rest,
-            ...getItemProps({
-              ref: (node: HTMLLIElement | null) => {
-                listItemsRef.current[idx] = node;
-              },
-              onClick: (e: React.MouseEvent<HTMLLIElement>) => {
-                handleSelect(idx);
-                onClick?.(e);
-              },
-              onKeyDown: (event: React.KeyboardEvent<HTMLLIElement>) => {
-                if (event.key === "Enter" || (event.key === " " && !isTypingRef.current)) {
-                  event.preventDefault();
-                  handleSelect(idx);
-                }
-                onKeyDown?.(event);
-              },
-            }),
-          });
-        })}
-      </m.ul>
-    </FloatingFocusManager>
-  );
-
   return (
     <SelectContextProvider value={contextValue}>
       <div {...containerProps} className={containerClasses}>
         <button
           type="button"
-          {...getReferenceProps({
-            ...rest,
-            ref: refs.setReference,
-            className: selectClasses,
-            disabled: disabled,
-            name: name,
-          })}
+          {...rest}
+          tabIndex={0}
+          ref={refs.setReference}
+          className={selectClasses}
+          {...getReferenceProps()}
         >
           {selectedIndex ? (
             <span
@@ -269,11 +219,65 @@ const Select = ({
           )}
           <div className={styles.arrow()}>{arrow ?? <ChevronDown strokeWidth={1} />}</div>
         </button>
-        <LazyMotion features={domAnimation}>
-          <AnimatePresence>
-            {open && <>{lockScroll ? <FloatingOverlay lockScroll>{selectMenu}</FloatingOverlay> : selectMenu}</>}
-          </AnimatePresence>
-        </LazyMotion>
+
+        {open && (
+          <LazyMotion features={domAnimation}>
+            <AnimatePresence>
+              <FloatingPortal>
+                <FloatingFocusManager context={context} modal={false}>
+                  <m.ul
+                    {...menuProps}
+                    role="listbox"
+                    ref={refs.setFloating}
+                    className={menuClasses}
+                    style={{
+                      ...floatingStyles,
+                      position: strategy,
+                      top: y ?? 0,
+                      left: x ?? 0,
+                      overflow: "auto",
+                    }}
+                    {...getFloatingProps()}
+                    initial="unmount"
+                    exit="unmount"
+                    animate={open ? "mount" : "unmount"}
+                    variants={appliedAnimation}
+                  >
+                    {React.Children.map(children, (child, idx) => {
+                      if (!React.isValidElement(child)) return null;
+
+                      const el = child as React.ReactElement<SelectOptionProps>;
+                      const { onClick, onKeyDown, ...rest } = el.props;
+
+                      return React.cloneElement(el, {
+                        key: value,
+                        active: activeIndex === idx,
+                        selected: selectedIndex === idx,
+                        ...rest,
+                        ...getItemProps({
+                          ref: (node: HTMLLIElement | null) => {
+                            listRef.current[idx] = node;
+                          },
+                          onClick: (e: React.MouseEvent<HTMLLIElement>) => {
+                            handleSelect(idx);
+                            onClick?.(e);
+                          },
+                          onKeyDown: (event: React.KeyboardEvent<HTMLLIElement>) => {
+                            if (event.key === "Enter" || (event.key === " " && !isTypingRef.current)) {
+                              event.preventDefault();
+                              handleSelect(idx);
+                            }
+                            onKeyDown?.(event);
+                          },
+                        }),
+                      });
+                    })}
+                  </m.ul>
+                </FloatingFocusManager>
+              </FloatingPortal>
+            </AnimatePresence>
+          </LazyMotion>
+        )}
       </div>
     </SelectContextProvider>
   );

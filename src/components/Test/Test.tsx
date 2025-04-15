@@ -29,7 +29,7 @@ export function Test() {
           <Select
             placeholder="Select Color"
             value={value}
-            onChange={(v) => {
+            onSelect={(v) => {
               console.log(v);
               setValue(v);
             }}
@@ -41,6 +41,7 @@ export function Test() {
             ))}
           </Select>
           <Input id="test name" name="Name" placeholder="Name" showLabel icon={<ChevronDown strokeWidth={1} />} />
+         
         </div>
 
         <div className="w-72 my-4">
