@@ -1,20 +1,21 @@
-import { ContextData, UseInteractionsReturn } from "@floating-ui/react";
+import { UseFloatingData, UseInteractionsReturn } from "@floating-ui/react";
 import React, { ReactNode } from "react";
 
 export type SelectContextType = contextValue;
 
-export type contextValue = {
+export interface contextValue extends UseInteractionsReturn, UseFloatingData {
   selectedIndex: number | null;
   setSelectedIndex: (index: number) => void;
-  activeIndex?: number | null;
+  activeIndex: number | null;
   setActiveIndex: (index: number | null) => void;
   listRef: React.RefObject<(HTMLLIElement | null)[]>;
+  open: boolean;
   setOpen: (open: boolean) => void;
   onSelect: (value: string | null) => void;
-  getItemProps: UseInteractionsReturn["getItemProps"];
   isTypingRef: React.RefObject<boolean>;
-  dataRef: ContextData;
-};
+  handleSelect(index: number): void;
+  listItems: string[];
+}
 
 export interface SelectContextProviderProps {
   value: contextValue;

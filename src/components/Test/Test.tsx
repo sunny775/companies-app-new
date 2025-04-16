@@ -16,7 +16,7 @@ export function Test() {
   const [value, setValue] = useState<string | null>(null);
   const [query, setQuery] = useState("");
 
-  const items = query === "" ? data  : data.filter((item) => item.toLowerCase().startsWith(query.toLowerCase()));
+  const items = query === "" ? data : data.filter((item) => item.toLowerCase().startsWith(query.toLowerCase()));
 
   return (
     <div>
@@ -26,22 +26,24 @@ export function Test() {
         </Link>
 
         <div className="w-72 my-4">
-          <Select
-            placeholder="Select Color"
+          <Select.Root
             value={value}
+            listItems={items}
             onSelect={(v) => {
               console.log(v);
               setValue(v);
             }}
           >
-            {items.map((option, i) => (
-              <Select.Option key={i + option} value={option}>
-                {option}
-              </Select.Option>
-            ))}
-          </Select>
+            <Select.Trigger error>Select Color</Select.Trigger>
+            <Select.Dropdown>
+              {items.map((option, i) => (
+                <Select.Option key={i + option} value={option}>
+                  {option}
+                </Select.Option>
+              ))}
+            </Select.Dropdown>
+          </Select.Root>
           <Input id="test name" name="Name" placeholder="Name" showLabel icon={<ChevronDown strokeWidth={1} />} />
-         
         </div>
 
         <div className="w-72 my-4">
