@@ -47,21 +47,25 @@ export function Test() {
         </div>
 
         <div className="w-72 my-4">
-          <Combobox
-            showLabel
+          <Combobox.Root
             value={value}
+            listItems={items}
             query={query}
             setQuery={setQuery}
-            onSelect={setValue}
-            id="colors select"
-            name="Select Color"
+            onSelect={(v) => {
+              console.log(v);
+              setValue(v);
+            }}
           >
-            {items.map((option, i) => (
-              <Combobox.Item key={i + option} value={option}>
-                {option}
-              </Combobox.Item>
-            ))}
-          </Combobox>
+            <Combobox.Input id="Fruits select" name="Select Fruit" showLabel />
+            <Combobox.Dropdown>
+              {items.map((option, i) => (
+                <Combobox.Item key={i + option} value={option}>
+                  {option}
+                </Combobox.Item>
+              ))}
+            </Combobox.Dropdown>
+          </Combobox.Root>
         </div>
       </main>
     </div>

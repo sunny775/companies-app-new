@@ -1,23 +1,23 @@
-import { ContextData, UseInteractionsReturn } from "@floating-ui/react";
-import { useIsomorphicLayoutEffect } from "framer-motion";
+import { Prettify } from "@/lib/shared-types";
+import { UseFloatingReturn, UseInteractionsReturn } from "@floating-ui/react";
 import React, { ReactNode } from "react";
 
-export type ComboboxContextType = contextValue;
+export type ComboboxContextType = Prettify<ContextValue>;
 
-export type contextValue = {
+export interface ContextValue extends UseInteractionsReturn, UseFloatingReturn<HTMLInputElement> {
   activeIndex?: number | null;
   setActiveIndex: (index: number | null) => void;
-  setInputValue: (value: string) => void;
   listRef: React.RefObject<(HTMLElement | null)[]>;
+  open: boolean;
   setOpen: (open: boolean) => void;
   onSelect: (value: string | null) => void;
-  getItemProps: UseInteractionsReturn["getItemProps"];
-  dataRef: ContextData;
-  domReference: React.RefObject<HTMLInputElement | null>;
-};
+  listItems: string[];
+  query: string;
+  setQuery: (value: string) => void;
+}
 
 export interface ComboboxContextProviderProps {
-  value: contextValue;
+  value: ContextValue;
   children: ReactNode;
 }
 
@@ -31,16 +31,6 @@ export function useCombobox() {
   }
 
   return context;
-}
-
-export function usePrevious<T>(value: T) {
-  const ref = React.useRef<T>(null);
-
-  useIsomorphicLayoutEffect(() => {
-    ref.current = value;
-  }, [value]);
-
-  return ref.current;
 }
 
 export const ComboboxContextProvider = ({ value, children }: ComboboxContextProviderProps) => {
