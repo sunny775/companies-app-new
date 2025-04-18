@@ -35,7 +35,7 @@ export function Dropdown({
       scale: [1, 0.98, 0.96, 0.95],
       transformOrigin: "top",
       transition: {
-        duration: 0.2,
+        duration: 0.3,
         times: [0, 0.4, 0.6, 1],
       },
     },
@@ -54,9 +54,9 @@ export function Dropdown({
 
   return (
     <>
-      {open ? (
-        <LazyMotion features={domAnimation}>
-          <AnimatePresence>
+      <LazyMotion features={domAnimation}>
+        <AnimatePresence>
+          {open ? (
             <FloatingPortal>
               <FloatingFocusManager context={context} initialFocus={-1} visuallyHiddenDismiss>
                 <m.div
@@ -90,9 +90,9 @@ export function Dropdown({
                 </m.div>
               </FloatingFocusManager>
             </FloatingPortal>
-          </AnimatePresence>
-        </LazyMotion>
-      ) : null}
+          ) : null}
+        </AnimatePresence>
+      </LazyMotion>
     </>
   );
 }

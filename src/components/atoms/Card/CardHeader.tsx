@@ -1,3 +1,4 @@
+import cn from "@/lib/cn";
 import React from "react";
 import { tv, VariantProps } from "tailwind-variants";
 
@@ -6,7 +7,7 @@ export interface CardHeaderProps extends React.ComponentProps<"div">, VariantPro
 }
 
 const cardHeaderStyles = tv({
-  base: "relative bg-clip-border mt--4 mx-4 rounded-xl overflow-hidden",
+  base: "relative bg-clip-border mt-4 mx-4 rounded-xl overflow-hidden",
   slots: {
     default: "bg-surface",
     success: "",
@@ -22,7 +23,7 @@ const cardHeaderStyles = tv({
     },
     variant: {
       outlined: "border bg-transparent",
-      filled: "text-white",
+      filled: "",
       gradient: "text-white bg-gradient-to-tr",
       transparent: "bg-transparent",
     },
@@ -62,9 +63,9 @@ const cardHeaderStyles = tv({
 });
 
 export const CardHeader = ({ variant, color, shadow, floated, className, children, ...rest }: CardHeaderProps) => {
-  const styles = cardHeaderStyles({ className, variant, shadow, floated });
+  const styles = cardHeaderStyles({ variant, shadow, floated });
 
-  const classes = color ? styles[color]() : styles.default();
+  const classes = cn(color ? styles[color]() : styles.default(), styles.base({ className }));
 
   return (
     <div {...rest} className={classes}>

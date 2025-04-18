@@ -3,7 +3,7 @@ import { tv, VariantProps } from "tailwind-variants";
 import Image, { ImageProps } from "next/image";
 
 const avatarStyles = tv({
-  base: "relative inline-block object-cover object-center",
+  base: "relative inline-block object-cover object-center rounded-lg",
   variants: {
     bordered: {
       true: "border-2",
@@ -30,22 +30,9 @@ const avatarStyles = tv({
       info: "border-blue-500",
     },
   },
-  compoundVariants: [
-    {
-      size: ["xs", "sm"],
-      class: "rounded-md",
-    },
-    {
-      size: ["md", "lg"],
-      class: "rounded-lg",
-    },
-    {
-      size: ["xl", "xxl"],
-      class: "rounded-xl",
-    },
-  ],
   defaultVariants: {
     shadow: true,
+    size: "md",
     variant: "circular",
     boderColor: "default"
   },

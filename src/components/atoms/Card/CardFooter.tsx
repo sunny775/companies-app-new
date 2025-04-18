@@ -5,7 +5,7 @@ const cardFooterStyles = tv({
   base: "p-6",
   variants: {
     divider: {
-      true: "border-t border-blue-gray-50",
+      true: "border-t border-black/5 dark:border-white/10",
     },
   },
 });

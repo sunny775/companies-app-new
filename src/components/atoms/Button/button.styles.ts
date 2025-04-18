@@ -2,9 +2,9 @@ import { tv } from "tailwind-variants";
 
 export const buttonStyles = tv({
   slots: {
-    base: "align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none rounded-lg shadow-md",
+    base: "align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none rounded-md shadow cursor-pointer active:scale-105 active:opacity-[0.85] text-gray-700 dark:text-gray-300",
     spinner: "w-4 h-4",
-    default: "bg-surface",
+    default: "",
     success: "",
     error: "",
     info: "",
@@ -13,40 +13,39 @@ export const buttonStyles = tv({
   variants: {
     variant: {
       outlined: {
-        default: "border-black/5 dark:border-white/10 dark:text-green-300 dark:shadow-white/2",
-        success: "border-green-500 text-green-500 focus:ring-green-200",
-        error: "border-red-500 text-red-700 focus:ring-red-200",
-        info: "border-blue-500 text-blue-700 focus:ring-blue-200",
-        gray: "border-gray-500 text-gray-700 focus:ring-gray-200",
+        default: "border-gray-600/20 dark:border-white/5",
+        success: "border-green-600/20 text-green-700 dark:text-green-400",
+        error: "border-red-600/20 text-red-700 dark:text-red-400",
+        info: "border-blue-600/20 text-blue-700 dark:text-blue-400",
+        gray: "border-gray-600/20",
       },
       filled: {
-        default: "border-black/5 dark:border-white/10 dark:text-green-300 dark:shadow-white/2",
-        success: "text-white bg-green-500",
-        error: "text-white bg-red-500",
-        info: "text-white bg-blue-500",
-        gray: "text-white bg-gray-500",
+        default: "bg-gray-900",
+        success: "bg-green-600 shadow-green-600/50",
+        error: "bg-red-600 shadow-red-600/50",
+        info: "bg-blue-600 shadow-blue-600/50",
+        gray: "bg-gray-600 shadow-gray-600/50",
       },
       gradient: {
-        default: "from-surface to-neon",
-        success: "from-green-600 to-green-400",
-        error: "from-red-600 to-red-400",
-        info: "from-blue-600 to-blue-400",
-        gray: "from-gray-600 to-gray-400",
+        default: "from-green-600 to-neon shadow-green-600/50",
+        success: "from-green-600 to-green-400 shadow-green-600/50",
+        error: "from-red-600 to-red-400 shadow-red-600/50",
+        info: "from-blue-600 to-blue-400 shadow-blue-600/50",
+        gray: "from-gray-600 to-gray-400 shadow-gray-600/50",
       },
       text: {
-        default: "hover:bg-green-500/10 active:bg-green-500/10 text-green-700",
-        success: "hover:bg-green-500/10 active:bg-green-500/10 text-green-700",
-        error: "hover:bg-red-500/10 active:bg-red-500/10 text-red-900",
-        info: "hover:bg-blue-500/10 active:bg-blue-500/10 text-blue-900",
-        gray: "hover:bg-gray-500/10 active:bg-gray-500/10 text-gray-900",
+        default: "hover:bg-gray-500/5 active:bg-green-500/5",
+        success: "hover:bg-green-500/5 active:bg-green-500/5 text-green-600 dark:text-green-400",
+        error: "hover:bg-red-500/5 active:bg-red-500/5 text-red-600 dark:text-red-400",
+        info: "hover:bg-blue-500/5 active:bg-blue-500/5 text-blue-600 dark:text-blue-400",
+        gray: "hover:bg-gray-500/5 active:bg-gray-500/5",
       },
       ghost: {
-        default:
-          "bg-gray-100 dark:bg-green-600/10 border-black/5 dark:border-white/10 dark:text-green-300 dark:shadow-white/2",
-        success: "border-green-500 text-green-500 focus:ring-green-200",
-        error: "border-red-500 text-red-700 focus:ring-red-200",
-        info: "border-blue-500 text-blue-700 focus:ring-blue-200",
-        gray: "border-gray-500 text-gray-700 focus:ring-gray-200",
+        default: "bg-green-500/5 border-green-600/10",
+        success: "bg-green-500/5 border-green-500/10 text-green-700 dark:text-green-400 shadow-green-500/10",
+        error: "bg-red-500/5 border-red-500/10 text-red-700 dark:text-red-400 shadow-red-500/10",
+        info: "bg-blue-500/5 border-blue-500/10 text-blue-700 dark:text-blue-400 shadow-blue-500/10",
+        gray: "bg-gray-500/5 border-gray-500/10 shadow-gray-500/10",
       },
     },
     size: {
@@ -63,14 +62,29 @@ export const buttonStyles = tv({
   },
   compoundSlots: [
     {
+      variant: ["ghost"],
+      slots: ["default", "success", "error", "info", "gray"],
+      class: "border",
+    },
+    {
+      variant: ["outlined", "text"],
+      slots: ["default", "success", "error", "info", "gray"],
+      class: "hover:opacity-85",
+    },
+    {
       variant: ["outlined"],
       slots: ["default", "success", "error", "info", "gray"],
-      class: "bg-transparent border hover:opacity-75 focus:ring active:opacity-[0.85]",
+      class: "bg-surface border shadow-none",
+    },
+    {
+      variant: ["filled", "gradient"],
+      slots: ["default", "success", "error", "info", "gray"],
+      class: "text-white hover:shadow-md",
     },
     {
       variant: ["gradient"],
       slots: ["default", "success", "error", "info", "gray"],
-      class: "text-white bg-gradient-to-tr hover:shadow-lg active:opacity-[0.85]",
+      class: "bg-gradient-to-tr",
     },
   ],
   compoundVariants: [
@@ -83,6 +97,7 @@ export const buttonStyles = tv({
     },
   ],
   defaultVariants: {
-    variant: "filled",
+    variant: "outlined",
+    size: "md",
   },
 });

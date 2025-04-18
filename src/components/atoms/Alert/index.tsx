@@ -1,40 +1,29 @@
-import React, { ReactNode, RefObject } from "react";
-import { AnimatePresence, m, MotionProps, domAnimation, LazyMotion } from "framer-motion";
-import { VariantProps } from "tailwind-variants";
-import merge from "deepmerge";
-import IconButton from "../IconButton";
 import cn from "@/lib/cn";
-import { alertStyles } from "./alert.styles";
+import merge from "deepmerge";
+import { AnimatePresence, domAnimation, LazyMotion, m, MotionProps } from "framer-motion";
+import { X } from "lucide-react";
+import { ReactNode, RefObject } from "react";
+import { VariantProps } from "tailwind-variants";
+import IconButton from "../IconButton";
 import { Animation } from "../sharedTypes";
+import { alertStyles } from "./alert.styles";
 
 export interface AlertProps extends Omit<MotionProps, "animate">, VariantProps<typeof alertStyles> {
-  color?: "default" | "success" | "error" | "info";
   icon?: ReactNode;
-  open: boolean;
+  open?: boolean;
   onClose?: () => void;
   action?: ReactNode;
   animate?: Animation;
   className?: string;
   children?: ReactNode;
-  ref: RefObject<HTMLDivElement>;
+  ref?: RefObject<HTMLDivElement>;
 }
 
-export const Alert = ({
-  variant,
-  color,
-  icon,
-  open,
-  action,
-  onClose,
-  animate,
-  className,
-  children,
-  ...rest
-}: AlertProps) => {
+export const Alert = ({ variant, icon, open, action, onClose, animate, className, children, ...rest }: AlertProps) => {
   const styles = alertStyles({ variant, className });
 
-  const classes = cn(styles.root(), color ? styles[color]() : styles.default());
-  const actionClasses = cn(styles.action());
+  const classes = styles.base();
+  const actionClasses = styles.action();
 
   const mainAnimation = {
     unmount: {
@@ -46,8 +35,6 @@ export const Alert = ({
   };
   const appliedAnimation = merge(mainAnimation, animate || {});
 
-  const iconTemplate = <div className="shrink-0">{icon}</div>;
-
   return (
     <LazyMotion features={domAnimation}>
       <AnimatePresence>
@@ -55,32 +42,17 @@ export const Alert = ({
           <m.div
             {...rest}
             role="alert"
-            className={`${classes} flex`}
+            className={classes}
             initial="unmount"
             exit="unmount"
             animate={open ? "mount" : "unmount"}
             variants={appliedAnimation}
           >
-            {icon && iconTemplate}
-            <div className={`${icon ? "ml-3" : ""} mr-12`}>{children}</div>
+            {icon && <div className="shrink-0">{icon}</div>}
+            <div className={cn("mr-12", { "ml-3": icon })}>{children}</div>
             {onClose && !action && (
-              <IconButton
-                onClick={onClose}
-                size="sm"
-                variant="text"
-                color={variant === "outlined" || variant === "ghost" ? color : "default"}
-                className={actionClasses}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  className="h-6 w-6"
-                  strokeWidth={2}
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                </svg>
+              <IconButton onClick={onClose} size="sm" variant={variant} className={actionClasses}>
+                <X className="size-5" />
               </IconButton>
             )}
             {action || null}

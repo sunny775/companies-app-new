@@ -35,13 +35,26 @@ export const Dropdown = ({
     className,
   });
 
+  /* const animation: Variants = {
+    unmount: {
+      opacity: 0,
+      y: 8,
+      transition: { duration: 0.4 },
+    },
+    mount: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.4 },
+    },
+  };*/
+
   const animation: Variants = {
     unmount: {
       opacity: [1, 0.8, 0.5, 0],
       scale: [1, 0.98, 0.96, 0.95],
       transformOrigin: "top",
       transition: {
-        duration: 0.2,
+        duration: 0.3,
         times: [0, 0.4, 0.6, 1],
       },
     },
@@ -58,44 +71,46 @@ export const Dropdown = ({
 
   const appliedAnimation = merge(animation, animate);
 
-  return open ? (
+  return (
     <LazyMotion features={domAnimation}>
       <AnimatePresence>
-        <FloatingPortal>
-          <FloatingFocusManager context={context} modal={false}>
-            <m.ul
-              {...rest}
-              role="listbox"
-              ref={refs.setFloating}
-              className={styles}
-              style={{
-                ...floatingStyles,
-                position: strategy,
-                top: y ?? 0,
-                left: x ?? 0,
-                overflow: "auto",
-              }}
-              {...getFloatingProps()}
-              initial="unmount"
-              exit="unmount"
-              animate={open ? "mount" : "unmount"}
-              variants={appliedAnimation}
-            >
-              {React.Children.map(children, (child, index) => {
-                if (!React.isValidElement(child)) return null;
+        {open ? (
+          <FloatingPortal>
+            <FloatingFocusManager context={context} modal={false}>
+              <m.ul
+                {...rest}
+                role="listbox"
+                ref={refs.setFloating}
+                className={styles}
+                style={{
+                  ...floatingStyles,
+                  position: strategy,
+                  top: y ?? 0,
+                  left: x ?? 0,
+                  overflow: "auto",
+                }}
+                {...getFloatingProps()}
+                initial="unmount"
+                exit="unmount"
+                animate={open ? "mount" : "unmount"}
+                variants={appliedAnimation}
+              >
+                {React.Children.map(children, (child, index) => {
+                  if (!React.isValidElement(child)) return null;
 
-                const el = child as React.ReactElement<SelectOptionProps>;
+                  const el = child as React.ReactElement<SelectOptionProps>;
 
-                return React.cloneElement(el, {
-                  index,
-                  active: activeIndex === index,
-                  selected: selectedIndex === index,
-                });
-              })}
-            </m.ul>
-          </FloatingFocusManager>
-        </FloatingPortal>
+                  return React.cloneElement(el, {
+                    index,
+                    active: activeIndex === index,
+                    selected: selectedIndex === index,
+                  });
+                })}
+              </m.ul>
+            </FloatingFocusManager>
+          </FloatingPortal>
+        ) : null}
       </AnimatePresence>
     </LazyMotion>
-  ) : null;
+  );
 };
