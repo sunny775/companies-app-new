@@ -2,21 +2,18 @@
 
 import { buttonStyles } from "@/components/Button";
 import cn from "@/lib/cn";
-import { ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
-import Input from "../atoms/Input";
 import Select from "../atoms/Select";
-import Combobox from "../molecules/Combobox";
 import { data } from "./data";
 
 // const data = ["Red", "Orange", "Yellow", "Green", "Cyan", "Blue", "Purple", "Pink", "Maroon", "Black", "White"];
 
 export function Test() {
-  const [value, setValue] = useState<string | null>(null);
+  const [value, setValue] = useState<string>();
   const [query, setQuery] = useState("");
 
-  const items = query === "" ? data : data.filter((item) => item.toLowerCase().startsWith(query.toLowerCase()));
+  const options = data.filter((option) => option.toLowerCase().includes(query.toLowerCase()));
 
   return (
     <div>
@@ -27,45 +24,24 @@ export function Test() {
 
         <div className="w-72 my-4">
           <Select.Root
-            value={value}
-            listItems={items}
-            onSelect={(v) => {
-              console.log(v);
-              setValue(v);
-            }}
+            defaultValue={value}
+            searchQuery={query}
+            setSearchQuery={setQuery}
+            filteredOptions={options}
+            onChange={(value) => setValue(value)}
           >
-            <Select.Trigger error>Select Color</Select.Trigger>
+            <Select.Trigger color="error">Select Fruit</Select.Trigger>
             <Select.Dropdown>
-              {items.map((option, i) => (
-                <Select.Option key={i + option} value={option}>
-                  {option}
-                </Select.Option>
-              ))}
+              <Select.Input />
+              <Select.List>
+                {options.map((option, i) => (
+                  <Select.Item key={i + option} value={option}>
+                    {option}
+                  </Select.Item>
+                ))}
+              </Select.List>
             </Select.Dropdown>
           </Select.Root>
-          <Input id="test name" name="Name" placeholder="Name" showLabel icon={<ChevronDown strokeWidth={1} />} />
-        </div>
-
-        <div className="w-72 my-4">
-          <Combobox.Root
-            value={value}
-            listItems={items}
-            query={query}
-            setQuery={setQuery}
-            onSelect={(v) => {
-              console.log(v);
-              setValue(v);
-            }}
-          >
-            <Combobox.Input id="Fruits select" name="Select Fruit" showLabel />
-            <Combobox.Dropdown>
-              {items.map((option, i) => (
-                <Combobox.Item key={i + option} value={option}>
-                  {option}
-                </Combobox.Item>
-              ))}
-            </Combobox.Dropdown>
-          </Combobox.Root>
         </div>
       </main>
     </div>

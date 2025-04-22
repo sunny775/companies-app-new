@@ -1,14 +1,30 @@
-import { Dropdown, SelectDropdownProps } from "./Dropdown";
-import { Option, SelectOptionProps } from "./Option";
-import { Root, SelectProps } from "./Root";
-import { SelectTriggerProps, Trigger } from "./Trigger";
+import { SelectDropdown, SelectDropdownProps } from "./SelectDropdown";
+import { SelectInput, SelectInputProps } from "./SelectInput";
+import { SelectList, SelectListProps } from "./SelectList";
+import { SelectListItem, SelectListItemProps } from "./SelectListItem";
+import { SelectRoot, SelectRootProps } from "./SelectRoot";
+import { SelectTrigger, SelectTriggerProps } from "./SelectTrigger";
 
-export { useSelect } from "./Context";
+export { useSelect } from "./SelectContext";
 
-const Select = { Root, Trigger, Dropdown, Option };
+const Select = {
+  Root: SelectRoot,
+  Dropdown: SelectDropdown,
+  List: SelectList,
+  Item: SelectListItem,
+  Input: SelectInput,
+  Trigger: SelectTrigger,
+};
 
 export default Select;
 
-export { Dropdown, Option, Root as Select, Trigger };
+export { SelectDropdown, SelectInput, SelectList, SelectListItem, SelectRoot, SelectTrigger };
 
-export type { SelectDropdownProps, SelectOptionProps, SelectProps, SelectTriggerProps };
+export type {
+  SelectDropdownProps,
+  SelectInputProps,
+  SelectListItemProps,
+  SelectListProps,
+  SelectRootProps,
+  SelectTriggerProps,
+};

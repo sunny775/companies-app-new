@@ -2,13 +2,13 @@ import { flowers } from "@/assets";
 import Card from "@/components/atoms/Card";
 import Image from "next/image";
 import Button from "../atoms/Button";
-import Text from "../atoms/Text";
 import Checkbox from "../atoms/Checkbox";
+import Text from "../atoms/Text";
 
 export function CardTest() {
   return (
     <div className="grid gap-x-4 gap-y-12 m-6 grid-cols-3">
-      <Card.Root  variant="filled">
+      <Card.Root variant="filled">
         <Card.Header className="relative h-56 bg-transparent">
           <Image src={flowers.src} alt="card-image" width={500} height={500} />
         </Card.Header>
@@ -25,7 +25,7 @@ export function CardTest() {
           <Button variant="gradient">Read More</Button>
         </Card.Footer>
       </Card.Root>
-      <Card.Root  variant="filled" color="success">
+      <Card.Root variant="filled" color="success">
         <Card.Header className="relative h-56 bg-transparent">
           <Image src={flowers.src} alt="card-image" width={500} height={500} />
         </Card.Header>
@@ -42,7 +42,7 @@ export function CardTest() {
           <Button variant="gradient">Read More</Button>
         </Card.Footer>
       </Card.Root>
-      <Card.Root  variant="filled" color="info">
+      <Card.Root variant="filled" color="info">
         <Card.Header className="relative h-56 bg-transparent" floated={false}>
           <Image src={flowers.src} alt="card-image" width={500} height={500} />
         </Card.Header>
@@ -59,7 +59,7 @@ export function CardTest() {
           <Button variant="gradient">Read More</Button>
         </Card.Footer>
       </Card.Root>
-      <Card.Root  variant="outlined" color="success">
+      <Card.Root variant="outlined" color="success">
         <Card.Header className="relative h-56 bg-transparent">
           <Image src={flowers.src} alt="card-image" width={500} height={500} />
         </Card.Header>
@@ -73,10 +73,12 @@ export function CardTest() {
           </Text>
         </Card.Body>
         <Card.Footer divider className="border-green-600/20 dark:border-green-600/20">
-          <Button variant="outlined" color="success">Read More</Button>
+          <Button variant="outlined" color="success">
+            Read More
+          </Button>
         </Card.Footer>
       </Card.Root>
-      <Card.Root  variant="gradient">
+      <Card.Root variant="gradient">
         <Card.Header className="relative h-56 bg-transparent">
           <Image src={flowers.src} alt="card-image" width={500} height={500} />
         </Card.Header>
@@ -100,10 +102,9 @@ export function CardTest() {
 export function Test3() {
   return (
     <div className="flex flex-col items-center justify-center gap-4">
-      <CardTest />
       <Checkbox />
       <Checkbox color="success" />
-      <Checkbox  color="error"/>
+      <Checkbox color="error" />
       <input type="checkbox" />
     </div>
   );
