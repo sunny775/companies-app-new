@@ -5,16 +5,15 @@ import { SelectListItem, SelectListItemProps } from "./SelectListItem";
 import { SelectRoot, SelectRootProps } from "./SelectRoot";
 import { SelectTrigger, SelectTriggerProps } from "./SelectTrigger";
 
-export { useSelect } from "./SelectContext";
+export { useSelect, type SelectContextType } from "./SelectContext";
 
-const Select = {
-  Root: SelectRoot,
+const Select = Object.assign(SelectRoot, {
   Dropdown: SelectDropdown,
   List: SelectList,
   Item: SelectListItem,
   Input: SelectInput,
   Trigger: SelectTrigger,
-};
+});
 
 export default Select;
 

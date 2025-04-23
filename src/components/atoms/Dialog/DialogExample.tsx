@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState } from 'react';
-import Dialog from './DialogNew';
+import Dialog from './index';
+import Button from '../Button';
 
 const DialogExample = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,12 +12,12 @@ const DialogExample = () => {
 
   return (
     <div>
-      <button 
+      <Button
         onClick={openDialog}
-        className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+        color='info'
       >
         Open Dialog
-      </button>
+      </Button>
 
       <Dialog 
         open={isOpen} 
@@ -29,22 +30,22 @@ const DialogExample = () => {
           Example Dialog
         </Dialog.Header>
         <Dialog.Body id="dialog-description">
-          <p>This is an example of our new dialog component using the native HTML dialog element.</p>
+          <p>This is an example of the custom dialog component</p>
           <p>It comes with improved accessibility, performance, and follows best practices.</p>
         </Dialog.Body>
-        <Dialog.Footer>
-          <button 
+        <Dialog.Footer className='gap-2'>
+          <Button 
             onClick={closeDialog}
-            className="px-4 py-2 mr-2  hover:bg-gray-50 rounded transition-colors"
           >
             Cancel
-          </button>
-          <button 
+          </Button>
+          <Button 
             onClick={closeDialog}
-            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+            variant='gradient'
+            color='info'
           >
             Confirm
-          </button>
+          </Button>
         </Dialog.Footer>
       </Dialog>
     </div>

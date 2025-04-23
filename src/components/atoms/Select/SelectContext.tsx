@@ -1,6 +1,7 @@
+import { Prettify } from "@/lib/shared-types";
 import React, { Dispatch, KeyboardEvent, ReactNode, RefObject, SetStateAction } from "react";
 
-export type SelectContextType = contextValue;
+export type SelectContextType = Prettify<contextValue>;
 
 export interface contextValue {
   id?: string;

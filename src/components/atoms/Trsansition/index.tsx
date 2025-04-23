@@ -25,7 +25,7 @@ export default function Transition({
     if (show) {
       setShouldRender(true);
       // Need to delay setting mounted to true to allow the browser to apply the initial unmounted state
-      const timer = setTimeout(() => setMounted(true), 20);
+      const timer = setTimeout(() => setMounted(true), 50);
       return () => clearTimeout(timer);
     } else {
       setMounted(false);

@@ -25,7 +25,7 @@ export function Test() {
 
         <DialogExample />
         <div className="w-72 my-4">
-          <Select.Root
+          <Select
             defaultValue={value}
             searchQuery={query}
             setSearchQuery={setQuery}
@@ -43,7 +43,7 @@ export function Test() {
                 ))}
               </Select.List>
             </Select.Dropdown>
-          </Select.Root>
+          </Select>
         </div>
       </main>
     </div>
