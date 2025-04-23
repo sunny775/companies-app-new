@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useState } from "react";
 import Select from "../atoms/Select";
 import { data } from "./data";
+import DialogExample from "../atoms/Dialog/DialogExample";
 
 // const data = ["Red", "Orange", "Yellow", "Green", "Cyan", "Blue", "Purple", "Pink", "Maroon", "Black", "White"];
 
@@ -22,6 +23,7 @@ export function Test() {
           Go to Companies List
         </Link>
 
+        <DialogExample />
         <div className="w-72 my-4">
           <Select.Root
             defaultValue={value}

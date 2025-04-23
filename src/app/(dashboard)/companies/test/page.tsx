@@ -8,7 +8,6 @@ export default function Home() {
       <Test />
       <Test2 />
       <Test3 />
-      <Test />
     </div>
   );
 }
