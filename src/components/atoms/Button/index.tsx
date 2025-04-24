@@ -1,7 +1,7 @@
-import React from "react";
 import Spinner from "@/components/loaders/Spinner";
-import { VariantProps } from "tailwind-variants";
 import cn from "@/lib/cn";
+import React from "react";
+import { VariantProps } from "tailwind-variants";
 import { buttonStyles } from "./button.styles";
 
 export interface ButtonProps extends React.ComponentProps<"button">, VariantProps<typeof buttonStyles> {
@@ -17,7 +17,7 @@ export const Button = ({ variant, size, color, fullWidth, className, children, l
     loading,
   });
 
-  const classes = cn(styles.base({className}), color ? styles[color]() : styles.default());
+  const classes = cn(styles.base(), color ? styles[color]() : styles.default(), className);
 
   return (
     <button {...rest} disabled={rest.disabled ?? loading} className={classes} type={rest.type || "button"}>

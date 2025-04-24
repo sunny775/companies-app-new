@@ -1,41 +1,71 @@
-import React from "react";
-import { useTabs, setIndicator } from "./TabsContext";
+import { ReactNode, useLayoutEffect, useRef, useState } from "react";
 import { tv } from "tailwind-variants";
+import { useTabs } from "./TabsContext";
 
-export interface TabsHeaderProps extends React.ComponentProps<"ul"> {
-  indicatorProps?: Record<string, unknown>;
+export interface IndicatorStyle {
+  left: string;
+  width: string;
+  top: string;
+  height: string;
+}
+
+export interface TabsHeaderProps {
+  children: ReactNode;
+  className?: string;
 }
 
 const tabsHeaderStyles = tv({
-  base: "flex relative bg-gray-50 rounded-lg p-1",
+  slots: {
+    base: "flex relative p-1.5 bg-gray-100 dark:bg-gray-600/5",
+    indicator:
+      "absolute bg-white dark:bg-surface backdrop-blur-2xl transition-all duration-300 ease-in-out rounded-md",
+  },
   variants: {
     orientation: {
-      horizontal: "block",
-      vertical: "flex",
+      vertical: "flex-col",
+      horizontal: "flex-row rounded-md",
     },
-  },
-  defaultVariants: {
-    orientation: "horizontal",
   },
 });
 
-export const TabsHeader = ({ indicatorProps, className, children, ...rest }: TabsHeaderProps) => {
-  const { state, dispatch } = useTabs();
-  const { orientation } = state;
+export const TabsHeader = ({ children, className = "" }: TabsHeaderProps) => {
+  const { activeTab, orientation } = useTabs();
+  const tabsRef = useRef<HTMLDivElement>(null);
+  const [indicatorStyle, setIndicatorStyle] = useState<IndicatorStyle>({
+    left: "0px",
+    width: "0px",
+    top: "0px",
+    height: "0px",
+  });
 
-  React.useEffect(() => {
-    if (indicatorProps) setIndicator(dispatch, indicatorProps);
-  }, [dispatch, indicatorProps]);
+  useLayoutEffect(() => {
+    if (!tabsRef.current) return;
 
-  const styles = tabsHeaderStyles({ className, orientation });
+    const activeTabElement = tabsRef.current.querySelector(`[data-value="${activeTab}"]`) as HTMLElement;
+    if (!activeTabElement) return;
+
+    setIndicatorStyle({
+      left: `${activeTabElement.offsetLeft}px`,
+      width: `${activeTabElement.offsetWidth}px`,
+      top: `${activeTabElement.offsetTop}px`,
+      height: `${activeTabElement.offsetHeight}px`,
+    });
+  }, [activeTab]);
+
+  const styles = tabsHeaderStyles({ orientation });
 
   return (
-    <nav>
-      <ul {...rest} role="tablist" className={styles}>
-        {children}
-      </ul>
-    </nav>
+    <div ref={tabsRef} className={styles.base({ className })}>
+      {children}
+      <span
+        className={styles.indicator()}
+        style={{
+          left: indicatorStyle.left,
+          width: indicatorStyle.width,
+          top: indicatorStyle.top,
+          height: indicatorStyle.height,
+        }}
+      />
+    </div>
   );
 };
-
-export default TabsHeader;

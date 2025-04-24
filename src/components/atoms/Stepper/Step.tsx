@@ -1,17 +1,41 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { tv } from "tailwind-variants";
+import { useStepper } from "./StepperContext";
 
-export interface StepProps extends React.ComponentProps<"div"> {
+const stepStyles = tv({
+  base: "relative z-10 grid place-items-center w-10 h-10 rounded-full bg-gray-200 dark:bg-surface-2 font-bold transition-all duration-300",
+  variants: {
+    active: {
+      true: "bg-green-700 dark:bg-green-700 text-white transition-all duration-800",
+    },
+    completed: {
+      true: "bg-green-700 dark:bg-green-700 text-white",
+    },
+  },
+});
+
+export interface StepProps extends Omit<React.ComponentProps<"div">, "id"> {
+  id: number;
+  className?: string;
   activeClassName?: string;
   completedClassName?: string;
 }
 
-const stepStyles = tv({
-  base: "relative z-10 grid place-items-center w-10 h-10 rounded-full bg-gray-300 text-gray-900 font-bold transition-all duration-300",
-});
+export const Step = ({ id, className, children, ...rest }: StepProps) => {
+  const { activeStep, registerStep } = useStepper();
 
-export const Step = ({ className, children, ...rest }: StepProps) => {
-  const styles = stepStyles({ className });
+  useEffect(() => {
+    registerStep(id);
+  }, [id, registerStep]);
+
+  const isActive = id === activeStep;
+  const isCompleted = id !== undefined && id < activeStep;
+
+  const styles = stepStyles({
+    className,
+    active: isActive,
+    completed: isCompleted,
+  });
 
   return (
     <div {...rest} className={styles}>
@@ -19,5 +43,3 @@ export const Step = ({ className, children, ...rest }: StepProps) => {
     </div>
   );
 };
-
-export default Step;

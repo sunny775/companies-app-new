@@ -8,6 +8,8 @@ import Select from "../atoms/Select";
 import { data } from "./data";
 import DialogExample from "../atoms/Dialog/DialogExample";
 import DrawerExample from "../atoms/Drawer/DrawerExample";
+import { TabsExample } from "../atoms/Tabs/TabsExample";
+import { StepperExample } from "../atoms/Stepper/StepperExample";
 
 // const data = ["Red", "Orange", "Yellow", "Green", "Cyan", "Blue", "Purple", "Pink", "Maroon", "Black", "White"];
 
@@ -18,11 +20,13 @@ export function Test() {
   const options = data.filter((option) => option.toLowerCase().includes(query.toLowerCase()));
 
   return (
-    <div>
+    <div >
       <main className="flex flex-col  gap-[32px] items-center justify-center">
         <Link href={"/companies"} className={cn(buttonStyles({ variant: "gradient" }))}>
           Go to Companies List
         </Link>
+        <StepperExample />
+        <TabsExample />
          <DrawerExample />
         <DialogExample />
         <div className="w-72 my-4">

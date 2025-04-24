@@ -1,3 +1,4 @@
+import cn from "@/lib/cn";
 import React from "react";
 import { tv, VariantProps } from "tailwind-variants";
 
@@ -43,6 +44,7 @@ export type TextProps = BaseTextProps &
   };
 
 const textStyles = tv({
+  base: "",
   slots: {
     default: "",
     success: "",
@@ -68,9 +70,9 @@ const textStyles = tv({
     {
       textGradient: true,
       class: {
-        default: "bg-gradient-to-tr from-foreground to-neon",
-        success: "bg-gradient-to-tr from-green-600 neon",
-        info: "bg-gradient-to-tr from-blue-600 to-indigo-600",
+        default: "bg-gradient-to-t from-blue-600 via-green-600 to-green-600",
+        success: "bg-gradient-to-t from-green-600 to-neon",
+        info: "bg-gradient-to-t from-blue-600 to-indigo-600",
       },
     },
     {
@@ -95,7 +97,7 @@ export function Text({
 }: TextProps) {
   const styles = textStyles({ textGradient, variant });
 
-  const classes = styles[color]({ className });
+  const classes = cn(styles.base({ className }), styles[color]());
 
   let template;
 

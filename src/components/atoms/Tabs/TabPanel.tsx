@@ -1,42 +1,29 @@
-import React, { ReactNode } from "react";
-import { AnimatePresence, m, MotionProps, LazyMotion, domAnimation } from "framer-motion";
-import { useTabs } from "./TabsContext";
+import { ReactNode } from "react";
 import { tv } from "tailwind-variants";
+import { useTabs } from "./TabsContext";
 
-export interface TabPanelProps extends MotionProps {
-  value: string | number;
-  className?: string;
+export interface TabPanelProps {
   children: ReactNode;
+  value: string;
 }
 
-const tabsPanelStyles = tv({
-  base: "w-full h-max text-gray-700 p-4 antialiased font-sans text-base font-light leading-relaxed",
+const tabPanelStyles = tv({
+  base: "transition-all duration-500 ease-in-out transform",
+  variants: {
+    active: {
+      true: "opacity-100 translate-x-0 ",
+      false: "opacity-0 absolute top-0 left-0 -translate-x-10",
+    },
+  },
 });
 
-export const TabPanel = ({ value, className, children, ...rest }: TabPanelProps) => {
-  const { state } = useTabs();
-  const { active, appliedAnimation, isInitial } = state;
-
-  const styles = tabsPanelStyles({ className });
+export const TabPanel = ({ children, value }: TabPanelProps) => {
+  const { activeTab } = useTabs();
+  const active = value === activeTab;
 
   return (
-    <LazyMotion features={domAnimation}>
-      <AnimatePresence mode="wait">
-        <m.div
-          {...rest}
-          role="tabpanel"
-          className={styles}
-          initial="unmount"
-          exit="unmount"
-          animate={active === value ? "mount" : isInitial ? "initial" : "unmount"}
-          variants={appliedAnimation}
-          data-value={value}
-        >
-          {children}
-        </m.div>
-      </AnimatePresence>
-    </LazyMotion>
+    <div className={tabPanelStyles({ active })} role="tabpanel" id={`panel-${value}`}>
+      {children}
+    </div>
   );
 };
-
-export default TabPanel;

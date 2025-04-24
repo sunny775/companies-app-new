@@ -1,62 +1,34 @@
-import React from "react";
-import { motion } from "framer-motion";
-import { useTabs, setActive, setIsInitial } from "./TabsContext";
+import { ReactNode } from "react";
 import { tv } from "tailwind-variants";
-import cn from "@/lib/cn";
+import Button from "../Button";
+import { useTabs } from "./TabsContext";
 
-export interface TabProps extends React.ComponentProps<"li"> {
-  value: string | number;
-  activeClassName?: string;
-  disabled?: boolean;
+export interface TabProps {
+  children: ReactNode;
+  className?: string;
+  value: string;
 }
 
 const tabStyles = tv({
-  slots: {
-    base: "flex items-center justify-center text-center w-full h-full relative bg-transparent py-1 px-2 text-blue-gray-900 antialiased font-sans text-base font-normal leading-relaxed select-none cursor-pointer",
-    indicator: "absolute inset-0 z-10 h-full bg-white rounded-md shadow",
-  },
+  base: "active:scale-100 bg-transparent border-0 shadow-none relative transition-all duration-300 z-10 hover:text-green-600 py-0 h-9",
   variants: {
-    disabled: {
-      true: "opacity-50 cursor-not-allowed pointer-events-none select-none",
+    active: {
+      true: "text-green-600 dark:text-green-600",
     },
+    isHorizontal:{
+        true:  "md:w-[300px]"
+    }
   },
 });
 
-export const Tab = ({ value, className, activeClassName, disabled, children, ...rest }: TabProps) => {
-  const { state, dispatch } = useTabs();
-  const { id, active, indicatorProps } = state;
-
-  const styles = tabStyles({ className, disabled });
-
-  const tabClasses = cn(styles.base(), { [activeClassName || ""]: active === value });
-
-  const indicatorClasses = styles.indicator({ className: (indicatorProps?.className || "") as string });
+export const Tab = ({ children, className , value }: TabProps) => {
+  const { activeTab, handleTabChange, orientation } = useTabs();
+  const active = activeTab === value;
+  const isHorizontal = orientation === "horizontal"
 
   return (
-    <li
-      {...rest}
-      role="tab"
-      className={tabClasses}
-      onClick={(e) => {
-        const onClick = rest?.onClick;
-
-        if (typeof onClick === "function") {
-          setActive(dispatch, value);
-          setIsInitial(dispatch, false);
-          onClick(e);
-        }
-
-        setIsInitial(dispatch, false);
-        setActive(dispatch, value);
-      }}
-      data-value={value}
-    >
-      <div className="z-20 text-inherit">{children}</div>
-      {active === value && (
-        <motion.div {...indicatorProps} transition={{ duration: 0.5 }} className={indicatorClasses} layoutId={id} />
-      )}
-    </li>
+    <Button className={tabStyles({ className, active, isHorizontal })} onClick={() => handleTabChange(value)} data-value={value}>
+      {children}
+    </Button>
   );
 };
-
-export default Tab;
