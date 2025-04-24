@@ -2,7 +2,7 @@ import useScrollLock from "@/lib/hooks/useScrollLock";
 import React, { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { tv, type VariantProps } from "tailwind-variants";
-import Transition from "../Trsansition";
+import Transition from "../Transition";
 import { DialogContext } from "./DialogContext";
 
 export const dialogStyles = tv({
@@ -50,7 +50,7 @@ export interface DialogProps extends Omit<React.ComponentProps<"div">, "role">, 
   animation?: AnimationProps;
 }
 
-export const Root = ({
+export const DialogRoot = ({
   open,
   onClose,
   size,

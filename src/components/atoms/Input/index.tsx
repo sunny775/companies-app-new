@@ -1,5 +1,5 @@
 import cn from "@/lib/cn";
-import { ComponentProps, ReactNode } from "react";
+import { ComponentProps, ReactNode, useId } from "react";
 import { tv, VariantProps } from "tailwind-variants";
 
 export const inputStyles = tv({
@@ -31,13 +31,13 @@ export const inputStyles = tv({
     },
     color: {
       default: {
-        input: "border-black/10 dark:border-white/10 focus:border-green-500/50 dark:focus:border-green-500/30",
+        input: "border-gray-600/20 focus:border-green-500/40",
       },
       error: {
-        input: "border-red-600/30 dark:border-red-500/20 focus:border-red-500/50 dark:focus:border-red-500/30",
+        input: "border-red-600/20 focus:border-red-500/40",
       },
       success: {
-        input: "border-green-500 dark:border-green-400 focus:border-green-500/50 dark:focus:border-green-500/30",
+        input: "border-green-600/20 focus:border-green-500/40",
       },
     },
   },
@@ -73,14 +73,12 @@ export const inputStyles = tv({
 
 export type InputProps = Omit<ComponentProps<"input">, "size" | "color"> &
   Omit<VariantProps<typeof inputStyles>, "icon"> & {
-    id: string;
-    name: string;
     error?: boolean;
     success?: boolean;
     icon?: ReactNode;
     errorMessage?: ReactNode;
     containerProps?: ComponentProps<"div">;
-    labelProps?: ComponentProps<"label"> & { title: string };
+    labelProps?: Omit<ComponentProps<"label">, "htmlFor"> & { title: string };
     showLabel?: boolean;
     className?: string;
   };
@@ -96,10 +94,17 @@ export const Input = ({
   labelProps,
   containerProps,
   className,
-  ref,
+  id,
   errorMessage,
   ...rest
 }: InputProps) => {
+  const defaultId = useId();
+
+  id = id ?? defaultId;
+  
+  error = error ?? !!errorMessage;
+  showLabel = showLabel ?? !!errorMessage;
+
   const styles = inputStyles({
     icon: !!icon,
     disabled,
@@ -114,7 +119,7 @@ export const Input = ({
 
   return (
     <div>
-      <label {...labelProps} htmlFor={rest.id} className={labelClasses}>
+      <label {...labelProps} htmlFor={id} className={labelClasses}>
         <span>{labelProps?.title || rest.name}</span>
         <span
           className={cn(styles.errorMessage(), {
@@ -126,7 +131,7 @@ export const Input = ({
       </label>
       <div {...containerProps} className={containerClasses}>
         {icon && <div className={styles.icon()}>{icon}</div>}
-        <input {...rest} ref={ref} className={inputClasses} />
+        <input {...rest} id={id} className={inputClasses} />
       </div>
     </div>
   );

@@ -13,12 +13,11 @@ export const Button = ({ variant, size, color, fullWidth, className, children, l
   const styles = buttonStyles({
     variant,
     size,
-    className,
     fullWidth,
     loading,
   });
 
-  const classes = cn(styles.base(), color ? styles[color]() : styles.default());
+  const classes = cn(styles.base({className}), color ? styles[color]() : styles.default());
 
   return (
     <button {...rest} disabled={rest.disabled ?? loading} className={classes} type={rest.type || "button"}>

@@ -7,6 +7,7 @@ import { useState } from "react";
 import Select from "../atoms/Select";
 import { data } from "./data";
 import DialogExample from "../atoms/Dialog/DialogExample";
+import DrawerExample from "../atoms/Drawer/DrawerExample";
 
 // const data = ["Red", "Orange", "Yellow", "Green", "Cyan", "Blue", "Purple", "Pink", "Maroon", "Black", "White"];
 
@@ -22,7 +23,7 @@ export function Test() {
         <Link href={"/companies"} className={cn(buttonStyles({ variant: "gradient" }))}>
           Go to Companies List
         </Link>
-
+         <DrawerExample />
         <DialogExample />
         <div className="w-72 my-4">
           <Select

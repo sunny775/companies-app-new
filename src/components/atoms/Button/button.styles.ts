@@ -13,14 +13,14 @@ export const buttonStyles = tv({
   variants: {
     variant: {
       outlined: {
-        default: "border-gray-600/20 dark:border-white/5",
+        default: "border-gray-600/20",
         success: "border-green-600/20 text-green-700 dark:text-green-400",
         error: "border-red-600/20 text-red-700 dark:text-red-400",
         info: "border-blue-600/20 text-blue-700 dark:text-blue-400",
         gray: "border-gray-600/20",
       },
       filled: {
-        default: "bg-gray-900",
+        default: "bg-gray-600",
         success: "bg-green-600 shadow-green-600/50",
         error: "bg-red-600 shadow-red-600/50",
         info: "bg-blue-600 shadow-blue-600/50",

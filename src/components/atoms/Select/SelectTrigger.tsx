@@ -22,9 +22,9 @@ export const selectTriggerStyles = tv({
       },
     },
     color: {
-      default: "border-black/10 dark:border-white/10",
-      error: "border-red-600/30 dark:border-red-500/20",
-      success: "border-green-500/30",
+      default: "border-gray-600/20",
+      error: "border-red-600/20",
+      success: "border-green-600/20",
     },
   },
   defaultVariants: {

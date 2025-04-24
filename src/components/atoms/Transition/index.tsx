@@ -37,11 +37,7 @@ export default function Transition({
   return shouldRender ? (
     <div
       style={{ transitionDuration: `${duration}ms` }}
-      className={cn(
-        "transition-all ease-out",
-        mounted ? mount : unmount,
-        className
-      )}
+      className={cn("transition-all ease-out", mounted ? mount : unmount, className)}
     >
       {children}
     </div>

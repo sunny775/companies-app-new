@@ -59,7 +59,7 @@ export function CardTest() {
           <Button variant="gradient">Read More</Button>
         </Card.Footer>
       </Card.Root>
-      <Card.Root variant="outlined" color="success">
+      <Card.Root variant="outlined" >
         <Card.Header className="relative h-56 bg-transparent">
           <Image src={flowers.src} alt="card-image" width={500} height={500} />
         </Card.Header>
@@ -72,8 +72,8 @@ export function CardTest() {
             where you can enjoy the main night life in Barcelona.
           </Text>
         </Card.Body>
-        <Card.Footer divider className="border-green-600/20 dark:border-green-600/20">
-          <Button variant="outlined" color="success">
+        <Card.Footer divider>
+          <Button variant="outlined">
             Read More
           </Button>
         </Card.Footer>
@@ -102,6 +102,7 @@ export function CardTest() {
 export function Test3() {
   return (
     <div className="flex flex-col items-center justify-center gap-4">
+      <CardTest />
       <Checkbox />
       <Checkbox color="success" />
       <Checkbox color="error" />

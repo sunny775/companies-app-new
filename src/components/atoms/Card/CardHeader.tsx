@@ -32,7 +32,7 @@ const cardHeaderStyles = tv({
     {
       variant: "outlined",
       class: {
-        default: "border-black/5 dark:border-white/10 dark:text-green-300 dark:shadow-white/2",
+        default: "border-gray-600/20 dark:shadow-white/2",
         success: "border-green-500 text-green-700 ",
         error: "border-red-500 text-red-700 ",
         info: "border-blue-500 text-blue-700 ",

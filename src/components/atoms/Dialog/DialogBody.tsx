@@ -6,7 +6,7 @@ export const dialogBodyStyles = tv({
   base: "relative p-4  antialiased font-sans text-base font-light leading-relaxed",
   variants: {
     divider: {
-      true: "border-t border-t-gray-900/10  border-b border-b-gray-900/10",
+      true: "border-t border-t-gray-600/20  border-b border-b-gray-600/20",
     },
   },
   defaultVariants: {

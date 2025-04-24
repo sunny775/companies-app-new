@@ -24,10 +24,10 @@ const avatarStyles = tv({
       xxl: "size-[110px]",
     },
     boderColor: {
-      default: "border-black/5 dark:border-white/10",
-      success: "border-green-500",
-      error: "border-red-500",
-      info: "border-blue-500",
+      default: "border-gray-600/20",
+      success: "border-green-600/20",
+      error: "border-red-600/20",
+      info: "border-blue-600/20",
     },
   },
   defaultVariants: {

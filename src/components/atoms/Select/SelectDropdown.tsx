@@ -1,7 +1,7 @@
 "use client";
 import cn from "@/lib/cn";
 import { ReactNode } from "react";
-import Transition from "../Trsansition";
+import Transition from "../Transition";
 import { useSelect } from "./SelectContext";
 
 export interface SelectDropdownProps {
@@ -16,7 +16,7 @@ export function SelectDropdown({ children, className }: SelectDropdownProps) {
     <Transition show={isOpen}>
       <div
         className={cn(
-          "absolute z-[999] mt-1 w-full bg-surface shadow-lg rounded-md py-1 text-base border border-black/5 dark:border-white/5 sm:text-sm",
+          "absolute z-[999] mt-1 w-full bg-surface shadow-lg rounded-md py-1 text-base border border-black/5 dark:border-gray-600/10 sm:text-sm",
           className
         )}
         onKeyDown={handleListKeyDown}

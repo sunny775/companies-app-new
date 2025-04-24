@@ -22,7 +22,7 @@ export  function SelectInput({ placeholder, className }: SelectInputProps) {
   };
 
   return (
-    <div className={cn("px-3 py-2 sticky top-0 border-b border-black/5 dark:border-white/5", className)}>
+    <div className={cn("px-3 py-2 sticky top-0 border-b border-black/5 dark:border-gray-600/10", className)}>
       <div className="relative">
         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
           <Search className="h-4 w-4 text-gray-400" aria-hidden="true" />
@@ -32,7 +32,7 @@ export  function SelectInput({ placeholder, className }: SelectInputProps) {
           autoFocus
           id={searchId}
           ref={searchInputRef}
-          className="block w-full pl-10 pr-8 py-1 border border-black/10 dark:border-white/10 rounded-md leading-5  placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-4 focus:ring-green-500/10 focus:border-green-500/50 sm:text-sm transition-all duration-300"
+          className="block w-full pl-10 pr-8 py-1 border border-black/10 dark:border-white/5 rounded-md leading-5  placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-4 focus:ring-green-500/10 focus:border-green-500/50 sm:text-sm transition-all duration-300"
           placeholder={placeholder || "Search ..."}
           value={searchQuery}
           onChange={handleSearchChange}

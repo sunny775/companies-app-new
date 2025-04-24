@@ -1,5 +1,5 @@
 import cn from "@/lib/cn";
-import { ComponentProps, ReactNode } from "react";
+import { ComponentProps, ReactNode, useId } from "react";
 import { tv, VariantProps } from "tailwind-variants";
 
 const textareaStyles = tv({
@@ -31,13 +31,13 @@ const textareaStyles = tv({
     },
     color: {
       default: {
-        input: "border-black/10 dark:border-white/10 focus:border-green-500/50 dark:focus:border-green-500/30",
+        input: "border-gray-600/20 focus:border-green-500/40",
       },
       error: {
-        input: "border-red-600/30 dark:border-red-500/20 focus:border-red-500/50 dark:focus:border-red-500/30",
+        input: "border-red-600/20 focus:border-red-500/40",
       },
       success: {
-        input: "border-green-500 dark:border-green-400 focus:border-green-500/50 dark:focus:border-green-500/30",
+        input: "border-green-600/20 focus:border-green-500/40",
       },
     },
   },
@@ -71,14 +71,12 @@ const textareaStyles = tv({
 
 type TextareaProps = Omit<ComponentProps<"textarea">, "size" | "color"> &
   VariantProps<typeof textareaStyles> & {
-    id: string;
-    name: string;
     error?: boolean;
     success?: boolean;
     icon?: ReactNode;
     errorMessage?: ReactNode;
     containerProps?: ComponentProps<"div">;
-    labelProps?: ComponentProps<"label"> & { title: string };
+    labelProps?: Omit<ComponentProps<"label">, "htmlFor"> & { title: string };
     showLabel?: boolean;
     className?: string;
   };
@@ -95,9 +93,17 @@ export const Input = ({
   containerProps,
   className,
   ref,
+  id,
   errorMessage,
   ...rest
 }: TextareaProps) => {
+  const defaultId = useId();
+
+  id = id ?? defaultId;
+
+  error = error ?? !!errorMessage;
+  showLabel = showLabel ?? !!errorMessage;
+
   const styles = textareaStyles({
     icon: !!icon,
     disabled,
@@ -112,7 +118,7 @@ export const Input = ({
 
   return (
     <div>
-      <label {...labelProps} htmlFor={rest.id} className={labelClasses}>
+      <label {...labelProps} htmlFor={id} className={labelClasses}>
         <span>{labelProps?.title || rest.name}</span>
         <span
           className={cn(styles.errorMessage(), {
@@ -124,7 +130,7 @@ export const Input = ({
       </label>
       <div {...containerProps} className={containerClasses}>
         {icon && <div className={styles.icon()}>{icon}</div>}
-        <textarea rows={5} {...rest} ref={ref} className={textareaClasses} />
+        <textarea rows={5} id={id} ref={ref} className={textareaClasses} {...rest} />
       </div>
     </div>
   );

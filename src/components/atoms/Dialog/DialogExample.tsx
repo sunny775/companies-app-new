@@ -29,7 +29,7 @@ const DialogExample = () => {
         <Dialog.Header id="dialog-title">
           Example Dialog
         </Dialog.Header>
-        <Dialog.Body id="dialog-description">
+        <Dialog.Body id="dialog-description" divider>
           <p>This is an example of the custom dialog component</p>
           <p>It comes with improved accessibility, performance, and follows best practices.</p>
         </Dialog.Body>
