@@ -4,12 +4,13 @@ import { buttonStyles } from "@/components/Button";
 import cn from "@/lib/cn";
 import Link from "next/link";
 import { useState } from "react";
-import Select from "../atoms/Select";
-import { data } from "./data";
 import DialogExample from "../atoms/Dialog/DialogExample";
 import DrawerExample from "../atoms/Drawer/DrawerExample";
-import { TabsExample } from "../atoms/Tabs/TabsExample";
+import MenuExample from "../atoms/Menu/MenuExample";
+import Select from "../atoms/Select";
 import { StepperExample } from "../atoms/Stepper/StepperExample";
+import { TabsExample } from "../atoms/Tabs/TabsExample";
+import { data } from "./data";
 
 // const data = ["Red", "Orange", "Yellow", "Green", "Cyan", "Blue", "Purple", "Pink", "Maroon", "Black", "White"];
 
@@ -20,15 +21,11 @@ export function Test() {
   const options = data.filter((option) => option.toLowerCase().includes(query.toLowerCase()));
 
   return (
-    <div >
+    <div>
       <main className="flex flex-col  gap-[32px] items-center justify-center">
         <Link href={"/companies"} className={cn(buttonStyles({ variant: "gradient" }))}>
           Go to Companies List
         </Link>
-        <StepperExample />
-        <TabsExample />
-         <DrawerExample />
-        <DialogExample />
         <div className="w-72 my-4">
           <Select
             defaultValue={value}
@@ -37,7 +34,7 @@ export function Test() {
             filteredOptions={options}
             onChange={(value) => setValue(value)}
           >
-            <Select.Trigger color="error">Select Fruit</Select.Trigger>
+            <Select.Trigger>Select Fruit</Select.Trigger>
             <Select.Dropdown>
               <Select.Input />
               <Select.List>
@@ -50,6 +47,13 @@ export function Test() {
             </Select.Dropdown>
           </Select>
         </div>
+        <div className="w-full max-w-3xl">
+          <MenuExample />
+        </div>
+        <StepperExample />
+        <TabsExample />
+        <DrawerExample />
+        <DialogExample />
       </main>
     </div>
   );

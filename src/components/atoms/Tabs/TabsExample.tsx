@@ -1,9 +1,9 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import Button from "../Button";
-import Text from "../Text";
 import Tabs from "./index";
+import Text from "../Text";
 
-export const TabsExample = () => {
+export const TabsExample  = () => {
   const [controlledTab, setControlledTab] = useState<string>("users");
 
   const handleControlledTabChange = (newValue: string): void => {
@@ -13,13 +13,9 @@ export const TabsExample = () => {
 
   return (
     <div className="p-6 space-y-10 bg-gray-50 dark:bg-surface">
-      <Text variant="h4" as="h1" textGradient>
-        Tabs Examples
-      </Text>
+      <Text variant="h4" as="h1" textGradient>Tabs Examples</Text>
       <div className="mb-10 bg-surface-2 p-6 rounded-xl shadow-md">
-        <Text variant="h5" as="h2" className="text-xl">
-          Basic Uncontrolled Tabs
-        </Text>
+        <h2 className="text-xl font-bold mb-4">Basic Uncontrolled Tabs</h2>
         <Tabs defaultValue="tab1" className="w-full max-w-lg">
           <Tabs.Header>
             <Tabs.Tab value="tab1">Home</Tabs.Tab>
@@ -29,7 +25,7 @@ export const TabsExample = () => {
           <Tabs.Body className="p-1 relative">
             <Tabs.Panel value="tab1">
               <div className="animate-fadeIn">
-                <Text as="h3" className="text-lg font-medium">Home Tab Content</Text>
+                <h3 className="text-lg font-medium">Home Tab Content</h3>
                 <p className="mt-2">This is the home tab content area with smooth animations.</p>
                 <div className="mt-4 bg-blue-600/10 p-4 rounded">
                   <p>Notice how the indicator smoothly transitions between tabs!</p>

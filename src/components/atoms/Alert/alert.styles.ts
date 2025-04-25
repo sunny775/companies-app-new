@@ -1,7 +1,7 @@
 import { tv } from "tailwind-variants";
 
 export const alertStyles = tv({
-  base: "flex relative w-full font-sans text-base font-regular px-4 py-4 rounded-lg border",
+  base: "flex relative font-sans text-base font-regular px-4 py-4 rounded-lg border",
   slots: {
     action: "!absolute top-2 right-3",
   },

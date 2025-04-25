@@ -2,7 +2,7 @@ import useScrollLock from "@/lib/hooks/useScrollLock";
 import React, { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { tv, type VariantProps } from "tailwind-variants";
-import Transition from "../Transition";
+import Transition, { TransitionType } from "../Transition";
 import { DialogContext } from "./DialogContext";
 
 export const dialogStyles = tv({
@@ -31,11 +31,8 @@ export const dialogBackdropStyles = tv({
   base: "fixed inset-0 bg-black/10 backdrop-blur-sm z-40",
 });
 
-export interface AnimationProps {
-  duration?: number;
+export interface AnimationProps extends TransitionType {
   backdropDuration?: number;
-  mount?: string;
-  unmount?: string;
   backdropMount?: string;
   backdropUnmount?: string;
 }

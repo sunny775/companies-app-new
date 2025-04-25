@@ -1,61 +1,97 @@
 import cn from "@/lib/cn";
-import { ReactNode, useEffect, useState } from "react";
+import React, { CSSProperties, ElementType, memo, ReactNode, useEffect, useRef, useState } from "react";
 
-export interface TransitionProps {
-  show: boolean;
+export interface TransitionType {
   duration?: number;
-  children: ReactNode;
   mount?: string;
   unmount?: string;
+}
+
+export interface TransitionProps extends TransitionType {
+  show: boolean;
+  children: ReactNode;
   className?: string;
+  as?: ElementType;
+  onTransitionEnd?: () => void;
+  useARIA?: boolean;
 }
 
-export default function Transition({
-  show = false,
-  children,
-  duration = 300,
-  className,
-  mount = "opacity-100 translate-y-0",
-  unmount = "opacity-0 translate-y-6",
-}: TransitionProps) {
-  const [shouldRender, setShouldRender] = useState(show);
-  const [mounted, setMounted] = useState(show);
+const Transition = memo(
+  ({
+    show = false,
+    children,
+    duration = 300,
+    className,
+    mount = "opacity-100 translate-y-0",
+    unmount = "opacity-0 translate-y-6",
+    as = "div",
+    onTransitionEnd,
+  }: TransitionProps) => {
+    const [shouldRender, setShouldRender] = useState(show);
+    const [mounted, setMounted] = useState(show);
+    const timerRef = useRef<NodeJS.Timeout | null>(null);
+    const componentRef = useRef<HTMLElement>(null);
 
-  useEffect(() => {
-    if (show) {
-      setShouldRender(true);
-      // Need to delay setting mounted to true to allow the browser to apply the initial unmounted state
-      const timer = setTimeout(() => setMounted(true), 50);
-      return () => clearTimeout(timer);
-    } else {
-      setMounted(false);
-      const timer = setTimeout(() => setShouldRender(false), duration);
-      return () => clearTimeout(timer);
+    useEffect(() => {
+      return () => {
+        if (timerRef.current) {
+          clearTimeout(timerRef.current);
+        }
+      };
+    }, []);
+
+    useEffect(() => {
+      if (show) {
+        setShouldRender(true);
+        // Need to delay setting mounted to true to allow the browser to apply the initial unmounted state
+        if (timerRef.current) clearTimeout(timerRef.current);
+        timerRef.current = setTimeout(() => {
+          setMounted(true);
+        }, 50);
+      } else {
+        setMounted(false);
+
+        if (timerRef.current) clearTimeout(timerRef.current);
+        timerRef.current = setTimeout(() => {
+          setShouldRender(false);
+          onTransitionEnd?.();
+        }, duration);
+      }
+    }, [show, duration, onTransitionEnd]);
+
+    if (!shouldRender) {
+      return null;
     }
-  }, [show, duration]);
 
-  return shouldRender ? (
-    <div
-      style={{ transitionDuration: `${duration}ms` }}
-      className={cn("transition-all ease-out", mounted ? mount : unmount, className)}
-    >
-      {children}
-    </div>
-  ) : null;
-}
+    return React.createElement(
+      as || "div",
+      {
+        ref: componentRef,
+        className,
+      },
+      React.Children.map(children, (child, index) => {
+        if (!React.isValidElement(child)) return null;
 
-export function ExampleTransitionUsage() {
-  const [open, setOpen] = useState(false);
+        const el = child as React.ReactElement<{ "data-mount": boolean; className?: string; style?: CSSProperties }>;
 
-  return (
-    <div className="min-h-screen flex flex-col items-center justify-center space-y-4 p-4">
-      <button onClick={() => setOpen(!open)} className="px-4 py-2 bg-indigo-600 text-white rounded">
-        Toggle Animation
-      </button>
+        const { className, style, ...rest } = el.props;
 
-      <Transition show={open} duration={300}>
-        <div className="bg-white shadow-lg rounded p-6 w-64 text-center">Hello! I fade and slide in/out.</div>
-      </Transition>
-    </div>
-  );
-}
+        return React.cloneElement(el, {
+          ...rest,
+          key: index,
+          "data-mount": mounted,
+          style: {
+            transitionDuration: `${duration}ms`,
+            ...style,
+          },
+          className: cn("transition-all ease-out", mounted ? mount : unmount, className),
+        });
+      })
+    );
+  }
+);
+
+Transition.displayName = "Transition Component";
+
+export default Transition;
+

@@ -25,7 +25,7 @@ const cardStyles = tv({
     {
       variant: "outlined",
       class: {
-        default: "border-gray-60020",
+        default: "border-gray-600/20",
         success: "border-green-600/20 text-green-700 dark:text-green-400 ",
         error: "border-red-600/20 text-red-700 dark:text-red-400",
         info: "border-blue-600/20 text-blue-700 dark:text-blue-400",
