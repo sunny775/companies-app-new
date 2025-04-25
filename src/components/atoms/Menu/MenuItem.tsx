@@ -48,7 +48,7 @@ export function MenuItem({
         "cursor-pointer select-none relative px-4 py-2 flex items-center text-sm",
         "transition-colors duration-150",
         "focus:outline-none",
-        "data-[focused=true]:bg-gray-100 dark:data-[focused=true]:bg-gray-700",
+        "data-[focused=true]:bg-green-600/10 data-[focused=true]:text-green-500",
         "data-[disabled=true]:opacity-50 data-[disabled=true]:cursor-not-allowed",
         className
       )}

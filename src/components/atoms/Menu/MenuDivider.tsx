@@ -10,7 +10,7 @@ export function MenuDivider({ className }: MenuDividerProps) {
   return (
     <li 
       role="separator" 
-      className={cn("my-1 h-px bg-gray-600/20 dark:bg-gray-700", className)}
+      className={cn("my-1 h-px bg-gray-600/20", className)}
     />
   );
 }

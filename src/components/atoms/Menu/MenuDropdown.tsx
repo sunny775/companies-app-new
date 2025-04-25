@@ -1,8 +1,9 @@
 "use client";
-import { ReactNode } from "react";
+import React, { ReactNode } from "react";
 import { tv, VariantProps } from "tailwind-variants";
 import Transition from "../Transition";
 import { useMenu } from "./MenuContext";
+import { MenuItemProps } from "./MenuItem";
 
 const menuDropdownStyles = tv({
   base: "absolute z-[9999] mt-1 bg-surface shadow-lg rounded-md py-1 text-base border border-black/5 dark:border-gray-600/10 sm:text-sm overflow-hidden",
@@ -41,7 +42,15 @@ export function MenuDropdown({ children, className, placement, width }: MenuDrop
     <Transition show={isOpen}>
       <div className={menuDropdownStyles({ placement, width, className })} onKeyDown={handleListKeyDown}>
         <ul ref={menuListRef} id={menuId} className="max-h-60 overflow-auto py-1" role="menu" tabIndex={-1}>
-          {children}
+          {React.Children.map(children, (child, index) => {
+            if (!React.isValidElement(child)) return null;
+
+            const el = child as React.ReactElement<MenuItemProps>;
+
+            return React.cloneElement(el, {
+              index,
+            });
+          })}
         </ul>
       </div>
     </Transition>
