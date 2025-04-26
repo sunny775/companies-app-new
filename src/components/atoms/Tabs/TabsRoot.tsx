@@ -16,7 +16,7 @@ export const TabsRoot = ({
   value,
   onChange,
   orientation = "horizontal",
-  className = "",
+  className,
 }: TabsProps) => {
   const [internalValue, setInternalValue] = useState<string>(defaultValue);
 
@@ -45,7 +45,7 @@ export const TabsRoot = ({
 
   return (
     <TabsContext.Provider value={contextValue}>
-      <div className={`tabs-container ${className}`} data-orientation={orientation}>
+      <div className={className} data-orientation={orientation}>
         {children}
       </div>
     </TabsContext.Provider>

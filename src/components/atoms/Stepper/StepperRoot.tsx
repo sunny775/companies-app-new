@@ -1,7 +1,7 @@
-import { useMergeRefs } from "@floating-ui/react";
 import React, { useEffect, useState } from "react";
 import { tv } from "tailwind-variants";
 import { StepperContext, StepperContextType } from "./StepperContext";
+import useMergedRefs from "@/lib/hooks/useMergeRefs";
 
 const stepperStyles = tv({
   slots: {
@@ -88,7 +88,7 @@ export const StepperRoot = ({
     registerStep,
   };
 
-  const mergedRef = useMergeRefs([ref, containerRef]);
+  const mergedRef = useMergedRefs(ref, containerRef);
   const stepperClasses = styles.stepper({ className });
 
   return (

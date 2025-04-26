@@ -18,7 +18,7 @@ const tabsHeaderStyles = tv({
   slots: {
     base: "flex relative p-1.5 bg-gray-100 dark:bg-gray-600/5",
     indicator:
-      "absolute bg-white dark:bg-surface backdrop-blur-2xl transition-all duration-300 ease-in-out rounded-md",
+      "absolute bg-surface backdrop-blur-2xl transition-all duration-300 ease-in-out rounded-md",
   },
   variants: {
     orientation: {

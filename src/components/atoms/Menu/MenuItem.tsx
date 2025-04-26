@@ -1,7 +1,7 @@
 "use client";
 
 import cn from "@/lib/cn";
-import { ReactNode, MouseEvent } from "react";
+import { MouseEvent, ReactNode } from "react";
 import { useMenu } from "./MenuContext";
 
 export interface MenuItemProps {
@@ -23,7 +23,7 @@ export function MenuItem({
   className,
   icon,
   shortcut,
-  divide
+  divide,
 }: MenuItemProps) {
   const { focusedIndex, setFocusedIndex, itemsRef, closeMenu, closeOnItemClick } = useMenu();
 
@@ -31,7 +31,7 @@ export function MenuItem({
 
   const handleClick = (e: MouseEvent<HTMLLIElement>) => {
     if (disabled) return;
-    
+
     if (onClick) onClick(e);
     if (closeOnItemClick) closeMenu();
   };
@@ -52,7 +52,7 @@ export function MenuItem({
         "focus:outline-none",
         "data-[focused=true]:bg-green-600/10 data-[focused=true]:text-green-500",
         "data-[disabled=true]:opacity-50 data-[disabled=true]:cursor-not-allowed",
-        {"border-b border-gray-600/20": divide},
+        { "border-b border-gray-600/20": divide },
         className
       )}
       onClick={handleClick}
@@ -60,9 +60,7 @@ export function MenuItem({
     >
       {icon && <span className="mr-2 flex-shrink-0">{icon}</span>}
       <span className="flex-grow">{children}</span>
-      {shortcut && (
-        <span className="ml-auto pl-4 text-xs text-gray-500 dark:text-gray-400">{shortcut}</span>
-      )}
+      {shortcut && <span className="ml-auto pl-4 text-xs text-gray-500 dark:text-gray-400">{shortcut}</span>}
     </li>
   );
 }
