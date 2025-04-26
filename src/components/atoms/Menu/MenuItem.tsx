@@ -12,6 +12,7 @@ export interface MenuItemProps {
   className?: string;
   icon?: ReactNode;
   shortcut?: string;
+  divide?: boolean;
 }
 
 export function MenuItem({
@@ -22,6 +23,7 @@ export function MenuItem({
   className,
   icon,
   shortcut,
+  divide
 }: MenuItemProps) {
   const { focusedIndex, setFocusedIndex, itemsRef, closeMenu, closeOnItemClick } = useMenu();
 
@@ -50,6 +52,7 @@ export function MenuItem({
         "focus:outline-none",
         "data-[focused=true]:bg-green-600/10 data-[focused=true]:text-green-500",
         "data-[disabled=true]:opacity-50 data-[disabled=true]:cursor-not-allowed",
+        {"border-b border-gray-600/20": divide},
         className
       )}
       onClick={handleClick}

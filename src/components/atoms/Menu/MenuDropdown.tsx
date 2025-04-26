@@ -6,7 +6,7 @@ import { useMenu } from "./MenuContext";
 import { MenuItemProps } from "./MenuItem";
 
 const menuDropdownStyles = tv({
-  base: "absolute z-[9999] mt-1 bg-surface shadow-lg rounded-md py-1 text-base border border-black/5 dark:border-gray-600/10 sm:text-sm overflow-hidden",
+  base: "absolute z-[999] mt-1 bg-surface shadow-lg rounded-md py-1 text-base border border-black/5 dark:border-gray-600/10 sm:text-sm overflow-hidden",
   variants: {
     placement: {
       "bottom-start": "top-full left-0",
@@ -36,11 +36,11 @@ export interface MenuDropdownProps extends VariantProps<typeof menuDropdownStyle
 }
 
 export function MenuDropdown({ children, className, placement, width }: MenuDropdownProps) {
-  const { isOpen, menuListRef, menuId, handleListKeyDown } = useMenu();
+  const { isOpen, menuListRef, menuId} = useMenu();
 
   return (
     <Transition show={isOpen}>
-      <div className={menuDropdownStyles({ placement, width, className })} onKeyDown={handleListKeyDown}>
+      <div className={menuDropdownStyles({ placement, width, className })}>
         <ul ref={menuListRef} id={menuId} className="max-h-60 overflow-auto py-1" role="menu" tabIndex={-1}>
           {React.Children.map(children, (child, index) => {
             if (!React.isValidElement(child)) return null;

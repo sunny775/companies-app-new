@@ -1,7 +1,7 @@
 "use client";
 
 import { Prettify } from "@/lib/shared-types";
-import React, { Dispatch, KeyboardEvent, ReactNode, RefObject, SetStateAction } from "react";
+import React, { Dispatch, ReactNode, RefObject, SetStateAction } from "react";
 
 export type MenuContextType = Prettify<contextValue>;
 
@@ -15,7 +15,6 @@ export interface contextValue {
   menuListRef: RefObject<HTMLUListElement | null>;
   itemsRef: RefObject<(HTMLLIElement | null)[]>;
   menuId: string;
-  handleListKeyDown: (e: KeyboardEvent) => void;
   closeMenu: () => void;
   closeOnItemClick?: boolean;
 }
@@ -29,11 +28,11 @@ export const MenuContext = React.createContext<MenuContextType | null>(null);
 
 export function useMenu() {
   const context = React.useContext(MenuContext);
-  
+
   if (context === null) {
     throw new Error("useMenu() must be used within a Menu component.");
   }
-  
+
   return context;
 }
 

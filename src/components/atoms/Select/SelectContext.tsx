@@ -1,5 +1,5 @@
 import { Prettify } from "@/lib/shared-types";
-import React, { Dispatch, KeyboardEvent, ReactNode, RefObject, SetStateAction } from "react";
+import React, { Dispatch, ReactNode, RefObject, SetStateAction } from "react";
 
 export type SelectContextType = Prettify<contextValue>;
 
@@ -11,11 +11,11 @@ export interface contextValue {
   disabled?: boolean;
   required?: boolean;
   isOpen: boolean;
-  setIsOpen: Dispatch<SetStateAction<boolean>>
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
   selectedOption: string | null;
-  setSelectedOption: Dispatch<SetStateAction<string | null>>
+  setSelectedOption: Dispatch<SetStateAction<string | null>>;
   focusedIndex: number;
-  setFocusedIndex: Dispatch<SetStateAction<number>>
+  setFocusedIndex: Dispatch<SetStateAction<number>>;
   searchQuery: string;
   setSearchQuery: (value: string) => void;
   filteredOptions: string[];
@@ -23,11 +23,10 @@ export interface contextValue {
   listboxRef: RefObject<HTMLUListElement | null>;
   searchInputRef: RefObject<HTMLInputElement | null>;
   optionsRef: RefObject<(HTMLLIElement | null)[]>;
-  labelId: string,
+  labelId: string;
   listboxId: string;
   searchId: string;
   selectOption: (option: string) => void;
-  handleListKeyDown: (e: KeyboardEvent) => void
 }
 
 export interface SelectContextProviderProps {

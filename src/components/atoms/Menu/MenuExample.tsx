@@ -17,8 +17,8 @@ export default function MenuExample() {
           </Menu.Trigger>
           <Menu.Dropdown>
             <Menu.Item>Profile</Menu.Item>
-            <Menu.Item>Settings</Menu.Item>
-            <Menu.Divider />
+            <Menu.Item divide>Settings</Menu.Item>
+          
             <Menu.Item>Logout</Menu.Item>
           </Menu.Dropdown>
         </Menu>
@@ -34,8 +34,8 @@ export default function MenuExample() {
           <Menu.Dropdown width="md">
             <Menu.Item icon={<User className="h-4 w-4" />}>My Profile</Menu.Item>
             <Menu.Item icon={<Settings className="h-4 w-4" />}>Settings</Menu.Item>
-            <Menu.Item icon={<Bell className="h-4 w-4" />}>Notifications</Menu.Item>
-            <Menu.Divider />
+            <Menu.Item divide icon={<Bell className="h-4 w-4" />}>Notifications</Menu.Item>
+            
             <Menu.Item icon={<LogOut className="h-4 w-4" />} className="text-red-500">
               Sign Out
             </Menu.Item>
@@ -54,10 +54,9 @@ export default function MenuExample() {
             <Menu.Item icon={<Copy className="h-4 w-4" />} shortcut="⌘C">
               Copy
             </Menu.Item>
-            <Menu.Item icon={<Edit className="h-4 w-4" />} shortcut="⌘E">
+            <Menu.Item divide icon={<Edit className="h-4 w-4" />} shortcut="⌘E">
               Edit
             </Menu.Item>
-            <Menu.Divider />
             <Menu.Item icon={<Trash className="h-4 w-4" />} className="text-red-500" shortcut="⌘⌫">
               Delete
             </Menu.Item>
@@ -68,32 +67,32 @@ export default function MenuExample() {
       {/* Placement Examples */}
       <div className="flex flex-col gap-2 w-full">
         <h2 className="text-xl font-semibold">Different Placements</h2>
-        <div className="grid grid-cols-3 gap-4">
-          <Menu placement="bottom-start">
+        <div className="grid grid-cols-3 gap-4 w-full">
+          <Menu  >
             <Menu.Trigger>
               Bottom Start
             </Menu.Trigger>
-            <Menu.Dropdown>
+            <Menu.Dropdown width="md" placement="bottom-start">
               <Menu.Item>Option 1</Menu.Item>
               <Menu.Item>Option 2</Menu.Item>
             </Menu.Dropdown>
           </Menu>
 
-          <Menu placement="bottom">
+          <Menu >
             <Menu.Trigger>
               Bottom
             </Menu.Trigger>
-            <Menu.Dropdown>
+            <Menu.Dropdown width="md" placement="bottom">
               <Menu.Item>Option 1</Menu.Item>
               <Menu.Item>Option 2</Menu.Item>
             </Menu.Dropdown>
           </Menu>
 
-          <Menu placement="bottom-end">
+          <Menu >
             <Menu.Trigger>
               Bottom End
             </Menu.Trigger>
-            <Menu.Dropdown>
+            <Menu.Dropdown width="md" placement="bottom-end">
               <Menu.Item>Option 1</Menu.Item>
               <Menu.Item>Option 2</Menu.Item>
             </Menu.Dropdown>
@@ -110,8 +109,8 @@ export default function MenuExample() {
           </Menu.Trigger>
           <Menu.Dropdown width="sm">
             <Menu.Item icon={<Edit className="h-4 w-4" />}>Edit</Menu.Item>
-            <Menu.Item icon={<Copy className="h-4 w-4" />}>Duplicate</Menu.Item>
-            <Menu.Divider />
+            <Menu.Item divide icon={<Copy className="h-4 w-4" />}>Duplicate</Menu.Item>
+         
             <Menu.Item icon={<Trash className="h-4 w-4" />} className="text-red-500">
               Delete
             </Menu.Item>

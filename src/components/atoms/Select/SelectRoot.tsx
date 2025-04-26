@@ -1,6 +1,6 @@
 "use client";
-import { KeyboardEvent, MouseEvent, ReactNode, useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import useScrollLock from "@/lib/hooks/useScrollLock";
+import { KeyboardEvent, MouseEvent, ReactNode, useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import { SelectContextProvider } from "./SelectContext";
 
 export interface SelectRootProps {
@@ -51,14 +51,6 @@ export function SelectRoot({
     // Reset focused index when filtered options change
     setFocusedIndex(filteredOptions.length > 0 ? 0 : -1);
   }, [searchQuery, filteredOptions]);
-
-  useEffect(() => {
-    if (isOpen && searchInputRef.current) {
-      setTimeout(() => {
-        searchInputRef.current?.focus();
-      }, 10);
-    }
-  }, [isOpen]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent | globalThis.MouseEvent) => {
@@ -170,7 +162,6 @@ export function SelectRoot({
       listboxId,
       searchId,
       selectOption,
-      handleListKeyDown,
     }),
     [
       id,
@@ -188,21 +179,16 @@ export function SelectRoot({
       searchQuery,
       setSearchQuery,
       filteredOptions,
-      selectRef,
-      listboxRef,
-      searchInputRef,
-      optionsRef,
       labelId,
       listboxId,
       searchId,
       selectOption,
-      handleListKeyDown,
     ]
   );
 
   return (
     <SelectContextProvider value={contextValue}>
-      <div className="relative" ref={selectRef}>
+      <div className="relative" ref={selectRef} onKeyDown={handleListKeyDown}>
         <label id={labelId} htmlFor={id} className="block text-sm font-medium mb-1">
           {label}
           {required && <span className="text-red-500 ml-1">*</span>}

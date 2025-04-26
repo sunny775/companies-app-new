@@ -7,7 +7,6 @@ import { MenuContextProvider } from "./MenuContext";
 export interface MenuRootProps {
   children: ReactNode;
   id?: string;
-  placement?: "bottom-start" | "bottom" | "bottom-end" | "top-start" | "top" | "top-end";
   lockScroll?: boolean;
   onClose?: () => void;
   defaultOpen?: boolean;
@@ -17,7 +16,6 @@ export interface MenuRootProps {
 export function MenuRoot({
   id,
   children,
-  placement = "bottom-start",
   lockScroll = false,
   onClose,
   defaultOpen = false,
@@ -119,7 +117,6 @@ export function MenuRoot({
       menuListRef,
       itemsRef,
       menuId,
-      handleListKeyDown,
       closeMenu,
       closeOnItemClick,
     }),
@@ -129,11 +126,7 @@ export function MenuRoot({
       setIsOpen,
       focusedIndex,
       setFocusedIndex,
-      menuRef,
-      menuListRef,
-      itemsRef,
       menuId,
-      handleListKeyDown,
       closeMenu,
       closeOnItemClick,
     ]
@@ -144,7 +137,7 @@ export function MenuRoot({
       <div 
         ref={menuRef} 
         className="relative" 
-        data-placement={placement}
+        onKeyDown={handleListKeyDown}
       >
         {children}
       </div>

@@ -7,7 +7,7 @@ import { tv, VariantProps } from "tailwind-variants";
 import { useSelect } from "./SelectContext";
 
 export const selectTriggerStyles = tv({
-  base: "relative w-full h-10 bg-transparent font-sans font-normal rounded-md focus:outline-0 disabled:opacity-80 disabled:cursor-not-allowed transition-all border  text-center",
+  base: "relative w-full h-10 bg-transparent font-sans font-normal rounded-md focus:outline-0 disabled:opacity-80 disabled:cursor-not-allowed transition-all border text-center",
   slots: {
     arrow:
       "grid place-items-center absolute top-2/4 right-2 pt-px w-5 h-5 text-blue-gray-400 rotate-0 -translate-y-2/4 transition-all text-gray-400 dark:text-gray-600",
@@ -41,7 +41,7 @@ export interface SelectTriggerProps extends Omit<VariantProps<typeof selectTrigg
 }
 
 export function SelectTrigger({ className, children, arrow, color, success, error }: SelectTriggerProps) {
-  const { id, labelId, disabled, isOpen, setIsOpen, selectedOption, listboxId, handleListKeyDown } = useSelect();
+  const { id, labelId, disabled, isOpen, setIsOpen, selectedOption, listboxId } = useSelect();
 
   const styles = selectTriggerStyles({
     open: isOpen,
@@ -73,7 +73,6 @@ export function SelectTrigger({ className, children, arrow, color, success, erro
       onClick={() => !disabled && setIsOpen(!isOpen)}
       onKeyDown={(e) => {
         handleButtonKeyDown(e);
-        handleListKeyDown(e);
       }}
       disabled={disabled}
     >
