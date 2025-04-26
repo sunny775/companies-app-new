@@ -6,7 +6,7 @@ import { useMenu } from "./MenuContext";
 import { MenuItemProps } from "./MenuItem";
 
 const menuDropdownStyles = tv({
-  base: "absolute z-[999] mt-1 bg-surface shadow-lg rounded-md py-1 text-base border border-black/5 dark:border-gray-600/10 sm:text-sm overflow-hidden",
+  base: "absolute z-[999] mt-1 bg-surface shadow-lg rounded-md py-1 text-base border border-gray-600/10 sm:text-sm overflow-hidden",
   variants: {
     placement: {
       "bottom-start": "top-full left-0",
