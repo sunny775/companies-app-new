@@ -7,7 +7,7 @@ import Menu from "./index";
 
 export default function MenuExample({ className, ...props }: ComponentProps<"div">) {
   return (
-    <div {...props} className={cn("flex flex-col gap-12 p-8 bg-red-500/20", className)}>
+    <div {...props} className={cn("flex flex-col gap-12 p-8", className)}>
       <h1 className="text-2xl font-bold">Menu Component Examples</h1>
 
       {/* Basic Menu */}

@@ -3,7 +3,7 @@
 import { buttonStyles } from "@/components/Button";
 import cn from "@/lib/cn";
 import Link from "next/link";
-import { ComponentProps, useState } from "react";
+import { useState } from "react";
 import Button from "../atoms/Button";
 import DialogExample from "../atoms/Dialog/DialogExample";
 import DrawerExample from "../atoms/Drawer/DrawerExample";
@@ -11,9 +11,8 @@ import MenuExample from "../atoms/Menu/MenuExample";
 import Select from "../atoms/Select";
 import { StepperExample } from "../atoms/Stepper/StepperExample";
 import { TabsExample } from "../atoms/Tabs/TabsExample";
-import { data } from "./data";
 import Tooltip, { TooltipChildrenProps } from "../atoms/Tooltip";
-
+import { data } from "./data";
 
 // const data = ["Red", "Orange", "Yellow", "Green", "Cyan", "Blue", "Purple", "Pink", "Maroon", "Black", "White"];
 
@@ -52,13 +51,12 @@ export function Test() {
         </div>
 
         <div className="w-full max-w-3xl">
-          <Tooltip content="tooltip text here">
-            {(props: TooltipChildrenProps<HTMLButtonElement>) => <Button {...props}>Cool stuff here</Button>}
-          </Tooltip>
-         <Tooltip content="menu example tooltip">
-         {(props: ComponentProps<typeof MenuExample>) => <MenuExample {...props} />}
-         
-         </Tooltip>
+          <div className="flex flex-col items-center">
+            <Tooltip content="tooltip text here">
+              {(props: TooltipChildrenProps<HTMLButtonElement>) => <Button {...props}>Tooltip Example</Button>}
+            </Tooltip>
+          </div>
+          <MenuExample />
         </div>
         <StepperExample />
         <TabsExample />
