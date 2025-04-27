@@ -1,15 +1,12 @@
+import cn from "@/lib/cn";
 import { ComponentProps } from "react";
-import { twMerge } from "tailwind-merge";
 
-export default function Spinner({
-  className = "",
-  ...props
-}: ComponentProps<"svg">) {
+export default function Spinner({ className, ...props }: ComponentProps<"svg">) {
   return (
     <svg
       viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"
-      className={twMerge("w-4 h-4 fill-gray-600 dark:fill-white/50", className)}
+      className={cn("w-4 h-4 fill-gray-600 dark:fill-white/50", className)}
       {...props}
     >
       <g>

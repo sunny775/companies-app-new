@@ -1,4 +1,4 @@
-import Spinner from "@/components/loaders/Spinner";
+import Spinner from "@/components/atoms/loaders/Spinner";
 import cn from "@/lib/cn";
 import React from "react";
 import { VariantProps } from "tailwind-variants";

@@ -27,7 +27,7 @@ export const iconButtonStyles = tv({
 
   defaultVariants: {
     variant: "default",
-    size: "md"
+    size: "md",
   },
 });
 
@@ -35,11 +35,10 @@ export const IconButton = ({ variant, size, className, children, ref, ...rest }:
   const styles = iconButtonStyles({
     variant,
     size,
-    className,
   });
 
   return (
-    <button {...rest} ref={ref} className={styles.base()} type={rest.type || "button"}>
+    <button {...rest} ref={ref} className={styles.base({ className })} type={rest.type || "button"}>
       <span className={styles.icon()}>{children}</span>
     </button>
   );

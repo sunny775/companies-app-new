@@ -1,19 +1,14 @@
 "use client";
-import { useState } from "react";
-import ProgressBar from "./FormProgress";
-import CompanyDetailsForm from "./CompanyDetailsForm";
-import AddressesForm from "./AddressesForm";
-import ContactForm from "./ContactForm";
-import LogoUploadForm from "./LogoUploadForm";
-import {
-  BasicAddressInput,
-  CompanyBasicInfo,
-  Contact,
-  UpdateCompanyInput,
-} from "@/lib/graphql/types";
 import { createCompany } from "@/app/actions/companies.actions";
+import { BasicAddressInput, CompanyBasicInfo, Contact, UpdateCompanyInput } from "@/lib/graphql/types";
+import { useState } from "react";
 import Button from "../Button";
-import Spinner from "../loaders/Spinner";
+import Spinner from "../atoms/loaders/Spinner";
+import AddressesForm from "./AddressesForm";
+import CompanyDetailsForm from "./CompanyDetailsForm";
+import ContactForm from "./ContactForm";
+import ProgressBar from "./FormProgress";
+import LogoUploadForm from "./LogoUploadForm";
 
 interface FormData {
   basicInfo?: CompanyBasicInfo;
@@ -30,12 +25,8 @@ function normalizeInputs(formData: FormData) {
   const input: UpdateCompanyInput = {
     ...formData.basicInfo,
     totalNumberOfEmployees: Number(formData.basicInfo?.totalNumberOfEmployees),
-    numberOfFullTimeEmployees: Number(
-      formData.basicInfo?.numberOfFullTimeEmployees
-    ),
-    numberOfPartTimeEmployees: Number(
-      formData.basicInfo?.numberOfPartTimeEmployees
-    ),
+    numberOfFullTimeEmployees: Number(formData.basicInfo?.numberOfFullTimeEmployees),
+    numberOfPartTimeEmployees: Number(formData.basicInfo?.numberOfPartTimeEmployees),
     ...formData.address,
     primaryContactPerson: formData.contact,
   };
@@ -64,11 +55,7 @@ export default function CreateCompanyForm() {
         Back
       </Button>
     </AddressesForm>,
-    <ContactForm
-      key="3"
-      onSubmit={(data: Contact) => handleNext("contact", data)}
-      defaultValues={formData.contact}
-    >
+    <ContactForm key="3" onSubmit={(data: Contact) => handleNext("contact", data)} defaultValues={formData.contact}>
       <Button onClick={handleBack} type="button" className="flex-1/2">
         Back
       </Button>
@@ -126,18 +113,13 @@ export default function CreateCompanyForm() {
 
       if (company) {
         const companyIds = localStorage.companyIds;
-        localStorage.companyIds = JSON.stringify([
-          ...JSON.parse(companyIds || "[]"),
-          company.id,
-        ]);
+        localStorage.companyIds = JSON.stringify([...JSON.parse(companyIds || "[]"), company.id]);
       }
       // resetForm();
       console.log("Company Created!", company);
     } catch (error) {
       console.log(error);
-      setErrorMessage(() =>
-        error instanceof Error ? error.message : "Error creating company"
-      );
+      setErrorMessage(() => (error instanceof Error ? error.message : "Error creating company"));
     } finally {
       setLoading(false);
     }

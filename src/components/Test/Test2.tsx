@@ -54,42 +54,44 @@ export function Test2() {
             </Button>
           </div>
         </div>
-        <Alert open={alertOpen} onClose={() => setAlertOpen(false)} variant="success" icon={<MessageCircle />}>
-          A dismissible alert for showing message.
-          <div className="grid gap-3">
-            <Button variant="outlined">Outlined button</Button>
-            <Button variant="gradient" loading={false}>
-              Gradient button
-            </Button>
-          </div>
-        </Alert>
-        <Alert open={alertOpen} onClose={() => setAlertOpen(false)} variant="error" icon={<MessageCircle />}>
-          A dismissible alert for showing message.
-          <div className="grid gap-3">
-            <Button variant="outlined">Outlined button</Button>
-            <Button variant="gradient" loading={false}>
-              Gradient button
-            </Button>
-          </div>
-        </Alert>
-        <Alert open={alertOpen} onClose={() => setAlertOpen(false)} icon={<MessageCircle />}>
-          A dismissible alert for showing message.
-          <div className="grid gap-3">
-            <Button variant="outlined">Outlined button</Button>
-            <Button variant="gradient" loading={false}>
-              Gradient button
-            </Button>
-          </div>
-        </Alert>
-        <Alert open={alertOpen} onClose={() => setAlertOpen(false)} variant="info" icon={<MessageCircle />}>
-          A dismissible alert for showing message.
-          <div className="grid gap-3">
-            <Button variant="outlined">Outlined button</Button>
-            <Button variant="gradient" color="info" loading={false}>
-              Gradient button
-            </Button>
-          </div>
-        </Alert>
+        <div className="grid gap-4">
+          <Alert open={alertOpen} onClose={() => setAlertOpen(false)} variant="success" icon={<MessageCircle />}>
+            A dismissible alert for showing message.
+            <div className="grid gap-3">
+              <Button variant="outlined">Outlined button</Button>
+              <Button variant="gradient" loading={false}>
+                Gradient button
+              </Button>
+            </div>
+          </Alert>
+          <Alert open={alertOpen} onClose={() => setAlertOpen(false)} variant="error" icon={<MessageCircle />}>
+            A dismissible alert for showing message.
+            <div className="grid gap-3">
+              <Button variant="outlined">Outlined button</Button>
+              <Button variant="gradient" loading={false}>
+                Gradient button
+              </Button>
+            </div>
+          </Alert>
+          <Alert open={alertOpen} onClose={() => setAlertOpen(false)} icon={<MessageCircle />}>
+            A dismissible alert for showing message.
+            <div className="grid gap-3">
+              <Button variant="outlined">Outlined button</Button>
+              <Button variant="gradient" loading={false}>
+                Gradient button
+              </Button>
+            </div>
+          </Alert>
+          <Alert open={alertOpen} onClose={() => setAlertOpen(false)} variant="info" icon={<MessageCircle />}>
+            A dismissible alert for showing message.
+            <div className="grid gap-3">
+              <Button variant="outlined">Outlined button</Button>
+              <Button variant="gradient" color="info" loading={false}>
+                Gradient button
+              </Button>
+            </div>
+          </Alert>
+        </div>
         <div className="grid gap-3 p-4 w-72">
           <Avatar src={flowers.src} width={500} height={500} alt="logo" />
         </div>

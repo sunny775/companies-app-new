@@ -7,7 +7,7 @@ import { DrawerContext } from "./DrawerContext";
 
 export const drawerStyles = tv({
   base: [
-    "h-screen fixed bg-surface shadow-xl transform transition-transform text-gray-700 dark:text-gray-300",
+    "h-screen w-full fixed bg-surface shadow-xl transform transition-transform text-gray-700 dark:text-gray-300",
     "flex flex-col overflow-hidden z-50",
   ],
   variants: {
