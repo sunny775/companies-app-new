@@ -84,18 +84,9 @@ export default function Tooltip<T extends HTMLElement>({
 
   const onMouseLeave = (): void => {
     setIsVisible(false);
+    isInitialPositionSet.current = false;
   };
 
-  /* useEffect(()=>{
-    if (!triggerRef.current) return;
-    const triggerRect = triggerRef.current.getBoundingClientRect();
-    // const tooltipRect = tooltipRef.current.getBoundingClientRect();
-    const x = triggerRect.left + triggerRect.width / 2 - 80;
-        const y = triggerRect.top - 25 - 8;
-        setCoords({x, y})
-  }, []) */
-
-  // Update position when tooltip becomes visible
   useEffect(() => {
     if (tooltipRef.current && isVisible) {
       updatePosition();
@@ -119,13 +110,12 @@ export default function Tooltip<T extends HTMLElement>({
 
   const styles = tooltipStyles({ position });
 
-
   const triggerElement = children({ onMouseEnter, onMouseLeave, ref: triggerRef });
 
   return (
     <>
       {triggerElement}
-      {isVisible && (
+      {isVisible ? (
         <div
           ref={tooltipRef}
           id={id}
@@ -136,7 +126,7 @@ export default function Tooltip<T extends HTMLElement>({
             top: `${coords.y}px`,
             pointerEvents: "none",
             opacity: isInitialPositionSet.current ? 1 : 0,
-            transition: "opacity 0.15s ease-in-out",
+            transition: "opacity 0.4s ease-in-out",
           }}
         >
           <div className="relative">
@@ -144,7 +134,7 @@ export default function Tooltip<T extends HTMLElement>({
             <div className={styles.arrow()} aria-hidden="true"></div>
           </div>
         </div>
-      )}
+      ) : null}
     </>
   );
 }

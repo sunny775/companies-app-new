@@ -13,7 +13,6 @@ export interface TransitionProps extends TransitionType {
   className?: string;
   as?: ElementType;
   onTransitionEnd?: () => void;
-  useARIA?: boolean;
 }
 
 const Transition = memo(
