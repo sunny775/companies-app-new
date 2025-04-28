@@ -6,7 +6,7 @@ export const tooltipStyles = tv({
     arrow: "absolute w-0 h-0 border-4",
   },
   variants: {
-    position: {
+    placement: {
       top: {
         arrow:
           "bottom-0 left-1/2 -translate-x-1/2 translate-y-full border-t-gray-100 dark:border-t-surface-2 border-x-transparent border-b-transparent",
@@ -27,6 +27,6 @@ export const tooltipStyles = tv({
   },
 
   defaultVariants: {
-    position: "top",
+    placement: "top",
   },
 });

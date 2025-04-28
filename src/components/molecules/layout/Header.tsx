@@ -1,4 +1,4 @@
-import BrandLogo from "../../BrandLogo";
+import BrandLogo from "../BrandLogo";
 import MenuDrawer from "./MenuDrawer";
 
 export default function Header() {

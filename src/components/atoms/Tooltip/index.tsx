@@ -2,7 +2,7 @@ import cn from "@/lib/cn";
 import React, { ReactNode, useCallback, useEffect, useId, useRef, useState } from "react";
 import { tooltipStyles } from "./tootltip.styles";
 
-type TooltipPosition = "top" | "bottom" | "left" | "right";
+type TooltipPlacement = "top" | "bottom" | "left" | "right";
 
 export type TooltipChildrenProps<T> = {
   onMouseEnter: React.MouseEventHandler<T>;
@@ -13,7 +13,7 @@ export type TooltipChildrenProps<T> = {
 export interface TooltipProps<T extends HTMLElement> {
   children: (props: TooltipChildrenProps<T>) => ReactNode;
   content: ReactNode;
-  position?: TooltipPosition;
+  placement?: TooltipPlacement;
   className?: string;
 }
 
@@ -25,7 +25,7 @@ interface Coordinates {
 export default function Tooltip<T extends HTMLElement>({
   children,
   content,
-  position = "top",
+  placement = "top",
   className,
 }: TooltipProps<T>) {
   const [isVisible, setIsVisible] = useState<boolean>(false);
@@ -46,7 +46,7 @@ export default function Tooltip<T extends HTMLElement>({
 
     let newX: number, newY: number;
 
-    switch (position) {
+    switch (placement) {
       case "top":
         newX = triggerRect.left + triggerRect.width / 2 - tooltipRect.width / 2;
         newY = triggerRect.top - tooltipRect.height - 8;
@@ -76,7 +76,7 @@ export default function Tooltip<T extends HTMLElement>({
 
     setCoords({ x: newX, y: newY });
     isInitialPositionSet.current = true;
-  }, [position]);
+  }, [placement]);
 
   const onMouseEnter = (): void => {
     setIsVisible(true);
@@ -108,7 +108,7 @@ export default function Tooltip<T extends HTMLElement>({
     };
   }, [isVisible, updatePosition]);
 
-  const styles = tooltipStyles({ position });
+  const styles = tooltipStyles({ placement });
 
   const triggerElement = children({ onMouseEnter, onMouseLeave, ref: triggerRef });
 

@@ -1,4 +1,4 @@
-import BrandLogo from "../../BrandLogo";
+import BrandLogo from "../BrandLogo";
 
 export default function Footer() {
   return (
