@@ -7,7 +7,7 @@ import Spinner from "../atoms/loaders/Spinner";
 import AddressesForm from "./AddressesForm";
 import CompanyDetailsForm from "./CompanyDetailsForm";
 import ContactForm from "./ContactForm";
-import ProgressBar from "./FormProgress";
+import { FormProgress } from "./FormProgress";
 import LogoUploadForm from "./LogoUploadForm";
 
 interface FormData {
@@ -34,7 +34,9 @@ function normalizeInputs(formData: FormData) {
 }
 
 export default function CreateCompanyForm() {
-  const [step, setStep] = useState(0);
+  const [activeStep, setActiveStep] = useState(0);
+  const [isLastStep, setIsLastStep] = useState(false);
+  const [isFirstStep, setIsFirstStep] = useState(false);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState<FormData>({ files: null });
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -80,19 +82,22 @@ export default function CreateCompanyForm() {
     </div>,
   ];
 
+  // const handleNext = () => !isLastStep && setActiveStep((cur) => cur + 1);
+  // const handlePrev = () => !isFirstStep && setActiveStep((cur) => cur - 1);
+
   function handleNext<T extends keyof FormData>(key: T, value: FormData[T]) {
     setFormData((prev) => ({
       ...prev,
       [key]: value,
     }));
-    if (step < steps.length) {
-      setStep((prev) => prev + 1);
+    if (!isLastStep) {
+      setActiveStep((prev) => prev + 1);
     }
   }
 
   function handleBack() {
-    if (step > 0) {
-      setStep((prev) => prev - 1);
+    if (!isFirstStep) {
+      setActiveStep((prev) => prev - 1);
     }
   }
 
@@ -127,8 +132,14 @@ export default function CreateCompanyForm() {
 
   return (
     <div className="max-w-3xl p-6 mx-auto my-12 rounded-md shadow-md bg-surface">
-      <ProgressBar step={step} />
-      {steps[step]}
+      <FormProgress
+        steps={[...Array(steps.length).keys()]}
+        activeStep={activeStep}
+        setActiveStep={setActiveStep}
+        setIsLastStep={setIsLastStep}
+        setIsFirstStep={setIsFirstStep}
+      />
+      {steps[activeStep]}
     </div>
   );
 }

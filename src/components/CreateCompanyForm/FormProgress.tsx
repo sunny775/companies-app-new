@@ -1,32 +1,30 @@
-import cn from "@/lib/cn";
+import { Dispatch, SetStateAction } from "react";
+import { Step, Stepper } from "../atoms/Stepper";
 
-export default function ProgressBar({ step }: { step: number }) {
-  const steps = ["Company Info", "Address", "Contact", "Upload Logo"];
+export interface FormProgressProps {
+  steps: number[];
+  activeStep: number;
+  setActiveStep: Dispatch<SetStateAction<number>>;
+  setIsLastStep: Dispatch<SetStateAction<boolean>>;
+  setIsFirstStep: Dispatch<SetStateAction<boolean>>;
+}
+
+export function FormProgress({ steps, activeStep, setActiveStep, setIsLastStep, setIsFirstStep }: FormProgressProps) {
+  // const steps = ["Company Info", "Address", "Contact", "Upload Logo"];
 
   return (
-    <div className="flex items-center justify-between w-full mx-auto my-6">
-      {steps.map((label, index) => (
-        <div key={index} className="relative flex items-center w-1/4">
-          <div
-            className={cn(
-              "h-[2px] w-[calc(100%-36px)] bg-gray-300 mx-1",
-              { "bg-primary": step >= index },
-              { "bg-gradient-to-r from-primary to-transparent": step === index }
-            )}
-          />
-
-          <div
-            className={cn(
-              "h-8 w-8 flex items-center justify-center rounded-full transition-all",
-              step > index
-                ? "bg-primary text-white"
-                : "bg-gray-300 text-gray-600"
-            )}
-          >
+    <div className="w-full py-4">
+      <Stepper
+        activeStep={activeStep}
+        isLastStep={(value) => setIsLastStep(value)}
+        isFirstStep={(value) => setIsFirstStep(value)}
+      >
+        {steps.map((label, index) => (
+          <Step key={label} id={label} onClick={() => setActiveStep(0)}>
             {index + 1}
-          </div>
-        </div>
-      ))}
+          </Step>
+        ))}
+      </Stepper>
     </div>
   );
 }

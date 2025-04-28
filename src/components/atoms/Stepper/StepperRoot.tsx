@@ -46,10 +46,10 @@ export const StepperRoot = ({
   const isReachEnd = stepsCount > 0 && activeStep > stepsCount - 1;
 
   useEffect(() => {
-    if (isFirstStepCallback && typeof isFirstStepCallback === "function") {
+    if (typeof isFirstStepCallback === "function") {
       isFirstStepCallback(isFirstStep);
     }
-    if (isLastStepCallback && typeof isLastStepCallback === "function") {
+    if (typeof isLastStepCallback === "function") {
       isLastStepCallback(isLastStep);
     }
   }, [isFirstStep, isLastStep, isFirstStepCallback, isLastStepCallback]);

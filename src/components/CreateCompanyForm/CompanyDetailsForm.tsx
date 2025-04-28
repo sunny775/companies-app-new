@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import Button from "../Button";
+import Button from "@/components/atoms/Button";
 import { companyBasicInfoSchema } from "./schema";
 import FormField, { InputType } from "./FormField";
 import PhoneFormField from "../PhoneFormField";

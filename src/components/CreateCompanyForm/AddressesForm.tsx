@@ -1,6 +1,6 @@
 import { BasicAddressInput } from "@/lib/graphql/types";
 import { useForm } from "react-hook-form";
-import Button from "../Button";
+import Button from "@/components/atoms/Button";
 import FormField, { InputType } from "./FormField";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { basicAddressSchema } from "./schema";
