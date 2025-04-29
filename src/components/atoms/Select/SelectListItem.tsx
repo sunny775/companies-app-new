@@ -1,6 +1,6 @@
 "use client";
 import cn from "@/lib/cn";
-import { ReactNode } from "react";
+import { MouseEventHandler, ReactNode } from "react";
 import { useSelect } from "./SelectContext";
 
 export interface SelectListItemProps {
@@ -9,9 +9,10 @@ export interface SelectListItemProps {
   label?: string;
   index?: number;
   className?: string;
+  onClick?: MouseEventHandler<HTMLLIElement>;
 }
 
-export function SelectListItem({ value, index = 0, className, children }: SelectListItemProps) {
+export function SelectListItem({ value, index = 0, className, children, onClick }: SelectListItemProps) {
   const { id, selectedOption, focusedIndex, setFocusedIndex, optionsRef, selectOption } = useSelect();
 
   const isSelected = selectedOption && selectedOption === value;
@@ -32,7 +33,10 @@ export function SelectListItem({ value, index = 0, className, children }: Select
         `cursor-default select-none relative py-2 pl-3 pr-9 data-[active=true]:bg-green-600/10 data-[active=true]:text-green-500 data-[selected=true]:border-t data-[selected=true]:border-b data-[selected=true]:border-green-600/10 data-[selected=true]:text-green-500`,
         className
       )}
-      onClick={() => selectOption(value)}
+      onClick={(event) => {
+        selectOption(value);
+        onClick?.(event);
+      }}
       onMouseEnter={() => setFocusedIndex(index)}
     >
       <span className={`block truncate ${isSelected ? "font-medium" : "font-normal"}`}>{children}</span>

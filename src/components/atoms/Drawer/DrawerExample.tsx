@@ -1,9 +1,9 @@
-import React, { useState} from 'react';
-import Drawer from './index';
-import Button from '../Button';
-import { X } from 'lucide-react';
-import IconButton from '../IconButton';
-import Input from '../Input';
+import { X } from "lucide-react";
+import { useState } from "react";
+import Button from "../Button";
+import IconButton from "../IconButton";
+import Input from "../Input";
+import Drawer from "./index";
 
 export default function DrawerExample() {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,62 +21,44 @@ export default function DrawerExample() {
         <Button onClick={() => openDrawer("right")}>Open Right Drawer</Button>
       </div>
 
-      <Drawer 
-        isOpen={isOpen} 
-        onClose={() => setIsOpen(false)}
-        position={position}
-        size="md"
-      >
+      <Drawer isOpen={isOpen} onClose={() => setIsOpen(false)} position={position} size="md">
         <Drawer.Header>
           <h2 id="drawer-title" className="text-lg font-semibold">
             MENU
           </h2>
-          <IconButton
-            onClick={() => setIsOpen(false)}
-            aria-label="Close drawer"
-            
-          >
+          <IconButton onClick={() => setIsOpen(false)} aria-label="Close drawer">
             <X className="w-6 h-6 stroke-1" />
           </IconButton>
         </Drawer.Header>
-        
+
         <Drawer.Body>
           <p className="mb-4">This is an accessible drawer component, that follows best practices.</p>
-          
+
           <div className="space-y-4">
             <div>
               <Input
-              errorMessage="Input has error message"
-                type="text" 
+                type="text"
                 name="name"
-                placeholder="Enter your name" 
+                placeholder="Enter your name"
                 className="w-full p-2 border rounded"
               />
             </div>
-            
+
             <div>
-            
-              <Input
-                type="email" 
-                id="email"
-                placeholder="Enter your email" 
-                className="w-full p-2 border rounded"
-              />
+              <Input type="email" id="email" placeholder="Enter your email" className="w-full p-2 border rounded" />
             </div>
-            
+
             <div className="pt-4">
-              <Button >Submit</Button>
+              <Button>Submit</Button>
             </div>
           </div>
         </Drawer.Body>
-        
+
         <Drawer.Footer>
           <Button variant="outlined" onClick={() => setIsOpen(false)}>
             Cancel
           </Button>
-          <Button onClick={() => setIsOpen(false)}>
-            Apply
-          </Button>
+          <Button onClick={() => setIsOpen(false)}>Apply</Button>
         </Drawer.Footer>
       </Drawer>
     </div>

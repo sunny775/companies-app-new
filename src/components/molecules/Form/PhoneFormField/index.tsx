@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { Menu } from "../Menu/Menu";
-import { FormFieldWithMenu } from "./FormFieldWithMenu";
-import { FormFieldProps } from "../CreateCompanyForm/FormField";
-import { FieldValues, Path} from "react-hook-form";
+import Input from "@/components/atoms/Input";
+import Label from "@/components/atoms/Label";
+import Select from "@/components/atoms/Select";
+import cn from "@/lib/cn";
+import { splitCamelPascalCase } from "@/lib/splitCamelCasePascalCase";
+import { useEffect, useId, useState } from "react";
+import { FieldValues, Path } from "react-hook-form";
+import { FormFieldProps, getNestedFieldName } from "../FormField";
 
 interface Country {
   name: string;
@@ -15,10 +18,28 @@ interface Props<T extends FieldValues> extends Omit<FormFieldProps<T>, "type"> {
   reset: (field: Path<T>) => void;
 }
 
-export default function PhoneFormField<T extends FieldValues>(props: Props<T>) {
+export default function PhoneFormField<T extends FieldValues>({
+  id,
+  name,
+  options,
+  register,
+  error,
+  reset,
+  errorMessage,
+  placeholder,
+  labelProps,
+  ...rest
+}: Props<T>) {
   const [countries, setCountries] = useState<Country[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [apiError, setApiError] = useState<string | null>(null);
+
+  const [value, setValue] = useState<string>();
+  const [query, setQuery] = useState("");
+
+  // const { selectedOption } = useSelect();
+
+  const data = countries.filter((country) => country.name.toLowerCase().includes(query.toLowerCase()));
 
   useEffect(() => {
     async function fetchCountries() {
@@ -30,9 +51,9 @@ export default function PhoneFormField<T extends FieldValues>(props: Props<T>) {
         setCountries(data);
       } catch (error) {
         if (error instanceof Error) {
-          setError(error.message);
+          setApiError(error.message);
         } else {
-          setError("Error fetching data");
+          setApiError("Error fetching data");
         }
       } finally {
         setLoading(false);
@@ -41,14 +62,71 @@ export default function PhoneFormField<T extends FieldValues>(props: Props<T>) {
     fetchCountries();
   }, []);
 
+  const defaultId = useId();
+
+  id = id ?? defaultId;
+
+  error = error ?? !!errorMessage;
+
   return (
-    <Menu>
-      <FormFieldWithMenu
-        countries={countries}
-        apiError={error}
-        loading={loading}
-        {...props}
+    <div className="w-full">
+      <div className="flex items-center gap-2 my-3">
+        <Label htmlFor={id} {...labelProps}>
+          {labelProps?.children || splitCamelPascalCase(getNestedFieldName(name))}
+        </Label>
+        <span
+          className={cn("invisible text-amber-600 text-xs font-extralight", {
+            visible: error,
+          })}
+        >
+          {errorMessage}
+        </span>
+      </div>
+      <div className="flex">
+      <Select
+        defaultValue={value}
+        searchQuery={query}
+        setSearchQuery={setQuery}
+        filteredOptions={data.map((country) => country.dial_code)}
+        onChange={(value) => setValue(value)}
+       
+      >
+        <Select.Trigger className="flex h-10 w-30 min-w-16 items-center gap-2 rounded-r-none  border-r-0 pl-3 pr-2 focus:outline-none py-0 shadow-none hover:shadow-none">
+          Dial Code
+        </Select.Trigger>
+
+        <Select.Dropdown className="w-64">
+          <Select.Input />
+          <Select.List>
+            {data.map(({ name: countryName, flag, dial_code }) => (
+              <Select.Item
+                key={countryName}
+                value={dial_code}
+                onClick={(evt) => {
+                  evt.preventDefault();
+                  reset(name);
+                }}
+              >
+                <span className="text-3xl rounded-full">{flag}</span>
+                {countryName.length > 14 ? countryName.slice(0, 15) + " .." : countryName}{" "}
+                <span className="ml-auto">{dial_code}</span>
+              </Select.Item>
+            ))}
+          </Select.List>
+        </Select.Dropdown>
+      </Select>
+      <Input
+        id={id}
+        {...rest}
+        type="tel"
+        {...register(name, {
+          ...options,
+        })}
+        placeholder={placeholder || splitCamelPascalCase(getNestedFieldName(name))}
+        error={error}
+        className="rounded-l-none"
       />
-    </Menu>
+      </div>
+    </div>
   );
 }

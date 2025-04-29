@@ -2,7 +2,7 @@
 
 import cn from "@/lib/cn";
 import { ChevronDown } from "lucide-react";
-import { KeyboardEvent, ReactNode, useCallback } from "react";
+import React, { ComponentProps, ElementType, KeyboardEvent, ReactNode, useCallback } from "react";
 import { tv, VariantProps } from "tailwind-variants";
 import { useSelect } from "./SelectContext";
 
@@ -38,9 +38,10 @@ export interface SelectTriggerProps extends Omit<VariantProps<typeof selectTrigg
   success?: boolean;
   arrow?: ReactNode;
   className?: string;
+  asChild?: boolean;
 }
 
-export function SelectTrigger({ className, children, arrow, color, success, error }: SelectTriggerProps) {
+export function SelectTrigger({ className, children, arrow, color, success, error, asChild }: SelectTriggerProps) {
   const { id, labelId, disabled, isOpen, setIsOpen, selectedOption, listboxId } = useSelect();
 
   const styles = selectTriggerStyles({
@@ -59,6 +60,24 @@ export function SelectTrigger({ className, children, arrow, color, success, erro
     },
     [isOpen, setIsOpen]
   );
+
+  if (asChild && React.isValidElement(children)) {
+    const child = children as React.ReactElement<ComponentProps<ElementType>>;
+    return React.cloneElement(child, {
+      //...triggerProps,
+      className: cn(child.props.className, className),
+      "aria-haspopup":"listbox",
+      "aria-expanded":isOpen,
+      "aria-labelledby": labelId,
+      "aria-controls": isOpen ? listboxId : undefined,
+      "aria-disabled": disabled,
+      onClick: () => !disabled && setIsOpen(!isOpen),
+      onKeyDown: (e: KeyboardEvent<HTMLElement>) => {
+        handleButtonKeyDown(e as KeyboardEvent<HTMLButtonElement>);
+      },
+      disabled
+    });
+  }
 
   return (
     <button

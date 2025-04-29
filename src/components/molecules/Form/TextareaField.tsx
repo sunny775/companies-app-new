@@ -1,15 +1,12 @@
-import Input, { InputProps } from "@/components/atoms/Input";
 import Label, { LabelProps } from "@/components/atoms/Label";
+import Textarea, { TextareaProps } from "@/components/atoms/Textarea";
 import cn from "@/lib/cn";
 import { splitCamelPascalCase } from "@/lib/splitCamelCasePascalCase";
 import { useId } from "react";
 import { FieldValues, Path, RegisterOptions, UseFormRegister } from "react-hook-form";
 
-export type InputType = "text" | "number" | "email" | "password" | "tel" | "url" | "search" | "date";
-
-export interface FormFieldProps<T extends FieldValues> extends InputProps {
+export interface TextareaFieldProps<T extends FieldValues> extends TextareaProps {
   id: string;
-  type: InputType;
   name: Path<T>;
   register: UseFormRegister<T>;
   options?: RegisterOptions<T, Path<T>>;
@@ -22,9 +19,8 @@ export const getNestedFieldName = (name: string) => {
   return nameArr[nameArr.length - 1];
 };
 
-export default function FormField<T extends FieldValues>({
+export default function TextareaField<T extends FieldValues>({
   id,
-  type,
   name,
   options,
   register,
@@ -33,7 +29,7 @@ export default function FormField<T extends FieldValues>({
   placeholder,
   labelProps,
   ...rest
-}: FormFieldProps<T>) {
+}: TextareaFieldProps<T>) {
   const defaultId = useId();
 
   id = id ?? defaultId;
@@ -51,14 +47,11 @@ export default function FormField<T extends FieldValues>({
           {errorMessage}
         </span>
       </div>
-      <Input
+      <Textarea
         id={id}
         {...rest}
-        type={type}
-        {...register(name, {
-          ...options,
-          setValueAs: (v) => (type === "number" ? Number(v) : v),
-        })}
+        rows={4}
+        {...register(name, options)}
         placeholder={placeholder || splitCamelPascalCase(getNestedFieldName(name))}
         error={error}
       />

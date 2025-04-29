@@ -1,24 +1,10 @@
-import cn from "@/lib/cn";
-import {
-  FieldValues,
-  Path,
-  RegisterOptions,
-  UseFormRegister,
-} from "react-hook-form";
 import Input from "@/components/atoms/Input";
 import Textarea from "@/components/atoms/Textarea";
+import cn from "@/lib/cn";
 import { splitCamelPascalCase } from "@/lib/splitCamelCasePascalCase";
+import { FieldValues, Path, RegisterOptions, UseFormRegister } from "react-hook-form";
 
-export type InputType =
-  | "text"
-  | "number"
-  | "email"
-  | "password"
-  | "tel"
-  | "url"
-  | "search"
-  | "date"
-  | "textarea";
+export type InputType = "text" | "number" | "email" | "password" | "tel" | "url" | "search" | "date" | "textarea";
 
 export interface FormFieldProps<T extends FieldValues> {
   type: InputType;

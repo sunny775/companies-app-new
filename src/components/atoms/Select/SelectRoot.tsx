@@ -2,6 +2,7 @@
 import useScrollLock from "@/lib/hooks/useScrollLock";
 import { KeyboardEvent, MouseEvent, ReactNode, useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import { SelectContextProvider } from "./SelectContext";
+import cn from "@/lib/cn";
 
 export interface SelectRootProps {
   filteredOptions: string[];
@@ -9,17 +10,20 @@ export interface SelectRootProps {
   searchQuery: string;
   setSearchQuery: (value: string) => void;
   id?: string;
+  showLabel?: boolean;
   label?: string;
   onChange?: (value: string) => void;
   defaultValue?: string;
   disabled?: boolean;
   required?: boolean;
   lockstroll?: boolean;
+  className?: string;
 }
 
 export function SelectRoot({
   filteredOptions = [],
   id,
+  showLabel,
   label = "Select an option",
   onChange = () => {},
   defaultValue = "",
@@ -29,6 +33,7 @@ export function SelectRoot({
   searchQuery,
   setSearchQuery,
   lockstroll,
+  className
 }: SelectRootProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [selectedOption, setSelectedOption] = useState<string | null>(
@@ -188,11 +193,13 @@ export function SelectRoot({
 
   return (
     <SelectContextProvider value={contextValue}>
-      <div className="relative" ref={selectRef} onKeyDown={handleListKeyDown}>
-        <label id={labelId} htmlFor={id} className="block text-sm font-medium mb-1">
-          {label}
-          {required && <span className="text-red-500 ml-1">*</span>}
-        </label>
+      <div className={cn("relative", className)} ref={selectRef} onKeyDown={handleListKeyDown}>
+        {showLabel && (
+          <label id={labelId} htmlFor={id} className="block text-sm font-medium mb-1">
+            {label}
+            {required && <span className="text-red-500 ml-1">*</span>}
+          </label>
+        )}
         {children}
       </div>
     </SelectContextProvider>

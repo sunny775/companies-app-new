@@ -4,7 +4,7 @@ import { z } from "zod";
 import Button from "@/components/atoms/Button";
 import { companyBasicInfoSchema } from "./schema";
 import FormField, { InputType } from "./FormField";
-import PhoneFormField from "../PhoneFormField";
+import PhoneFormField from "../molecules/Form/PhoneFormField";
 
 type CompanyBasicInfo = z.infer<typeof companyBasicInfoSchema>;
 
