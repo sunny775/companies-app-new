@@ -91,7 +91,7 @@ export default function PhoneFormField<T extends FieldValues>({
         onChange={(value) => setValue(value)}
        
       >
-        <Select.Trigger className="flex h-10 w-30 min-w-16 items-center gap-2 rounded-r-none  border-r-0 pl-3 pr-2 focus:outline-none py-0 shadow-none hover:shadow-none">
+        <Select.Trigger className="w-30 rounded-r-none  border-r-0">
           Dial Code
         </Select.Trigger>
 
