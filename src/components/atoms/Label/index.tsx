@@ -4,7 +4,7 @@ import { tv, VariantProps } from "tailwind-variants";
 export type LabelProps = ComponentProps<"label"> & VariantProps<typeof labelStyles>;
 
 export const labelStyles = tv({
-  base: "",
+  base: "text-sm font-light",
   variants: {
     error: {
       true: "text-amber-600",

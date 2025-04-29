@@ -4,7 +4,7 @@ export const inputStyles = tv({
     slots: {
       base: "relative w-full min-w-[200px] text-gray-700 dark:text-gray-300",
       input:
-        "peer h-full w-full rounded bg-transparent border text-sm focus:outline-none focus:border placeholder:text-gray-300 dark:placeholder:text-gray-700 placeholder:text-xs placeholder:italic",
+        "peer h-full w-full rounded bg-transparent border text-sm font-light focus:outline-none focus:border placeholder:text-gray-300 dark:placeholder:text-gray-700 placeholder:text-xs placeholder:italic",
       icon: "grid place-items-center absolute text-gray-500 top-2 right-2",
     },
     variants: {

@@ -8,7 +8,6 @@ import { FieldValues, Path, RegisterOptions, UseFormRegister } from "react-hook-
 export type InputType = "text" | "number" | "email" | "password" | "tel" | "url" | "search" | "date";
 
 export interface FormFieldProps<T extends FieldValues> extends InputProps {
-  id: string;
   type: InputType;
   name: Path<T>;
   register: UseFormRegister<T>;

@@ -7,17 +7,17 @@ import { tv, VariantProps } from "tailwind-variants";
 import { useSelect } from "./SelectContext";
 
 export const selectTriggerStyles = tv({
-  base: "flex items-center px-2 relative w-full h-10 bg-transparent font-sans font-normal rounded-md focus:outline-0 disabled:opacity-80 disabled:cursor-not-allowed transition-all border text-center",
+  base: "flex items-center justify-between gap-1 px-2 relative w-full h-10 bg-transparent rounded-md focus:outline-0 disabled:opacity-80 disabled:cursor-not-allowed transition-all border text-center text-sm font-light",
   slots: {
     arrow:
-      "grid place-items-center absolute top-2/4 right-2 pt-px w-5 h-5 text-blue-gray-400 rotate-0 -translate-y-2/4 transition-all text-gray-400 dark:text-gray-600",
-    placeholder: "text-gray-400 dark:text-gray-600",
+      "size-4 rotate-0 transition-all text-gray-400 dark:text-gray-600 mb-1 mr-1",
   },
 
   variants: {
     open: {
       true: {
-        arrow: "rotate-180 mt-px",
+        arrow: "rotate-180 mt-2 mb-0 mr-0",
+        base: "pr-1"
       },
     },
     color: {
@@ -97,9 +97,9 @@ export function SelectTrigger({ className, children, arrow, color, success, erro
       {selectedOption ? (
         <span>{selectedOption}</span>
       ) : (
-        <span className={styles.placeholder()}>{children}</span>
+        <span>{children}</span>
       )}
-      <div className={styles.arrow()}>{arrow ?? <ChevronDown strokeWidth={1} />}</div>
+      <span className={styles.arrow()}>{arrow ?? <ChevronDown strokeWidth={1} />}</span>
     </button>
   );
 }

@@ -39,7 +39,7 @@ export function SelectListItem({ value, index = 0, className, children, onClick 
       }}
       onMouseEnter={() => setFocusedIndex(index)}
     >
-      <span className={`block truncate ${isSelected ? "font-medium" : "font-normal"}`}>{children}</span>
+      <span className={`block ${isSelected ? "font-medium" : "font-normal"}`}>{children}</span>
 
       {isSelected && (
         <span className="absolute inset-y-0 right-0 flex items-center pr-4 text-green-500">

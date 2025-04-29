@@ -70,7 +70,7 @@ export default function PhoneFormField<T extends FieldValues>({
 
   return (
     <div className="w-full">
-      <div className="flex items-center gap-2 my-3">
+      <div className="flex items-center gap-2">
         <Label htmlFor={id} {...labelProps}>
           {labelProps?.children || splitCamelPascalCase(getNestedFieldName(name))}
         </Label>
@@ -83,49 +83,48 @@ export default function PhoneFormField<T extends FieldValues>({
         </span>
       </div>
       <div className="flex">
-      <Select
-        defaultValue={value}
-        searchQuery={query}
-        setSearchQuery={setQuery}
-        filteredOptions={data.map((country) => country.dial_code)}
-        onChange={(value) => setValue(value)}
-       
-      >
-        <Select.Trigger className="w-30 rounded-r-none  border-r-0">
-          Dial Code
-        </Select.Trigger>
+        <Select
+          defaultValue={value}
+          searchQuery={query}
+          setSearchQuery={setQuery}
+          filteredOptions={data.map((country) => country.dial_code)}
+          onChange={(value) => setValue(value)}
+        >
+          <Select.Trigger className="w-26 rounded-r-none  border-r-0">Dial Code</Select.Trigger>
 
-        <Select.Dropdown className="w-64">
-          <Select.Input />
-          <Select.List>
-            {data.map(({ name: countryName, flag, dial_code }) => (
-              <Select.Item
-                key={countryName}
-                value={dial_code}
-                onClick={(evt) => {
-                  evt.preventDefault();
-                  reset(name);
-                }}
-              >
-                <span className="text-3xl rounded-full">{flag}</span>
-                {countryName.length > 14 ? countryName.slice(0, 15) + " .." : countryName}{" "}
-                <span className="ml-auto">{dial_code}</span>
-              </Select.Item>
-            ))}
-          </Select.List>
-        </Select.Dropdown>
-      </Select>
-      <Input
-        id={id}
-        {...rest}
-        type="tel"
-        {...register(name, {
-          ...options,
-        })}
-        placeholder={placeholder || splitCamelPascalCase(getNestedFieldName(name))}
-        error={error}
-        className="rounded-l-none"
-      />
+          <Select.Dropdown className="w-64">
+            <Select.Input />
+            <Select.List>
+              {data.map(({ name: countryName, flag, dial_code }) => (
+                <Select.Item
+                  key={countryName}
+                  value={dial_code}
+                  onClick={(evt) => {
+                    evt.preventDefault();
+                    reset(name);
+                  }}
+                >
+                 <p  className="flex items-center gap-2">
+                 <span className="text-2xl">{flag}</span>
+                 <span className="truncate"> {countryName}</span>
+                  <span className="ml-auto">{dial_code}</span>
+                 </p>
+                </Select.Item>
+              ))}
+            </Select.List>
+          </Select.Dropdown>
+        </Select>
+        <Input
+          id={id}
+          {...rest}
+          type="tel"
+          {...register(name, {
+            ...options,
+          })}
+          placeholder={placeholder || splitCamelPascalCase(getNestedFieldName(name))}
+          error={error}
+          className="rounded-l-none"
+        />
       </div>
     </div>
   );
