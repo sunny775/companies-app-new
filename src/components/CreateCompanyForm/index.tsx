@@ -11,19 +11,20 @@ import { FormProgress } from "./FormProgress";
 import LogoUploadForm from "./LogoUploadForm";
 
 interface FormData {
-  basicInfo?: CompanyBasicInfo;
+  basicInfo?: CompanyBasicInfo & { dialCode: string };
   address?: {
     registeredAddress: BasicAddressInput;
     mailingAddress?: BasicAddressInput;
     isMailingAddressDifferent?: boolean;
   };
-  contact?: Contact;
+  contact?: Contact & { dialCode: string };
   files: FileList | null;
 }
 
 function normalizeInputs(formData: FormData) {
   const input: UpdateCompanyInput = {
     ...formData.basicInfo,
+    phone: formData.basicInfo?.dialCode || "" + formData.basicInfo?.phone || "",
     totalNumberOfEmployees: Number(formData.basicInfo?.totalNumberOfEmployees),
     numberOfFullTimeEmployees: Number(formData.basicInfo?.numberOfFullTimeEmployees),
     numberOfPartTimeEmployees: Number(formData.basicInfo?.numberOfPartTimeEmployees),
@@ -44,7 +45,7 @@ export default function CreateCompanyForm() {
   const steps = [
     <CompanyDetailsForm
       key="1"
-      onSubmit={(data: CompanyBasicInfo) => handleNext("basicInfo", data)}
+      onSubmit={(data: CompanyBasicInfo & { dialCode: string }) => handleNext("basicInfo", data)}
       defaultValues={formData.basicInfo}
     />,
     <AddressesForm
@@ -57,7 +58,11 @@ export default function CreateCompanyForm() {
         Back
       </Button>
     </AddressesForm>,
-    <ContactForm key="3" onSubmit={(data: Contact) => handleNext("contact", data)} defaultValues={formData.contact}>
+    <ContactForm
+      key="3"
+      onSubmit={(data: Contact & { dialCode: string }) => handleNext("contact", data)}
+      defaultValues={formData.contact}
+    >
       <Button onClick={handleBack} type="button" className="flex-1/2">
         Back
       </Button>

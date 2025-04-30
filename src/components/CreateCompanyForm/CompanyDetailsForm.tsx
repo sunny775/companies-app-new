@@ -1,10 +1,10 @@
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import Button from "@/components/atoms/Button";
-import { companyBasicInfoSchema } from "./schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import PhoneFormField from "../molecules/Form/PhoneField";
 import FormField, { InputType } from "./FormField";
-import PhoneFormField from "../molecules/Form/PhoneFormField";
+import { companyBasicInfoSchema } from "./schema";
 
 type CompanyBasicInfo = z.infer<typeof companyBasicInfoSchema>;
 
@@ -30,14 +30,11 @@ const companyFields: { name: keyof CompanyBasicInfo; type: InputType }[] = [
   { name: "otherInformation", type: "textarea" },
 ];
 
-export default function CompanyDetailsForm({
-  onSubmit,
-  defaultValues,
-  children,
-}: Props) {
+export default function CompanyDetailsForm({ onSubmit, defaultValues, children }: Props) {
   const {
     register,
-    resetField,
+    //resetField,
+    setValue,
     handleSubmit,
     formState: { errors },
   } = useForm<CompanyBasicInfo>({
@@ -47,9 +44,7 @@ export default function CompanyDetailsForm({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-      <div className="my-4 text-lg font-semibold uppercase">
-        Basic Information
-      </div>
+      <div className="my-4 text-lg font-semibold uppercase">Basic Information</div>
       {companyFields.map((field) =>
         field.name === "phone" ? (
           <PhoneFormField
@@ -58,7 +53,12 @@ export default function CompanyDetailsForm({
             register={register}
             error={!!errors[field.name]}
             errorMessage={errors[field.name]?.message}
-            reset={(field: keyof CompanyBasicInfo) => resetField(field)}
+            dialCodeError={!!errors.dialCode}
+            dialCodeErrorMessage={errors.dialCode?.message}
+            // reset={(field: keyof CompanyBasicInfo) => resetField(field)}
+            setDialCode={(value: string) => setValue("dialCode", value, {shouldValidate: true})}
+            dialCode={defaultValues?.dialCode}
+            //setValue={(field: keyof CompanyBasicInfo, value: string) => setValue(field, value)}
           />
         ) : (
           <FormField

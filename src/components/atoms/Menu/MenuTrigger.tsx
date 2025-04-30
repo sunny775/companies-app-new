@@ -2,7 +2,7 @@
 
 import cn from "@/lib/cn";
 import { ChevronDown } from "lucide-react";
-import React, { ComponentProps, KeyboardEvent, ReactNode, useCallback } from "react";
+import React, { ComponentProps, ElementType, KeyboardEvent, ReactNode, useCallback } from "react";
 import { tv } from "tailwind-variants";
 import { useMenu } from "./MenuContext";
 
@@ -53,8 +53,9 @@ export function MenuTrigger({ children, arrow, className, asChild = false }: Men
   };
 
   if (asChild && React.isValidElement(children)) {
-    const child = children as React.ReactElement<{ className?: string }>;
+    const child = children as React.ReactElement<ComponentProps<ElementType>>;
     return React.cloneElement(child, {
+      ...child.props,
       ...triggerProps,
       className: cn(child.props.className, className),
     });

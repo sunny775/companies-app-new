@@ -4,8 +4,8 @@ import Select from "@/components/atoms/Select";
 import cn from "@/lib/cn";
 import { splitCamelPascalCase } from "@/lib/splitCamelCasePascalCase";
 import { useEffect, useId, useState } from "react";
-import { FieldValues, Path } from "react-hook-form";
-import { FormFieldProps, getNestedFieldName } from "../FormField";
+import { FieldValues } from "react-hook-form";
+import { FormFieldProps, getNestedFieldName } from "./FormField";
 
 interface Country {
   name: string;
@@ -15,29 +15,33 @@ interface Country {
 }
 
 interface Props<T extends FieldValues> extends Omit<FormFieldProps<T>, "type"> {
-  reset: (field: Path<T>) => void;
+  dialCode?: string;
+  setDialCode: (value: string) => void;
+  dialCodeError?: boolean;
+  dialCodeErrorMessage?: string;
 }
 
-export default function PhoneFormField<T extends FieldValues>({
+export default function PhoneField<T extends FieldValues>({
   id,
   name,
   options,
   register,
   error,
-  reset,
+  //reset,
+  dialCode,
+  setDialCode,
+  dialCodeError,
   errorMessage,
+  dialCodeErrorMessage,
   placeholder,
   labelProps,
   ...rest
 }: Props<T>) {
   const [countries, setCountries] = useState<Country[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [apiError, setApiError] = useState<string | null>(null);
+  const [, setLoading] = useState(true);
+  const [, setApiError] = useState<string | null>(null);
 
-  const [value, setValue] = useState<string>();
   const [query, setQuery] = useState("");
-
-  // const { selectedOption } = useSelect();
 
   const data = countries.filter((country) => country.name.toLowerCase().includes(query.toLowerCase()));
 
@@ -45,7 +49,7 @@ export default function PhoneFormField<T extends FieldValues>({
     async function fetchCountries() {
       try {
         const response = await fetch(
-          "https://gist.githubusercontent.com/sunny775/f6f6c6691e259fb8b432a0718b15410f/raw/449258552611926be9ee7a8b4acc2ed9b2243a97/countries.json"
+          "https://raw.githubusercontent.com/sunny775/countriesData/refs/heads/main/countries.json"
         );
         const data = await response.json();
         setCountries(data);
@@ -76,21 +80,23 @@ export default function PhoneFormField<T extends FieldValues>({
         </Label>
         <span
           className={cn("invisible text-amber-600 text-xs font-extralight", {
-            visible: error,
+            visible: error || dialCodeError,
           })}
         >
-          {errorMessage}
+          {errorMessage || dialCodeErrorMessage}
         </span>
       </div>
       <div className="flex">
         <Select
-          defaultValue={value}
+          defaultValue={dialCode}
           searchQuery={query}
           setSearchQuery={setQuery}
           filteredOptions={data.map((country) => country.dial_code)}
-          onChange={(value) => setValue(value)}
+          onChange={(value) => setDialCode(value)}
         >
-          <Select.Trigger className="w-26 rounded-r-none  border-r-0">Dial Code</Select.Trigger>
+          <Select.Trigger color={dialCodeError ? "error" : "default"} className="w-26 rounded-r-none  border-r-0">
+            {dialCode || "Dial Code"}
+          </Select.Trigger>
 
           <Select.Dropdown className="w-64">
             <Select.Input />
@@ -101,14 +107,14 @@ export default function PhoneFormField<T extends FieldValues>({
                   value={dial_code}
                   onClick={(evt) => {
                     evt.preventDefault();
-                    reset(name);
+                    // reset(name);
                   }}
                 >
-                 <p  className="flex items-center gap-2">
-                 <span className="text-2xl">{flag}</span>
-                 <span className="truncate"> {countryName}</span>
-                  <span className="ml-auto">{dial_code}</span>
-                 </p>
+                  <p className="flex items-center gap-2">
+                    <span className="text-2xl">{flag}</span>
+                    <span className="truncate"> {countryName}</span>
+                    <span className="ml-auto">{dial_code}</span>
+                  </p>
                 </Select.Item>
               ))}
             </Select.List>
