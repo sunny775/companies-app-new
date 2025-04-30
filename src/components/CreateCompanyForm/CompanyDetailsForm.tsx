@@ -1,9 +1,10 @@
 import Button from "@/components/atoms/Button";
+import FormField, { InputType } from "@/components/molecules/Form/FormField";
+import TextareaField from "@/components/molecules/Form/TextareaField";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import PhoneFormField from "../molecules/Form/PhoneField";
-import FormField, { InputType } from "./FormField";
 import { companyBasicInfoSchema } from "./schema";
 
 type CompanyBasicInfo = z.infer<typeof companyBasicInfoSchema>;
@@ -27,13 +28,11 @@ const companyFields: { name: keyof CompanyBasicInfo; type: InputType }[] = [
   { name: "phone", type: "tel" },
   { name: "fax", type: "tel" },
   { name: "email", type: "email" },
-  { name: "otherInformation", type: "textarea" },
 ];
 
 export default function CompanyDetailsForm({ onSubmit, defaultValues, children }: Props) {
   const {
     register,
-    //resetField,
     setValue,
     handleSubmit,
     formState: { errors },
@@ -43,7 +42,7 @@ export default function CompanyDetailsForm({ onSubmit, defaultValues, children }
   });
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
       <div className="my-4 text-lg font-semibold uppercase">Basic Information</div>
       {companyFields.map((field) =>
         field.name === "phone" ? (
@@ -55,10 +54,8 @@ export default function CompanyDetailsForm({ onSubmit, defaultValues, children }
             errorMessage={errors[field.name]?.message}
             dialCodeError={!!errors.dialCode}
             dialCodeErrorMessage={errors.dialCode?.message}
-            // reset={(field: keyof CompanyBasicInfo) => resetField(field)}
-            setDialCode={(value: string) => setValue("dialCode", value, {shouldValidate: true})}
+            setDialCode={(value: string) => setValue("dialCode", value, { shouldValidate: true })}
             dialCode={defaultValues?.dialCode}
-            //setValue={(field: keyof CompanyBasicInfo, value: string) => setValue(field, value)}
           />
         ) : (
           <FormField
@@ -71,6 +68,13 @@ export default function CompanyDetailsForm({ onSubmit, defaultValues, children }
           />
         )
       )}
+      <TextareaField
+        key="otherInformation"
+        name={"otherInformation"}
+        register={register}
+        error={!!errors["otherInformation"]}
+        errorMessage={errors["otherInformation"]?.message}
+      />
       <div className="flex gap-2 my-4">
         {children}
         <Button type="submit" className="flex-1/2">

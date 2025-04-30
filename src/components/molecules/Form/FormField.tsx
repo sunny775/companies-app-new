@@ -40,8 +40,10 @@ export default function FormField<T extends FieldValues>({
 
   return (
     <>
-      <div className="flex items-center gap-2 my-3">
-        <Label htmlFor={id} {...labelProps}>{labelProps?.children || name}</Label>
+      <div className="flex items-center gap-2 mt-3">
+        <Label htmlFor={id} {...labelProps}>
+          {labelProps?.children || splitCamelPascalCase(getNestedFieldName(name))}
+        </Label>
         <span
           className={cn("invisible text-amber-600 text-xs font-extralight", {
             visible: error,

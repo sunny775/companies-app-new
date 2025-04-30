@@ -26,7 +26,7 @@ export function SelectRoot({
   showLabel,
   label = "Select an option",
   onChange = () => {},
-  defaultValue = "",
+  defaultValue,
   disabled = false,
   required = false,
   children,
@@ -36,9 +36,7 @@ export function SelectRoot({
   className
 }: SelectRootProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [selectedOption, setSelectedOption] = useState<string | null>(
-    defaultValue ? filteredOptions.find((opt) => opt === defaultValue) || null : null
-  );
+  const [selectedOption, setSelectedOption] = useState<string | null>(defaultValue || null);
   const [focusedIndex, setFocusedIndex] = useState<number>(-1);
 
   const selectRef = useRef<HTMLDivElement>(null);

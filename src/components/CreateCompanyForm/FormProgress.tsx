@@ -10,7 +10,6 @@ export interface FormProgressProps {
 }
 
 export function FormProgress({ steps, activeStep, setActiveStep, setIsLastStep, setIsFirstStep }: FormProgressProps) {
-  // const steps = ["Company Info", "Address", "Contact", "Upload Logo"];
 
   return (
     <div className="w-full py-4">

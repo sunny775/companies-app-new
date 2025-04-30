@@ -1,11 +1,14 @@
-import { BasicAddressInput } from "@/lib/graphql/types";
-import { useForm } from "react-hook-form";
 import Button from "@/components/atoms/Button";
-import FormField, { InputType } from "./FormField";
+import FormField, { InputType } from "@/components/molecules/Form/FormField";
+import { BasicAddressInput } from "@/lib/graphql/types";
+import useCountries from "@/lib/hooks/useCountries";
+import useCountryStates from "@/lib/hooks/useStates";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { basicAddressSchema } from "./schema";
-import { z } from "zod";
 import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import SelectField from "../molecules/Form/SelectField";
+import { basicAddressSchema } from "./schema";
 
 export const formDataSchema = z.object({
   isMailingAddressDifferentFromRegisteredAddress: z.boolean().optional(),
@@ -23,32 +26,32 @@ interface Props {
 }
 
 const addressFields: { name: keyof BasicAddressInput; type: InputType }[] = [
-  { name: "country", type: "text" },
-  { name: "state", type: "text" },
   { name: "city", type: "text" },
   { name: "street", type: "text" },
   { name: "zipCode", type: "text" },
 ];
 
-export default function AddressesForm({
-  onSubmit,
-  defaultValues,
-  children,
-}: Props) {
+export default function AddressesForm({ onSubmit, defaultValues, children }: Props) {
   const {
     register,
     handleSubmit,
     watch,
     resetField,
+    setValue,
     formState: { errors },
   } = useForm<FormData>({
     defaultValues,
     resolver: zodResolver(formDataSchema),
   });
 
-  const isMailingAddressDifferent = watch(
-    "isMailingAddressDifferentFromRegisteredAddress"
-  );
+  const isMailingAddressDifferent = watch("isMailingAddressDifferentFromRegisteredAddress");
+
+  const registeredCountry = watch("registeredAddress.country");
+  const mailingCountry = watch("mailingAddress.country");
+
+  const { countries } = useCountries();
+  const { countryStates: registeredCountryStates } = useCountryStates({ countryName: registeredCountry });
+  const { countryStates: mailingCountryStates } = useCountryStates({ countryName: mailingCountry });
 
   useEffect(() => {
     if (!isMailingAddressDifferent) {
@@ -67,10 +70,39 @@ export default function AddressesForm({
 
   return (
     <form onSubmit={handleSubmit(_onSubmit)}>
-      <fieldset className="flex flex-col gap-4">
-        <legend className="text-lg font-semibold uppercase mb-8 mt-12">
-          Registered Address
-        </legend>
+      <fieldset className="flex flex-col gap-2">
+        <legend className="text-lg font-semibold uppercase mb-8 mt-12">Registered Address</legend>
+        <SelectField
+          key="registeredAddress.country"
+          name="registeredAddress.country"
+          value={defaultValues?.registeredAddress.country}
+          error={!!errors.registeredAddress?.country}
+          errorMessage={errors.registeredAddress?.country?.message}
+          options={countries.map((country) => ({ value: country.name, label: country.name }))}
+          onChange={(value) => {
+            setValue("registeredAddress.country", value, { shouldValidate: true });
+            resetField("registeredAddress.state");
+          }}
+        />
+        {registeredCountryStates.length ? (
+          <SelectField
+            name="registeredAddress.state"
+            value={defaultValues?.registeredAddress.state}
+            onChange={(value: string) => setValue("registeredAddress.state", value, { shouldValidate: true })}
+            error={!!errors.registeredAddress?.state}
+            errorMessage={errors.registeredAddress?.state?.message}
+            options={registeredCountryStates.map((state) => ({ value: state.name, label: state.name }))}
+          />
+        ) : (
+          <FormField
+            key="registeredAddress.state"
+            name="registeredAddress.state"
+            type="text"
+            register={register}
+            error={!!errors.registeredAddress?.state}
+            errorMessage={errors.registeredAddress?.state?.message}
+          />
+        )}
         {addressFields.map((field) => (
           <FormField
             key={`registeredAddress.${field.name}`}
@@ -94,11 +126,40 @@ export default function AddressesForm({
       </div>
 
       {isMailingAddressDifferent && (
-        <fieldset className="flex flex-col gap-4">
-          <legend className="text-lg font-semibold uppercase mb-8 mt-12">
-            Mailing Address
-          </legend>
+        <fieldset className="flex flex-col gap-2">
+          <legend className="text-lg font-semibold uppercase mb-8 mt-12">Mailing Address</legend>
 
+          <SelectField
+            key="mailingAddress.country"
+            name="mailingAddress.country"
+            value={defaultValues?.mailingAddress?.country}
+            onChange={(value: string) => {
+              setValue("mailingAddress.country", value, { shouldValidate: true });
+              resetField("mailingAddress.state");
+            }}
+            error={!!errors.mailingAddress?.country}
+            errorMessage={errors.mailingAddress?.country?.message}
+            options={countries.map((country) => ({ value: country.name, label: country.name }))}
+          />
+          {mailingCountryStates.length ? (
+            <SelectField
+              name="mailingAddress.state"
+              value={defaultValues?.mailingAddress?.state}
+              onChange={(value: string) => setValue("mailingAddress.state", value, { shouldValidate: true })}
+              error={!!errors.mailingAddress?.state}
+              errorMessage={errors.mailingAddress?.state?.message}
+              options={mailingCountryStates.map((state) => ({ value: state.name, label: state.name }))}
+            />
+          ) : (
+            <FormField
+              key="mailingAddress.state"
+              name="mailingAddress.state"
+              type="text"
+              register={register}
+              error={!!errors.mailingAddress?.state}
+              errorMessage={errors.mailingAddress?.state?.message}
+            />
+          )}
           {addressFields.map((field) => (
             <FormField
               key={`mailingAddress.${field.name}`}

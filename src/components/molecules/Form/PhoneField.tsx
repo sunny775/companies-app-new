@@ -1,3 +1,4 @@
+import countriesApiError, { getCountries } from "@/app/actions/countries.actions";
 import Input from "@/components/atoms/Input";
 import Label from "@/components/atoms/Label";
 import Select from "@/components/atoms/Select";
@@ -27,7 +28,6 @@ export default function PhoneField<T extends FieldValues>({
   options,
   register,
   error,
-  //reset,
   dialCode,
   setDialCode,
   dialCodeError,
@@ -46,24 +46,19 @@ export default function PhoneField<T extends FieldValues>({
   const data = countries.filter((country) => country.name.toLowerCase().includes(query.toLowerCase()));
 
   useEffect(() => {
-    async function fetchCountries() {
+    (async function () {
       try {
-        const response = await fetch(
-          "https://raw.githubusercontent.com/sunny775/countriesData/refs/heads/main/countries.json"
-        );
-        const data = await response.json();
+        setLoading(true);
+        const { data, error } = await getCountries();
+        if (error) throw error;
+
         setCountries(data);
       } catch (error) {
-        if (error instanceof Error) {
-          setApiError(error.message);
-        } else {
-          setApiError("Error fetching data");
-        }
+        setApiError(countriesApiError(error).message);
       } finally {
         setLoading(false);
       }
-    }
-    fetchCountries();
+    })();
   }, []);
 
   const defaultId = useId();
@@ -73,8 +68,8 @@ export default function PhoneField<T extends FieldValues>({
   error = error ?? !!errorMessage;
 
   return (
-    <div className="w-full">
-      <div className="flex items-center gap-2">
+    <>
+      <div className="flex items-center gap-2 mt-3">
         <Label htmlFor={id} {...labelProps}>
           {labelProps?.children || splitCamelPascalCase(getNestedFieldName(name))}
         </Label>
@@ -102,18 +97,11 @@ export default function PhoneField<T extends FieldValues>({
             <Select.Input />
             <Select.List>
               {data.map(({ name: countryName, flag, dial_code }) => (
-                <Select.Item
-                  key={countryName}
-                  value={dial_code}
-                  onClick={(evt) => {
-                    evt.preventDefault();
-                    // reset(name);
-                  }}
-                >
+                <Select.Item key={countryName} value={dial_code}>
                   <p className="flex items-center gap-2">
                     <span className="text-2xl">{flag}</span>
                     <span className="truncate"> {countryName}</span>
-                    <span className="ml-auto">{dial_code}</span>
+                    <span className="ml-auto pr-1">{dial_code}</span>
                   </p>
                 </Select.Item>
               ))}
@@ -132,6 +120,6 @@ export default function PhoneField<T extends FieldValues>({
           className="rounded-l-none"
         />
       </div>
-    </div>
+    </>
   );
 }

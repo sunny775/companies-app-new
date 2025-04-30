@@ -10,11 +10,11 @@ import mockDb from "@/lib/mockDb";
 
 export async function getCompany(id: string) {
   try {
-    const { data, loading } = await getClient().query({
+    const { data } = await getClient().query({
       query: GET_COMPANY,
       variables: { id },
     });
-    return { data: data.company, loading };
+    return { data: data.company };
   } catch (error) {
     return { error: apiError(error) };
   }
