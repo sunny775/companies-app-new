@@ -75,9 +75,9 @@ export default function CompanyDetailsForm({ onSubmit, defaultValues, children }
         error={!!errors["otherInformation"]}
         errorMessage={errors["otherInformation"]?.message}
       />
-      <div className="flex gap-2 my-4">
+      <div className="flex gap-2 my-4 justify-end">
         {children}
-        <Button type="submit" className="flex-1/2">
+        <Button type="submit">
           Next
         </Button>
       </div>

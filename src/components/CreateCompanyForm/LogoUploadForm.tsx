@@ -81,9 +81,9 @@ export default function LogoUploadForm({ onSubmit, children, defaultValue }: Pro
         </div>
       </div>
 
-      <div className="flex gap-2 my-4">
+      <div className="flex gap-2 my-4 justify-end">
         {children}
-        <Button type="submit" className="flex-1/2">
+        <Button type="submit">
           Next
         </Button>
       </div>

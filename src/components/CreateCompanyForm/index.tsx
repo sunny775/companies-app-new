@@ -2,7 +2,7 @@
 import { createCompany } from "@/app/actions/companies.actions";
 import { BasicAddressInput, CompanyBasicInfo, Contact, UpdateCompanyInput } from "@/lib/graphql/types";
 import { useState } from "react";
-import Button from "../Button";
+import Button from "@/components/atoms/Button";
 import Spinner from "../atoms/loaders/Spinner";
 import AddressesForm from "./AddressesForm";
 import CompanyDetailsForm from "./CompanyDetailsForm";
@@ -54,7 +54,7 @@ export default function CreateCompanyForm() {
       defaultValues={formData.address}
       isMailingAddressDifferent
     >
-      <Button onClick={handleBack} type="button" className="flex-1/2">
+      <Button onClick={handleBack} type="button">
         Back
       </Button>
     </AddressesForm>,
@@ -63,7 +63,7 @@ export default function CreateCompanyForm() {
       onSubmit={(data: Contact & { dialCode: string }) => handleNext("contact", data)}
       defaultValues={formData.contact}
     >
-      <Button onClick={handleBack} type="button" className="flex-1/2">
+      <Button onClick={handleBack} type="button">
         Back
       </Button>
     </ContactForm>,
@@ -72,11 +72,11 @@ export default function CreateCompanyForm() {
       onSubmit={(data: FileList | null) => handleNext("files", data)}
       defaultValue={formData.files}
     >
-      <Button onClick={handleBack} type="button" className="flex-1/2">
+      <Button onClick={handleBack} type="button">
         Back
       </Button>
     </LogoUploadForm>,
-    <div key="5" className="flex flex-col gap-4 mt-12 mb-8">
+    <div key="5" className="flex gap-2 mt-12 mb-8 justify-end">
       <Button onClick={handleBack} type="button">
         Back
       </Button>
@@ -86,9 +86,6 @@ export default function CreateCompanyForm() {
       {errorMessage && <div>{errorMessage}</div>}
     </div>,
   ];
-
-  // const handleNext = () => !isLastStep && setActiveStep((cur) => cur + 1);
-  // const handlePrev = () => !isFirstStep && setActiveStep((cur) => cur - 1);
 
   function handleNext<T extends keyof FormData>(key: T, value: FormData[T]) {
     setFormData((prev) => ({
