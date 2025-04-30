@@ -1,18 +1,14 @@
 "use client";
-import { ChangeEvent, FormEvent, useRef, useState } from "react";
+import Button from "@/components/atoms/Button";
 import { CloudUpload } from "lucide-react";
-import Button from "../Button";
+import { ChangeEvent, FormEvent, useRef, useState } from "react";
 
 interface Props {
   onSubmit: (data: FileList | null) => void;
   defaultValue: FileList | null;
   children?: React.ReactNode;
 }
-export default function LogoUploadForm({
-  onSubmit,
-  children,
-  defaultValue,
-}: Props) {
+export default function LogoUploadForm({ onSubmit, children, defaultValue }: Props) {
   const [files, setFiles] = useState<FileList | null>(defaultValue);
 
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -51,17 +47,14 @@ export default function LogoUploadForm({
     if (!files) {
       alert("No Files selected");
       return;
-    };
+    }
     onSubmit(files);
   }
 
   return (
     <form onSubmit={handleSubmit}>
       <div className="col-span-full">
-        <label
-          htmlFor="company-logo"
-          className="block text-lg font-semibold uppercase my-8"
-        >
+        <label htmlFor="company-logo" className="block text-lg font-semibold uppercase my-8">
           Company Logo
         </label>
         <div
@@ -69,10 +62,7 @@ export default function LogoUploadForm({
           className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 dark:border-gray-600/30 px-6 py-10"
         >
           <div className="text-center">
-            <CloudUpload
-              aria-hidden="true"
-              className="mx-auto size-12 text-gray-300 dark:text-gray-600"
-            />
+            <CloudUpload aria-hidden="true" className="mx-auto size-12 text-gray-300 dark:text-gray-600" />
             <div className="mt-4 text-center text-sm/6 cursor-pointer rounded-md font-semibold text-green-600 dark:text-green-500 hover:opacity-70">
               <span>{files?.[0]?.name || "Upload a file"}</span>
               <input
@@ -86,9 +76,7 @@ export default function LogoUploadForm({
                 className="sr-only"
               />
             </div>
-            <p className="text-xs/5 text-gray-600 dark:text-gray-400">
-              (JPEG and PNG only, 2MB maximum.)
-            </p>
+            <p className="text-xs/5 text-gray-600 dark:text-gray-400">(JPEG and PNG only, 2MB maximum.)</p>
           </div>
         </div>
       </div>

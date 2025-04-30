@@ -1,8 +1,8 @@
+import Button from "@/components/atoms/Button";
 import FormField, { InputType } from "@/components/molecules/Form/FormField";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import Button from "../Button";
 import PhoneFormField from "../molecules/Form/PhoneField";
 import { contactSchema } from "./schema";
 
