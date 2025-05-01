@@ -1,37 +1,32 @@
 "use client";
 import { createCompany } from "@/app/actions/companies.actions";
-import { BasicAddressInput, CompanyBasicInfo, Contact, UpdateCompanyInput } from "@/lib/graphql/types";
-import { useState } from "react";
 import Button from "@/components/atoms/Button";
+import { UpdateCompanyInput } from "@/lib/graphql/types";
+import { validateSchema } from "@/lib/zod";
+import { useState } from "react";
+import { z } from "zod";
 import Spinner from "../atoms/loaders/Spinner";
 import AddressesForm from "./AddressesForm";
 import CompanyDetailsForm from "./CompanyDetailsForm";
 import ContactForm from "./ContactForm";
 import { FormProgress } from "./FormProgress";
 import LogoUploadForm from "./LogoUploadForm";
+import { FormAddress, FormCompanyBasicInfo, FormContact, createCompanySchema } from "./createCompany.schema";
 
-interface FormData {
-  basicInfo?: CompanyBasicInfo & { dialCode: string };
-  address?: {
-    registeredAddress: BasicAddressInput;
-    mailingAddress?: BasicAddressInput;
-    isMailingAddressDifferent?: boolean;
-  };
-  contact?: Contact & { dialCode: string };
+interface FormData extends Partial<z.infer<typeof createCompanySchema>> {
   files: FileList | null;
 }
 
-function normalizeInputs(formData: FormData) {
+function validateAndFormatFormData(formData: FormData) {
+  const { data, errors } = validateSchema(createCompanySchema, formData);
+  if (errors) return { errors };
   const input: UpdateCompanyInput = {
-    ...formData.basicInfo,
-    phone: formData.basicInfo?.dialCode || "" + formData.basicInfo?.phone || "",
-    totalNumberOfEmployees: Number(formData.basicInfo?.totalNumberOfEmployees),
-    numberOfFullTimeEmployees: Number(formData.basicInfo?.numberOfFullTimeEmployees),
-    numberOfPartTimeEmployees: Number(formData.basicInfo?.numberOfPartTimeEmployees),
-    ...formData.address,
-    primaryContactPerson: formData.contact,
+    ...data.basicInfo,
+    phone: data.basicInfo.dialCode + data.basicInfo.phone,
+    ...data.address,
+    primaryContactPerson: { ...data.contact, phone: data.contact.dialCode + data.contact.phone },
   };
-  return input;
+  return { input };
 }
 
 export default function CreateCompanyForm() {
@@ -45,12 +40,12 @@ export default function CreateCompanyForm() {
   const steps = [
     <CompanyDetailsForm
       key="1"
-      onSubmit={(data: CompanyBasicInfo & { dialCode: string }) => handleNext("basicInfo", data)}
+      onSubmit={(data: FormCompanyBasicInfo) => handleNext("basicInfo", data)}
       defaultValues={formData.basicInfo}
     />,
     <AddressesForm
       key="2"
-      onSubmit={(data: FormData["address"]) => handleNext("address", data)}
+      onSubmit={(data: FormAddress) => handleNext("address", data)}
       defaultValues={formData.address}
       isMailingAddressDifferent
     >
@@ -58,11 +53,7 @@ export default function CreateCompanyForm() {
         Back
       </Button>
     </AddressesForm>,
-    <ContactForm
-      key="3"
-      onSubmit={(data: Contact & { dialCode: string }) => handleNext("contact", data)}
-      defaultValues={formData.contact}
-    >
+    <ContactForm key="3" onSubmit={(data: FormContact) => handleNext("contact", data)} defaultValues={formData.contact}>
       <Button onClick={handleBack} type="button">
         Back
       </Button>
@@ -103,16 +94,21 @@ export default function CreateCompanyForm() {
     }
   }
 
-  function resetForm() {
-    setFormData({ files: null });
-  }
+  //function resetForm() {
+  //  setFormData({ files: null });
+  //}
   async function handleCreateCompany() {
     setLoading(true);
     console.log(formData);
 
     if (!formData.files) return;
 
-    const input = normalizeInputs(formData);
+    const { input, errors } = validateAndFormatFormData(formData);
+
+    if (errors) {
+      console.log(errors);
+      return;
+    }
     try {
       const { company, error } = await createCompany(input, formData.files[0]);
 

@@ -6,22 +6,13 @@ import useCountryStates from "@/lib/hooks/useStates";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import SelectField from "../molecules/Form/SelectField";
-import { basicAddressSchema } from "./schema";
-
-export const formDataSchema = z.object({
-  isMailingAddressDifferentFromRegisteredAddress: z.boolean().optional(),
-  registeredAddress: basicAddressSchema,
-  mailingAddress: basicAddressSchema.optional(),
-});
-
-type FormData = z.infer<typeof formDataSchema>;
+import { FormAddress as Address, addressSchema } from "./createCompany.schema";
 
 interface Props {
-  onSubmit: (data: FormData) => void;
+  onSubmit: (data: Address) => void;
   children?: React.ReactNode;
-  defaultValues?: FormData;
+  defaultValues?: Address;
   isMailingAddressDifferent: boolean;
 }
 
@@ -39,9 +30,9 @@ export default function AddressesForm({ onSubmit, defaultValues, children }: Pro
     resetField,
     setValue,
     formState: { errors },
-  } = useForm<FormData>({
+  } = useForm<Address>({
     defaultValues,
-    resolver: zodResolver(formDataSchema),
+    resolver: zodResolver(addressSchema),
   });
 
   const isMailingAddressDifferent = watch("isMailingAddressDifferentFromRegisteredAddress");
@@ -59,7 +50,7 @@ export default function AddressesForm({ onSubmit, defaultValues, children }: Pro
     }
   }, [isMailingAddressDifferent, resetField]);
 
-  const _onSubmit = (data: FormData) => {
+  const _onSubmit = (data: Address) => {
     // If mailing address is not different, copy registeredAddress
     if (!data.isMailingAddressDifferentFromRegisteredAddress) {
       data.mailingAddress = data.registeredAddress;
@@ -174,9 +165,7 @@ export default function AddressesForm({ onSubmit, defaultValues, children }: Pro
       )}
       <div className="flex gap-2 my-4 justify-end">
         {children}
-        <Button type="submit">
-          Next
-        </Button>
+        <Button type="submit">Next</Button>
       </div>
     </form>
   );

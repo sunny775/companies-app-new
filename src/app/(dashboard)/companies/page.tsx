@@ -1,4 +1,4 @@
-import CompaniesListPage from "@/components/pages/ComaniesList";
+import CompaniesListPage from "@/components/view/ComaniesList";
 
 export default async function Page() {
   return <CompaniesListPage />;

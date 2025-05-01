@@ -80,3 +80,22 @@ export const basicAddressSchema = z.object({
     .trim()
     .regex(/^[a-zA-Z0-9- ]{3,10}$/, "Invalid zip code format"),
 });
+
+
+export const addressSchema = z.object({
+  isMailingAddressDifferentFromRegisteredAddress: z.boolean().optional(),
+  registeredAddress: basicAddressSchema,
+  mailingAddress: basicAddressSchema.optional(),
+});
+
+export const createCompanySchema  = z.object({
+  basicInfo: companyBasicInfoSchema,
+  address: addressSchema,
+  contact: contactSchema
+})
+
+export type FormAddress = z.infer<typeof addressSchema>;
+
+export type FormContact = z.infer<typeof contactSchema>;
+
+export type FormCompanyBasicInfo = z.infer<typeof companyBasicInfoSchema>;

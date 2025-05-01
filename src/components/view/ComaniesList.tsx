@@ -16,6 +16,9 @@ export default function CompaniesListPage() {
       try {
         setLoading(true);
         const companyIds = JSON.parse(localStorage.companyIds) || [];
+
+        console.log(companyIds)
+
         const { data, error } = await getCompanies(companyIds);
         if (error) throw error;
 

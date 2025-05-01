@@ -3,11 +3,8 @@ import FormField, { InputType } from "@/components/molecules/Form/FormField";
 import TextareaField from "@/components/molecules/Form/TextareaField";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import PhoneFormField from "../molecules/Form/PhoneField";
-import { companyBasicInfoSchema } from "./schema";
-
-type CompanyBasicInfo = z.infer<typeof companyBasicInfoSchema>;
+import { FormCompanyBasicInfo as CompanyBasicInfo, companyBasicInfoSchema } from "./createCompany.schema";
 
 interface Props {
   onSubmit: (data: CompanyBasicInfo) => void;
@@ -77,9 +74,7 @@ export default function CompanyDetailsForm({ onSubmit, defaultValues, children }
       />
       <div className="flex gap-2 my-4 justify-end">
         {children}
-        <Button type="submit">
-          Next
-        </Button>
+        <Button type="submit">Next</Button>
       </div>
     </form>
   );
