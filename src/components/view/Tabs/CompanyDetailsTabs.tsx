@@ -17,16 +17,16 @@ export const CompanyDetailsTabs = () => {
           >
             <Tabs.Tab value="Overview" className="flex gap-2 items-center justify-center h-16">
               <Activity />
-              Overview
+              <span className="shrink-0">Overview</span>
             </Tabs.Tab>
             <Tabs.Tab value="Basic Info" className="flex gap-2 items-center justify-center h-16">
-              <FileText /> Basic Info
+              <FileText /> <span className="shrink-0">Basic Info</span>
             </Tabs.Tab>
             <Tabs.Tab value="Addresses" className="flex gap-2 items-center justify-center h-16">
-              <MapPin /> Addresses
+              <MapPin /> <span className="shrink-0">Addresses</span>
             </Tabs.Tab>
             <Tabs.Tab value="Contact" className="flex gap-2 items-center justify-center h-16">
-              <User /> Contact
+              <User /> <span className="shrink-0">Contact</span>
             </Tabs.Tab>
           </Tabs.Header>
           <div className="flex justify-center items-center text-gray-500 dark:text-gray-400">
@@ -39,7 +39,7 @@ export const CompanyDetailsTabs = () => {
           </div>
         </div>
       </div>
-      <Tabs.Body className="mt-8 max-w-7xl mx-auto  px-4 sm:px-6 lg:px-8">
+      <Tabs.Body className="mt-5 max-w-7xl mx-auto  px-4 sm:px-6 lg:px-8">
         <Tabs.Panel value="Overview">
           <CompanyOverview />
         </Tabs.Panel>

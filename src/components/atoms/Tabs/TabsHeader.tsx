@@ -1,6 +1,7 @@
 import { ReactNode, useLayoutEffect, useRef, useState } from "react";
 import { tv } from "tailwind-variants";
 import { useTabs } from "./TabsContext";
+import cn from "@/lib/cn";
 
 export interface IndicatorStyle {
   left: string;
@@ -54,9 +55,11 @@ export const TabsHeader = ({ children, className, indicatorClassName }: TabsHead
 
   const styles = tabsHeaderStyles({ orientation });
 
+  const isHorizontal = orientation === "horizontal"
+
   return (
     <div ref={tabsRef} className={styles.base({ className })}>
-      {children}
+      <div className={cn("flex w-full justify-between", {"flex-col": !isHorizontal})}>{children}</div>
       <span
         className={styles.indicator({ className: indicatorClassName })}
         style={{

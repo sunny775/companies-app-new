@@ -10,7 +10,7 @@ export interface TabProps {
 }
 
 const tabStyles = tv({
-  base: "active:scale-100 bg-transparent border-0 shadow-none relative transition-all duration-300 z-10 hover:text-green-600 py-0 h-9",
+  base: "w-full bg-transparent active:scale-100 border-0 shadow-none relative transition-all duration-300 z-10 hover:text-green-600 py-0 h-9",
   variants: {
     active: {
       true: "text-green-600 dark:text-green-600",

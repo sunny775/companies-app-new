@@ -1,5 +1,6 @@
 import IconButton from "@/components/atoms/IconButton";
-import { Calendar, Clock, Users } from "lucide-react";
+import Text from "@/components/atoms/Text";
+import { Clock, Users } from "lucide-react";
 
 const formatDate = (dateString: string): string => {
   const date = new Date(dateString);
@@ -58,55 +59,59 @@ const data = {
   },
 };
 
+const summaryItems: { label: string; value: string | number }[] = [
+  { label: "Company ID", value: data.id },
+  { label: "Legal Name", value: data.basicInfo.legalName },
+  { label: "Industry", value: data.basicInfo.industry },
+  { label: "State of Incorporation", value: data.basicInfo.stateOfIncorporation },
+  { label: "Primary Contact", value: `${data.contact.firstName} ${data.contact.lastName}` },
+  { label: "Primary Email", value: data.contact.email },
+  { label: "Total Employees", value: data.basicInfo.totalNumberOfEmployees },
+  { label: "Headquarters", value: `${data.address.registeredAddress.city}, ${data.address.registeredAddress.state}` },
+];
+
+const metrics = [
+  {
+    label: "Full Time Employees",
+    value: data.basicInfo.numberOfFullTimeEmployees,
+    icon: <Users className="text-blue-500" />,
+    description: "Total Number of Full Time Employees of the company",
+  },
+  {
+    label: "Part Time Employees",
+    value: data.basicInfo.numberOfPartTimeEmployees,
+    icon: <Users className="text-blue-500" />,
+    description: "Total Number of Part Time Employees of the company",
+  },
+];
+
 export function CompanyOverview() {
   return (
     <div className="space-y-6">
       {/* Company Metrics */}
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-        <div className="bg-surface overflow-hidden shadow rounded-lg">
-          <div className="p-5">
-            <div className="flex items-center">
-              <IconButton>
-                <Users className="text-blue-500" />
-              </IconButton>
-              <div className="ml-5 w-0 flex-1">
-                <dl>
-                  <dt className="text-sm font-medium truncate text-gray-700 dark:text-gray-300 uppercase">
-                    Full Time Employees
-                  </dt>
-                  <dd>
-                    <div className="text-lg font-medium text-green-600">{data.basicInfo.numberOfFullTimeEmployees}</div>
-                  </dd>
-                </dl>
+        {metrics.map((item) => (
+          <div key={item.value} className="bg-surface overflow-hidden shadow rounded-lg">
+            <div className="p-5">
+              <div className="flex items-center">
+                <IconButton>{item.icon}</IconButton>
+                <div className="ml-5 w-0 flex-1">
+                  <dl>
+                    <dt className="text-sm font-medium truncate uppercase">
+                      {item.label}
+                    </dt>
+                    <dd>
+                      <div className="text-lg font-medium text-green-600">{item.value}</div>
+                    </dd>
+                  </dl>
+                </div>
               </div>
             </div>
-          </div>
-          <div className="bg-gray-50 dark:bg-surface-2 px-5 py-3 border-t border-gray-600/20">
-            <div className="text-sm text-gray-500">Total Number of Full Time Employees of the company</div>
-          </div>
-        </div>
-        <div className="bg-surface overflow-hidden shadow rounded-lg">
-          <div className="p-5">
-            <div className="flex items-center">
-              <IconButton>
-                <Users className="text-blue-500" />
-              </IconButton>
-              <div className="ml-5 w-0 flex-1">
-                <dl>
-                  <dt className="text-sm font-medium truncate text-gray-700 dark:text-gray-300 uppercase">
-                    Part Time Employees
-                  </dt>
-                  <dd>
-                    <div className="text-lg font-medium text-green-600">{data.basicInfo.numberOfPartTimeEmployees}</div>
-                  </dd>
-                </dl>
-              </div>
+            <div className="bg-gray-50 dark:bg-surface-2 px-5 py-3 border-t border-gray-600/20">
+              <div className="text-sm text-muted">{item.description}</div>
             </div>
           </div>
-          <div className="bg-gray-50 dark:bg-surface-2 px-5 py-3 border-t border-gray-600/20">
-            <div className="text-sm text-gray-500">Total Number of Part Time Employees of the company</div>
-          </div>
-        </div>
+        ))}
       </div>
 
       {/* Summary Card */}
@@ -116,82 +121,32 @@ export function CompanyOverview() {
         </div>
         <div className="px-6 py-5">
           <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
-            <div className="sm:col-span-3">
-              <dl>
-                <dt className="text-sm font-medium text-gray-500">Company ID</dt>
-                <dd className="mt-1 text-sm text-gray-700 dark:text-gray-300">{data.id}</dd>
-              </dl>
-            </div>
-
-            <div className="sm:col-span-3">
-              <dl>
-                <dt className="text-sm font-medium text-gray-500">Legal Name</dt>
-                <dd className="mt-1 text-sm text-gray-700 dark:text-gray-300">{data.basicInfo.legalName}</dd>
-              </dl>
-            </div>
-
-            <div className="sm:col-span-3">
-              <dl>
-                <dt className="text-sm font-medium text-gray-500">Industry</dt>
-                <dd className="mt-1 text-sm text-gray-700 dark:text-gray-300">{data.basicInfo.industry}</dd>
-              </dl>
-            </div>
-
-            <div className="sm:col-span-3">
-              <dl>
-                <dt className="text-sm font-medium text-gray-500">State of Incorporation</dt>
-                <dd className="mt-1 text-sm text-gray-700 dark:text-gray-300">{data.basicInfo.stateOfIncorporation}</dd>
-              </dl>
-            </div>
-
-            <div className="sm:col-span-3">
-              <dl>
-                <dt className="text-sm font-medium text-gray-500">Primary Contact</dt>
-                <dd className="mt-1 text-sm text-gray-700 dark:text-gray-300">
-                  {data.contact.firstName} {data.contact.lastName}
-                </dd>
-              </dl>
-            </div>
-
-            <div className="sm:col-span-3">
-              <dl>
-                <dt className="text-sm font-medium text-gray-500">Primary Email</dt>
-                <dd className="mt-1 text-sm text-gray-700 dark:text-gray-300">
-                  <a href={`mailto:${data.contact.email}`} className="text-indigo-600 hover:text-indigo-500">
-                    {data.contact.email}
-                  </a>
-                </dd>
-              </dl>
-            </div>
-
-            <div className="sm:col-span-3">
-              <dl>
-                <dt className="text-sm font-medium text-gray-500">Total Employees</dt>
-                <dd className="mt-1 text-sm text-gray-700 dark:text-gray-300">
-                  {data.basicInfo.totalNumberOfEmployees}
-                </dd>
-              </dl>
-            </div>
-
-            <div className="sm:col-span-3">
-              <dl>
-                <dt className="text-sm font-medium text-gray-500">Headquarters</dt>
-                <dd className="mt-1 text-sm text-gray-700 dark:text-gray-300">
-                  {data.address.registeredAddress.city}, {data.address.registeredAddress.state}
-                </dd>
-              </dl>
-            </div>
-
-            <div className="sm:col-span-6">
-              <dl>
-                <dt className="text-sm font-medium text-gray-500">About</dt>
-                <dd className="mt-1 text-sm text-gray-700 dark:text-gray-300">{data.basicInfo.otherInformation}</dd>
-              </dl>
-            </div>
+            {summaryItems.map((item) => (
+              <div key={item.value} className="sm:col-span-3">
+                {item.label.includes("Email") ? (
+                  <dl>
+                    <dt className="text-sm font-medium text-muted">{item.label}</dt>
+                    <dd className="mt-1 text-sm">
+                      <a
+                        href={`mailto:${item.value}`}
+                        className="text-blue-600 dark:text-blue-300"
+                      >
+                        {item.value}
+                      </a>
+                    </dd>
+                  </dl>
+                ) : (
+                  <dl>
+                    <dt className="text-sm font-medium text-muted">{item.label}</dt>
+                    <dd className="mt-1 text-sm ">{item.value}</dd>
+                  </dl>
+                )}
+              </div>
+            ))}
           </div>
         </div>
         <div className="bg-gray-50 dark:bg-surface-2 px-6 py-3 flex items-center justify-end border-t border-gray-600/20">
-          <div className="flex items-center text-sm text-gray-500">
+          <div className="flex items-center text-sm text-muted">
             <Clock className="mr-1.5 h-5 w-5" />
             Last updated on {formatDate(new Date().toDateString())}
           </div>

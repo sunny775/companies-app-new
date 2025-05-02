@@ -2,8 +2,8 @@
 
 :root {
   --background: #ffffff;
-  /*--foreground: #171717; */
-  --foreground: var(--color-gray-700);
+  --foreground: var(--color-gray-800);
+  --muted: var(--color-gray-500);
   --surface: #ffffff;
   --surface-2: var(--color-gray-50);
   input:is(:-webkit-autofill, :autofill) {
@@ -15,6 +15,7 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
   --color-surface: var(--surface);
   --color-surface-2: var(--surface-2);
   --color-surface-3: var(--surface-3);
@@ -39,7 +40,7 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
-    --foreground: var(--color-gray-400);
+    --foreground: var(--color-gray-300);
     --surface: #0f0f0f;
     --surface-2: #141414;
     --surface-3: #262626;

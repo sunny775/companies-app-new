@@ -8,11 +8,11 @@ import Text from "../atoms/Text";
 export function CardTest() {
   return (
     <div className="grid gap-x-4 gap-y-12 m-6 grid-cols-3">
-      <Card.Root variant="filled">
-        <Card.Header className="relative h-56 bg-transparent">
+      <Card.Root>
+        <Card.Header floated={false} className="relative h-56 bg-transparent">
           <Image src={flowers.src} alt="card-image" width={500} height={500} />
         </Card.Header>
-        <Card.Body>
+        <Card.Body className="w-full">
           <Text variant="h5" className="mb-2">
             UI/UX Review Check
           </Text>
@@ -21,80 +21,12 @@ export function CardTest() {
             where you can enjoy the main night life in Barcelona.
           </Text>
         </Card.Body>
-        <Card.Footer divider className="border-green-400">
-          <Button variant="gradient">Read More</Button>
+        <Card.Footer divider >
+          <div>some text</div>
         </Card.Footer>
       </Card.Root>
-      <Card.Root variant="filled" color="success">
-        <Card.Header className="relative h-56 bg-transparent">
-          <Image src={flowers.src} alt="card-image" width={500} height={500} />
-        </Card.Header>
-        <Card.Body>
-          <Text variant="h5" className="mb-2">
-            UI/UX Review Check
-          </Text>
-          <Text>
-            The place is close to Barceloneta Beach and bus stop just 2 min by walk and near to &quot;Naviglio&quot;
-            where you can enjoy the main night life in Barcelona.
-          </Text>
-        </Card.Body>
-        <Card.Footer divider className="border-green-400">
-          <Button variant="gradient">Read More</Button>
-        </Card.Footer>
-      </Card.Root>
-      <Card.Root variant="filled" color="info">
-        <Card.Header className="relative h-56 bg-transparent" floated={false}>
-          <Image src={flowers.src} alt="card-image" width={500} height={500} />
-        </Card.Header>
-        <Card.Body>
-          <Text variant="h5" className="mb-2">
-            UI/UX Review Check
-          </Text>
-          <Text>
-            The place is close to Barceloneta Beach and bus stop just 2 min by walk and near to &quot;Naviglio&quot;
-            where you can enjoy the main night life in Barcelona.
-          </Text>
-        </Card.Body>
-        <Card.Footer divider className="border-green-400">
-          <Button variant="gradient">Read More</Button>
-        </Card.Footer>
-      </Card.Root>
-      <Card.Root variant="outlined" >
-        <Card.Header className="relative h-56 bg-transparent">
-          <Image src={flowers.src} alt="card-image" width={500} height={500} />
-        </Card.Header>
-        <Card.Body>
-          <Text variant="h5" className="mb-2">
-            UI/UX Review Check
-          </Text>
-          <Text>
-            The place is close to Barceloneta Beach and bus stop just 2 min by walk and near to &quot;Naviglio&quot;
-            where you can enjoy the main night life in Barcelona.
-          </Text>
-        </Card.Body>
-        <Card.Footer divider>
-          <Button variant="outlined">
-            Read More
-          </Button>
-        </Card.Footer>
-      </Card.Root>
-      <Card.Root variant="gradient">
-        <Card.Header className="relative h-56 bg-transparent">
-          <Image src={flowers.src} alt="card-image" width={500} height={500} />
-        </Card.Header>
-        <Card.Body>
-          <Text variant="h5" className="mb-2">
-            UI/UX Review Check
-          </Text>
-          <Text>
-            The place is close to Barceloneta Beach and bus stop just 2 min by walk and near to &quot;Naviglio&quot;
-            where you can enjoy the main night life in Barcelona.
-          </Text>
-        </Card.Body>
-        <Card.Footer divider>
-          <Button variant="gradient">Read More</Button>
-        </Card.Footer>
-      </Card.Root>
+      
+      
     </div>
   );
 }
