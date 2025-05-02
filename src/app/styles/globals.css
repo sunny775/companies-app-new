@@ -5,7 +5,7 @@
   /*--foreground: #171717; */
   --foreground: var(--color-gray-700);
   --surface: #ffffff;
-  --surface-2: #ffffff;
+  --surface-2: var(--color-gray-50);
   input:is(:-webkit-autofill, :autofill) {
     transition: background-color 5000s ease-in-out 0s;
     -webkit-text-fill-color: var(--foreground);

@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import Button from "./ButtonOld";
 import Input from "./Input";
-import Button from "./Button";
 
 interface Country {
   name: string;
@@ -58,14 +58,10 @@ export function InputWithDropdown() {
     if (!menuOpen) return;
 
     if (event.key === "ArrowDown") {
-      setFocusedIndex((prev) =>
-        prev === null ? 0 : Math.min(prev + 1, countries.length - 1)
-      );
+      setFocusedIndex((prev) => (prev === null ? 0 : Math.min(prev + 1, countries.length - 1)));
       event.preventDefault();
     } else if (event.key === "ArrowUp") {
-      setFocusedIndex((prev) =>
-        prev === null ? countries.length - 1 : Math.max(prev - 1, 0)
-      );
+      setFocusedIndex((prev) => (prev === null ? countries.length - 1 : Math.max(prev - 1, 0)));
       event.preventDefault();
     } else if (event.key === "Enter" && focusedIndex !== null) {
       setSelectedIndex(focusedIndex);
@@ -128,11 +124,7 @@ export function InputWithDropdown() {
       )}
 
       {/* Mobile Number Input */}
-      <Input
-        type="tel"
-        placeholder="Mobile Number"
-        className="rounded-l-none px-3 py-2 w-full"
-      />
+      <Input type="tel" placeholder="Mobile Number" className="rounded-l-none px-3 py-2 w-full" />
     </div>
   );
 }

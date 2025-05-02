@@ -1,4 +1,4 @@
-import { buttonStyles } from "@/components/Button";
+import { buttonStyles } from "@/components/ButtonOld";
 import cn from "@/lib/cn";
 import Image from "next/image";
 import Link from "next/link";

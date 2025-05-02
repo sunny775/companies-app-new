@@ -1,5 +1,6 @@
 import { ReactNode, useEffect, useState } from "react";
 import { TabsContext, TabsContextType } from "./TabsContext";
+import cn from "@/lib/cn";
 
 export interface TabsProps {
   children: ReactNode;
@@ -45,7 +46,7 @@ export const TabsRoot = ({
 
   return (
     <TabsContext.Provider value={contextValue}>
-      <div className={className} data-orientation={orientation}>
+      <div className={cn("w-full", className)} data-orientation={orientation}>
         {children}
       </div>
     </TabsContext.Provider>

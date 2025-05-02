@@ -12,13 +12,13 @@ export interface IndicatorStyle {
 export interface TabsHeaderProps {
   children: ReactNode;
   className?: string;
+  indicatorClassName?: string;
 }
 
 const tabsHeaderStyles = tv({
   slots: {
     base: "flex relative p-1.5 bg-gray-100 dark:bg-gray-600/5",
-    indicator:
-      "absolute bg-surface backdrop-blur-2xl transition-all duration-300 ease-in-out rounded-md",
+    indicator: "absolute bg-surface backdrop-blur-2xl transition-all duration-300 ease-in-out rounded-md",
   },
   variants: {
     orientation: {
@@ -28,7 +28,7 @@ const tabsHeaderStyles = tv({
   },
 });
 
-export const TabsHeader = ({ children, className = "" }: TabsHeaderProps) => {
+export const TabsHeader = ({ children, className, indicatorClassName }: TabsHeaderProps) => {
   const { activeTab, orientation } = useTabs();
   const tabsRef = useRef<HTMLDivElement>(null);
   const [indicatorStyle, setIndicatorStyle] = useState<IndicatorStyle>({
@@ -58,7 +58,7 @@ export const TabsHeader = ({ children, className = "" }: TabsHeaderProps) => {
     <div ref={tabsRef} className={styles.base({ className })}>
       {children}
       <span
-        className={styles.indicator()}
+        className={styles.indicator({ className: indicatorClassName })}
         style={{
           left: indicatorStyle.left,
           width: indicatorStyle.width,

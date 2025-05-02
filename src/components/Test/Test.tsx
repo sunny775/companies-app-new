@@ -1,8 +1,5 @@
 "use client";
 
-import { buttonStyles } from "@/components/Button";
-import cn from "@/lib/cn";
-import Link from "next/link";
 import { useState } from "react";
 import Button from "../atoms/Button";
 import DialogExample from "../atoms/Dialog/DialogExample";
@@ -25,9 +22,6 @@ export function Test() {
   return (
     <div>
       <main className="flex flex-col  gap-[32px] items-center justify-center">
-        <Link href={"/companies"} className={cn(buttonStyles({ variant: "gradient" }))}>
-          Go to Companies List
-        </Link>
         <div className="w-72 my-4">
           <Select
             defaultValue={value}

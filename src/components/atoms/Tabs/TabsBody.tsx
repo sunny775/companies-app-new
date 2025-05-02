@@ -8,5 +8,5 @@ export interface TabsBodyProps {
 
 export const TabsBody = ({ children, className }: TabsBodyProps) => {
 
-  return <div className={cn("relative overflow-hidden", className)}>{children}</div>;
+  return <div className={cn("relative", className)}>{children}</div>;
 };

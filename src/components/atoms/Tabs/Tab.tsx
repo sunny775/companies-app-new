@@ -15,19 +15,15 @@ const tabStyles = tv({
     active: {
       true: "text-green-600 dark:text-green-600",
     },
-    isHorizontal:{
-        true:  "md:w-[300px]"
-    }
   },
 });
 
 export const Tab = ({ children, className , value }: TabProps) => {
-  const { activeTab, handleTabChange, orientation } = useTabs();
+  const { activeTab, handleTabChange } = useTabs();
   const active = activeTab === value;
-  const isHorizontal = orientation === "horizontal"
 
   return (
-    <Button className={tabStyles({ className, active, isHorizontal })} onClick={() => handleTabChange(value)} data-value={value}>
+    <Button className={tabStyles({ className, active })} onClick={() => handleTabChange(value)} data-value={value}>
       {children}
     </Button>
   );
