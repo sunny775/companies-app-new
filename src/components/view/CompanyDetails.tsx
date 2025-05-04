@@ -1,25 +1,10 @@
 "use client";
 
-import {
-  Activity,
-  Bookmark,
-  Briefcase,
-  Building2,
-  Download,
-  FileText,
-  Globe,
-  MapPin,
-  Printer,
-  Share2,
-  User,
-  Users,
-} from "lucide-react";
-import { useState } from "react";
+import { Briefcase, Building2, Download, Edit, Globe, MapPin, Share2, Users } from "lucide-react";
 import Button from "../atoms/Button";
-import IconButton from "../atoms/IconButton";
 import { CompanyDetailsTabs } from "./Tabs/CompanyDetailsTabs";
+import IconButton from "../atoms/IconButton";
 
-// Define TypeScript interfaces based on the Zod schema
 interface BasicAddress {
   country: string;
   state: string;
@@ -69,33 +54,6 @@ interface CompanyData {
   contact: Contact;
 }
 
-interface TabProps {
-  label: string;
-  icon: React.ReactNode;
-  active: boolean;
-  onClick: () => void;
-}
-
-// Tab component for navigation
-const Tab = ({ label, icon, active, onClick }: TabProps) => {
-  return (
-    <button
-      onClick={onClick}
-      className={`flex items-center px-4 border-b-2 ${
-        active
-          ? "border-indigo-500 text-indigo-600"
-          : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
-      } h-full`}
-    >
-      <div className="flex items-center">
-        <span className={`mr-2 ${active ? "text-indigo-500" : "text-gray-400"}`}>{icon}</span>
-        <span className="font-medium text-sm">{label}</span>
-      </div>
-    </button>
-  );
-};
-
-// Extended sample data for the details view
 const companyData: CompanyData = {
   id: "COMP-2023-05678",
   status: "active",
@@ -144,8 +102,7 @@ const companyData: CompanyData = {
   },
 };
 
-export default function CompanyDetails2(): JSX.Element {
-  const [activeTab, setActiveTab] = useState<string>("overview");
+export default function CompanyDetails2() {
   const data = companyData;
 
   // Format date strings
@@ -159,12 +116,11 @@ export default function CompanyDetails2(): JSX.Element {
             <div className="flex-1 min-w-0">
               <div className="flex items-center">
                 <div className="bg-surface-2/50 backdrop-blur-md p-3 rounded-lg shadow-md mr-4">
-                  <Building2 size={40} className="text-indigo-600" />
+                  <Building2 size={80} className="text-blue-600" />
+                  <IconButton className="absolute -top-2 -right-2 bg-transparent dark:bg-transparent"><Edit size={15}  /></IconButton>
                 </div>
                 <div>
-                  <h1 className="text-3xl font-bold leading-tight text-gray-700 dark:text-gray-300">
-                    {data.basicInfo.legalName}
-                  </h1>
+                  <h1 className="text-3xl font-bold leading-tight">{data.basicInfo.legalName}</h1>
                   <div className="mt-2 flex flex-col sm:flex-row sm:flex-wrap sm:mt-0 sm:space-x-6">
                     <div className="mt-2 flex items-center text-sm">
                       <Briefcase className="mr-1.5 h-5 w-5" />
@@ -207,7 +163,7 @@ export default function CompanyDetails2(): JSX.Element {
       </header>
 
       <main>
-      <CompanyDetailsTabs />
+        <CompanyDetailsTabs />
       </main>
     </div>
   );
