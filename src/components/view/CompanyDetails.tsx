@@ -1,9 +1,9 @@
 "use client";
 
-import { Briefcase, Building2, Download, Edit, Globe, MapPin, Share2, Users } from "lucide-react";
-import Button from "../atoms/Button";
-import { CompanyDetailsTabs } from "./Tabs/CompanyDetailsTabs";
+import { FacebookIcon, LinkedinIcon } from "@/assets/BrandIcons";
+import { Briefcase, Building2, Edit, Globe, MapPin, Users } from "lucide-react";
 import IconButton from "../atoms/IconButton";
+import { CompanyDetailsTabs } from "./Tabs/CompanyDetailsTabs";
 
 interface BasicAddress {
   country: string;
@@ -112,12 +112,14 @@ export default function CompanyDetails2() {
       {/* Header with company info and actions */}
       <header className="bg-green-800/10 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
-          <div className="md:flex md:items-center md:justify-between">
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center">
-                <div className="bg-surface-2/50 backdrop-blur-md p-3 rounded-lg shadow-md mr-4">
-                  <Building2 size={80} className="text-blue-600" />
-                  <IconButton className="absolute -top-2 -right-2 bg-transparent dark:bg-transparent"><Edit size={15}  /></IconButton>
+          <div className="flex flex-col md:flex-row items-center justify-between">
+            <div>
+              <div className="flex flex-col md:flex-row items-center justify-center">
+                <div className="bg-surface-2/50 backdrop-blur-md p-3 rounded-lg shadow-md md:mr-4 my-4 md:my-0">
+                  <Building2 className="text-blue-600 size-50 md:size-40 md:my-0" />
+                  <IconButton className="absolute -top-2 -right-2 bg-transparent dark:bg-transparent">
+                    <Edit size={15} />
+                  </IconButton>
                 </div>
                 <div>
                   <h1 className="text-3xl font-bold leading-tight">{data.basicInfo.legalName}</h1>
@@ -145,18 +147,21 @@ export default function CompanyDetails2() {
               </div>
             </div>
 
-            <div className="mt-6 flex md:mt-0 md:ml-4 space-x-3">
-              <Button variant="ghost" color="success" className="rounded-full shadow-none px-2 py-px">
-                Active
-              </Button>
-              <Button variant="filled" color="success" className="flex gap-2">
-                <Share2 className="size-4" />
-                Share
-              </Button>
-              <Button variant="filled" color="info" className="flex gap-2">
-                <Download className="size-4" />
-                Export
-              </Button>
+            <div className="mt-6 flex items-center md:mt-0 space-x-3">
+              <a
+                target="_blank"
+                href={data.basicInfo.linkedInCompanyPage}
+                className="h-10 w-30 md:size-10 rounded-full flex items-center justify-center bg-sky-500 shadow-md shadow-sky-500/30"
+              >
+                <LinkedinIcon className="stroke-sky-100" />
+              </a>
+              <a
+                target="_blank"
+                href={data.basicInfo.facebookCompanyPage}
+                className="h-10 w-30 md:size-10 rounded-full flex items-center justify-center bg-blue-500 shadow-md shadow-blue-500/30"
+              >
+                <FacebookIcon className="stroke-blue-100" />
+              </a>
             </div>
           </div>
         </div>

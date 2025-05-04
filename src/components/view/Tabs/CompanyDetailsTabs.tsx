@@ -1,12 +1,37 @@
 import IconButton from "@/components/atoms/IconButton";
+import Menu from "@/components/atoms/Menu";
 import Tabs from "@/components/atoms/Tabs";
-import { Activity, Bookmark, FileText, MapPin, Printer, User } from "lucide-react";
+import cn from "@/lib/cn";
+import { useLocalStorage } from "@/lib/hooks/useLocalStorage";
+import { Activity, Bookmark, Download, FileText, MapPin, MoreVertical, Printer, User } from "lucide-react";
+import { useParams } from "next/navigation";
 import { AddressesDetails } from "./AddressesDetails";
 import { BasicInfoDetails } from "./BasicInfoDetails";
 import { CompanyOverview } from "./CompanyOverview";
 import { ContactDetails } from "./ContactDetails";
 
 export const CompanyDetailsTabs = () => {
+  const params = useParams<{ companyId: string }>();
+
+  const [bookmarks, setBookmarks] = useLocalStorage<string[]>("bookmarkedCompanies", []);
+
+  const handlePrint = () => {
+    window.print();
+  };
+
+  const deleteBookmark = (companyId: string) => {
+    setBookmarks((items) => items.filter((item) => item !== companyId));
+  };
+
+  const addToBookmarks = (companyId: string) => {
+    if (bookmarks.includes(companyId)) {
+      return deleteBookmark(companyId);
+    }
+    setBookmarks((items) => [...items, companyId]);
+  };
+
+  const isBookmarked = () => bookmarks.includes(params.companyId);
+
   return (
     <>
       <Tabs defaultValue="Overview" className="hidden md:block">
@@ -30,13 +55,28 @@ export const CompanyDetailsTabs = () => {
                 <User /> <span className="shrink-0">Contact</span>
               </Tabs.Tab>
             </Tabs.Header>
-            <div className="flex justify-center items-center text-gray-500 dark:text-gray-400">
-              <IconButton className="hover:shadow">
-                <Bookmark className="h-6 w-6" />
-              </IconButton>
-              <IconButton className="ml-4 hover:shadow">
+            <div className="flex justify-center items-center gap-4 text-gray-500 dark:text-gray-400">
+              <IconButton className="hover:shadow" onClick={handlePrint}>
                 <Printer className="h-6 w-6" />
               </IconButton>
+              <Menu>
+                <Menu.Trigger asChild>
+                  <IconButton>
+                    <MoreVertical className="h-5 w-5" />
+                  </IconButton>
+                </Menu.Trigger>
+                <Menu.Dropdown width="sm" placement="bottom-end">
+                  <Menu.Item
+                    icon={<Bookmark className={cn("size-4", { "fill-blue-500 stroke-0": isBookmarked() })} />}
+                    onClick={() => addToBookmarks(params.companyId)}
+                  >
+                    {isBookmarked() ? "Bookmarked" : "Bookmark"}
+                  </Menu.Item>
+                  <Menu.Item icon={<Download className="size-4" />} onClick={handlePrint}>
+                    Export
+                  </Menu.Item>
+                </Menu.Dropdown>
+              </Menu>
             </div>
           </div>
         </div>

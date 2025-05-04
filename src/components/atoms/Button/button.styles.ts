@@ -2,7 +2,7 @@ import { tv } from "tailwind-variants";
 
 export const buttonStyles = tv({
   slots: {
-    base: "align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none rounded-md shadow cursor-pointer active:scale-105 active:opacity-[0.85] text-gray-700 dark:text-gray-300",
+    base: "align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none rounded-md shadow cursor-pointer active:scale-105 active:opacity-[0.85] focus:outline-0 text-gray-700 dark:text-gray-300",
     spinner: "w-4 h-4",
     default: "",
     success: "",

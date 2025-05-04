@@ -6,7 +6,7 @@ export interface IconButtonProps extends React.ComponentProps<"button">, Variant
 }
 
 export const iconButtonStyles = tv({
-  base: "relative select-none font-sans font-medium text-center transition-all disabled:opacity-50  disabled:pointer-events-none cursor-pointer active:scale-105 active:opacity-[0.85] rounded-full shrink-0",
+  base: "relative select-none font-sans font-medium text-center transition-all disabled:opacity-50  disabled:pointer-events-none cursor-pointer active:scale-105 active:opacity-[0.85] rounded-full shrink-0 focus:outline-0",
   slots: {
     icon: "absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform",
   },
