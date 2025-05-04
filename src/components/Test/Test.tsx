@@ -1,14 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import Button from "../atoms/Button";
 import DialogExample from "../atoms/Dialog/DialogExample";
 import DrawerExample from "../atoms/Drawer/DrawerExample";
 import MenuExample from "../atoms/Menu/MenuExample";
 import Select from "../atoms/Select";
 import { StepperExample } from "../atoms/Stepper/StepperExample";
 import { TabsExample } from "../atoms/Tabs/TabsExample";
-import Tooltip, { TooltipChildrenProps } from "../atoms/Tooltip";
 import { data } from "./data";
 
 // const data = ["Red", "Orange", "Yellow", "Green", "Cyan", "Blue", "Purple", "Pink", "Maroon", "Black", "White"];
@@ -45,11 +43,6 @@ export function Test() {
         </div>
 
         <div className="w-full max-w-3xl">
-          <div className="flex flex-col items-center">
-            <Tooltip content="tooltip text here">
-              {(props: TooltipChildrenProps<HTMLButtonElement>) => <Button {...props}>Tooltip Example</Button>}
-            </Tooltip>
-          </div>
           <MenuExample />
         </div>
         <StepperExample />

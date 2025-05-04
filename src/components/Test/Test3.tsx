@@ -1,7 +1,6 @@
 import { flowers } from "@/assets";
 import Card from "@/components/atoms/Card";
 import Image from "next/image";
-import Button from "../atoms/Button";
 import Checkbox from "../atoms/Checkbox";
 import Text from "../atoms/Text";
 
@@ -21,12 +20,10 @@ export function CardTest() {
             where you can enjoy the main night life in Barcelona.
           </Text>
         </Card.Body>
-        <Card.Footer divider >
+        <Card.Footer divider>
           <div>some text</div>
         </Card.Footer>
       </Card.Root>
-      
-      
     </div>
   );
 }

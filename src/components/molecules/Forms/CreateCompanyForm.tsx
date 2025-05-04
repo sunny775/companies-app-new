@@ -1,17 +1,17 @@
 "use client";
 import { createCompany } from "@/app/actions/companies.actions";
 import Button from "@/components/atoms/Button";
+import Spinner from "@/components/atoms/loaders/Spinner";
 import { UpdateCompanyInput } from "@/lib/graphql/types";
 import { validateSchema } from "@/lib/zod";
 import { useState } from "react";
 import { z } from "zod";
-import Spinner from "../atoms/loaders/Spinner";
 import AddressesForm from "./AddressesForm";
 import CompanyDetailsForm from "./CompanyDetailsForm";
 import ContactForm from "./ContactForm";
 import { FormProgress } from "./FormProgress";
 import LogoUploadForm from "./LogoUploadForm";
-import { FormAddress, FormCompanyBasicInfo, FormContact, createCompanySchema } from "./createCompany.schema";
+import { FormAddress, FormCompanyBasicInfo, FormContact, createCompanySchema } from "./schema/createCompany.schema";
 
 interface FormData extends Partial<z.infer<typeof createCompanySchema>> {
   files: FileList | null;

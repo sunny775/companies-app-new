@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { Step, Stepper } from "../atoms/Stepper";
+import { Step, Stepper } from "../../atoms/Stepper";
 
 export interface FormProgressProps {
   steps: number[];
@@ -10,7 +10,6 @@ export interface FormProgressProps {
 }
 
 export function FormProgress({ steps, activeStep, setActiveStep, setIsLastStep, setIsFirstStep }: FormProgressProps) {
-
   return (
     <div className="w-full py-4">
       <Stepper

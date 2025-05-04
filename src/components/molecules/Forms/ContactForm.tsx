@@ -1,9 +1,9 @@
 import Button from "@/components/atoms/Button";
-import FormField, { InputType } from "@/components/molecules/Form/FormField";
+import FormField, { InputType } from "@/components/molecules/FormField/FormField";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import PhoneFormField from "../molecules/Form/PhoneField";
-import { FormContact as Contact, contactSchema } from "./createCompany.schema";
+import PhoneFormField from "../FormField/PhoneField";
+import { FormContact as Contact, contactSchema } from "./schema/createCompany.schema";
 
 interface Props {
   onSubmit: (data: Contact) => void;

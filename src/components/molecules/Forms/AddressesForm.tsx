@@ -1,13 +1,13 @@
 import Button from "@/components/atoms/Button";
-import FormField, { InputType } from "@/components/molecules/Form/FormField";
+import FormField, { InputType } from "@/components/molecules/FormField/FormField";
 import { BasicAddressInput } from "@/lib/graphql/types";
 import useCountries from "@/lib/hooks/useCountries";
 import useCountryStates from "@/lib/hooks/useStates";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import SelectField from "../molecules/Form/SelectField";
-import { FormAddress as Address, addressSchema } from "./createCompany.schema";
+import SelectField from "../FormField/SelectField";
+import { FormAddress as Address, addressSchema } from "./schema/createCompany.schema";
 
 interface Props {
   onSubmit: (data: Address) => void;

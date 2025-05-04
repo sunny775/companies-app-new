@@ -1,10 +1,10 @@
 import Button from "@/components/atoms/Button";
-import FormField, { InputType } from "@/components/molecules/Form/FormField";
-import TextareaField from "@/components/molecules/Form/TextareaField";
+import FormField, { InputType } from "@/components/molecules/FormField/FormField";
+import TextareaField from "@/components/molecules/FormField/TextareaField";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import PhoneFormField from "../molecules/Form/PhoneField";
-import { FormCompanyBasicInfo as CompanyBasicInfo, companyBasicInfoSchema } from "./createCompany.schema";
+import PhoneFormField from "../FormField/PhoneField";
+import { FormCompanyBasicInfo as CompanyBasicInfo, companyBasicInfoSchema } from "./schema/createCompany.schema";
 
 interface Props {
   onSubmit: (data: CompanyBasicInfo) => void;
