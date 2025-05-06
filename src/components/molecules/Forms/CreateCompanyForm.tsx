@@ -78,15 +78,14 @@ export default function CreateCompanyForm() {
         <Button onClick={handleBack} type="button" disabled={loading}>
           Back
         </Button>
-        {loading ? (
-          <Button variant="gradient" disabled className="flex items-center justify-center gap-2">
-            <Spinner className="fill-white size-4" /> Submitting
-          </Button>
-        ) : (
-          <Button variant="gradient" onClick={handleCreateCompany}>
-            Submit
-          </Button>
-        )}
+        <Button
+          variant="gradient"
+          disabled={loading}
+          onClick={handleCreateCompany}
+          className="flex items-center justify-center gap-2"
+        >
+          {loading && <Spinner className="fill-white size-4" />} {loading ? "Submitting" : "Submit"}
+        </Button>
       </div>
       <Alert variant="error" open={!!errorMessage} onClose={() => setErrorMessage(null)}>
         {errorMessage}
