@@ -18,7 +18,8 @@ export const formatZodErrors = (error: z.ZodError): Record<string, string[]> => 
 
 export const validateSchema = <T extends z.ZodType>(schema: T, data: Partial<z.infer<typeof schema>>) => {
   try {
-    const validatedData = schema.parse(data);
+    const validatedData = schema.parse(data) as z.infer<typeof schema>;
+
     return {
       success: true,
       data: validatedData,

@@ -1,5 +1,6 @@
 "use client";
 import { createCompany } from "@/app/actions/companies.actions";
+import Alert from "@/components/atoms/Alert";
 import Button from "@/components/atoms/Button";
 import Spinner from "@/components/atoms/loaders/Spinner";
 import { UpdateCompanyInput } from "@/lib/graphql/types";
@@ -20,11 +21,16 @@ interface FormData extends Partial<z.infer<typeof createCompanySchema>> {
 function validateAndFormatFormData(formData: FormData) {
   const { data, errors } = validateSchema(createCompanySchema, formData);
   if (errors) return { errors };
+  const {
+    basicInfo: { dialCode: basicInfoDialCode, phone: basicInfoPhone, ...basicInfo },
+    address,
+    contact: { dialCode: contactDialCode, phone: contactPhone, ...contact },
+  } = data;
   const input: UpdateCompanyInput = {
-    ...data.basicInfo,
-    phone: data.basicInfo.dialCode + data.basicInfo.phone,
-    ...data.address,
-    primaryContactPerson: { ...data.contact, phone: data.contact.dialCode + data.contact.phone },
+    ...basicInfo,
+    phone: basicInfoDialCode + basicInfoPhone,
+    ...address,
+    primaryContactPerson: { ...contact, phone: contactDialCode + contactPhone },
   };
   return { input };
 }
@@ -67,14 +73,24 @@ export default function CreateCompanyForm() {
         Back
       </Button>
     </LogoUploadForm>,
-    <div key="5" className="flex gap-2 mt-12 mb-8 justify-end">
-      <Button onClick={handleBack} type="button">
-        Back
-      </Button>
-      <Button variant="gradient" onClick={handleCreateCompany}>
-        {loading ? <Spinner className="fill-white size-6" /> : "Submit"}
-      </Button>
-      {errorMessage && <div>{errorMessage}</div>}
+    <div key="5" className="mt-12 mb-8 flex flex-col gap-4">
+      <div className="flex gap-2 justify-end">
+        <Button onClick={handleBack} type="button" disabled={loading}>
+          Back
+        </Button>
+        {loading ? (
+          <Button variant="gradient" disabled className="flex items-center justify-center gap-2">
+            <Spinner className="fill-white size-4" /> Submitting
+          </Button>
+        ) : (
+          <Button variant="gradient" onClick={handleCreateCompany}>
+            Submit
+          </Button>
+        )}
+      </div>
+      <Alert variant="error" open={!!errorMessage} onClose={() => setErrorMessage(null)}>
+        {errorMessage}
+      </Alert>
     </div>,
   ];
 

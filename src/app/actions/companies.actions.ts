@@ -2,11 +2,11 @@
 
 import apiError from "@/lib/apiError";
 import { getClient } from "@/lib/apolloClient";
+import { db } from "@/lib/db/companyIdDb";
 import { CREATE_COMPANY, UPDATE_COMPANY } from "@/lib/graphql/mutations";
 import { GET_COMPANIES, GET_COMPANY } from "@/lib/graphql/queries";
 import { UpdateCompanyInput } from "@/lib/graphql/types";
 import { uploadFile } from "./files.actions";
-import mockDb from "@/lib/mockDb";
 
 export async function getCompany(id: string) {
   try {
@@ -37,7 +37,10 @@ export async function getCompanies(companyIds: string[]) {
 }
 
 export async function createCompany(args: UpdateCompanyInput, file: File) {
-  try {
+  await db.addCompanyId("test id");
+
+  return {company: {id: ""}, error: null}
+  /* try {
     const { data: uploadResponse, error: uploadError } = await uploadFile(file);
 
     if (uploadError) throw uploadError;
@@ -56,16 +59,14 @@ export async function createCompany(args: UpdateCompanyInput, file: File) {
 
     const company = data?.createCompany.company;
 
-   /* if(company?.id){
-    const companyIds = await mockDb.get("companyIds");
-    await mockDb.set("companyIds", [...JSON.parse()])
-   } */
+    if (company) await db.addCompanyId(company?.id);
+
     return { company };
   } catch (error) {
     console.log(error);
 
     return { error: apiError(error) };
-  }
+  } */
 }
 
 export async function updateCompany(input: UpdateCompanyInput) {

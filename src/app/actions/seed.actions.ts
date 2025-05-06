@@ -5,10 +5,13 @@ import { lookup } from "mime-types";
 import path, { basename, extname } from "path";
 import { createCompany } from "./companies.actions";
 import companyDatasets from "./companyDataset";
+import { db } from "@/lib/db/companyIdDb";
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 
-export const getVolume = async (date: Date) => {
-  return date.getMonth() < 6 ? `Jan-Jun ${date.getFullYear()}` : `Jul-Dec ${date.getFullYear()}`;
-};
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 
 class LocalFileData {
   arrayBuffer: ArrayBuffer[];
@@ -31,7 +34,7 @@ function constructFileFromLocalFileData(localFileData: LocalFileData) {
 
 export const generateCompany = async ({ index, ...rest }: (typeof companyDatasets)[0] & { index: number }) => {
   try {
-    const filePath = path.join(__dirname, "img", `${index}.jpg`);
+    const filePath = path.join(__dirname, "img", `${index + 1}.jpg`);
 
     if (!fs.existsSync(filePath)) {
       throw new Error(`File not found: ${filePath}`);
@@ -55,7 +58,7 @@ export const generateCompanies = async () => {
 
     console.log(companyIds);
 
-    return companyIds.filter(Boolean) as string[];
+    return db.addCompanyIds(companyIds.filter(Boolean) as string[]);
   } catch (error) {
     console.log(error);
   }
