@@ -3,6 +3,7 @@ import { createCompany } from "@/app/actions/companies.actions";
 import Alert from "@/components/atoms/Alert";
 import Button from "@/components/atoms/Button";
 import Spinner from "@/components/atoms/loaders/Spinner";
+import CompanyPreview from "@/components/view/CompanyPreview";
 import { UpdateCompanyInput } from "@/lib/graphql/types";
 import { validateSchema } from "@/lib/zod";
 import { useState } from "react";
@@ -74,6 +75,7 @@ export default function CreateCompanyForm() {
       </Button>
     </LogoUploadForm>,
     <div key="5" className="mt-12 mb-8 flex flex-col gap-4">
+      <CompanyPreview data={formData} />
       <div className="flex gap-2 justify-end">
         <Button onClick={handleBack} type="button" disabled={loading}>
           Back
@@ -130,8 +132,8 @@ export default function CreateCompanyForm() {
       if (error) throw error;
 
       if (company) {
-        const companyIds = localStorage.companyIds;
-        localStorage.companyIds = JSON.stringify([...JSON.parse(companyIds || "[]"), company.id]);
+        // const companyIds = localStorage.companyIds;
+        // localStorage.companyIds = JSON.stringify([...JSON.parse(companyIds || "[]"), company.id]);
       }
       // resetForm();
       console.log("Company Created!", company);

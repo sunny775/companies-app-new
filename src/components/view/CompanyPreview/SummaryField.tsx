@@ -2,7 +2,7 @@ import cn from "@/lib/cn";
 
 interface SummaryItemProps {
   label: string;
-  value: string | number;
+  value?: string | number;
   isLink?: boolean;
   fullWidth?: boolean;
 }

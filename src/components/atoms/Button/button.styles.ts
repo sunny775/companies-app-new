@@ -27,7 +27,7 @@ export const buttonStyles = tv({
         gray: "bg-gray-600 shadow-gray-600/50",
       },
       gradient: {
-        default: "from-green-600 to-neon shadow-green-600/50",
+        default: "from-green-600 to-neon dark:from-black dark:to-green-600 shadow-green-600/50 dark:shadow-black",
         success: "from-green-600 to-green-400 shadow-green-600/50",
         error: "from-red-600 to-red-400 shadow-red-600/50",
         info: "from-blue-600 to-blue-400 shadow-blue-600/50",
