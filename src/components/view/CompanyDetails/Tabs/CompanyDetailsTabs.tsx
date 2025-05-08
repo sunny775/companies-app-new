@@ -2,6 +2,7 @@ import IconButton from "@/components/atoms/IconButton";
 import Menu from "@/components/atoms/Menu";
 import Tabs from "@/components/atoms/Tabs";
 import cn from "@/lib/cn";
+import { Company } from "@/lib/graphql/types";
 import { useLocalStorage } from "@/lib/hooks/useLocalStorage";
 import { Activity, Bookmark, Download, FileText, MapPin, MoreVertical, Printer, User } from "lucide-react";
 import { useParams } from "next/navigation";
@@ -10,7 +11,11 @@ import { BasicInfoDetails } from "./BasicInfoDetails";
 import { CompanyOverview } from "./CompanyOverview";
 import { ContactDetails } from "./ContactDetails";
 
-export const CompanyDetailsTabs = () => {
+interface Props {
+  data: Company;
+}
+
+export const CompanyDetailsTabs = ({ data }: Props) => {
   const params = useParams<{ companyId: string }>();
 
   const [bookmarks, setBookmarks] = useLocalStorage<string[]>("bookmarkedCompanies", []);
@@ -31,6 +36,8 @@ export const CompanyDetailsTabs = () => {
   };
 
   const isBookmarked = () => bookmarks.includes(params.companyId);
+
+  const { primaryContactPerson, registeredAddress, mailingAddress, ...basicInfo } = data;
 
   return (
     <>
@@ -82,24 +89,24 @@ export const CompanyDetailsTabs = () => {
         </div>
         <Tabs.Body className="mt-5 max-w-7xl mx-auto  px-4 sm:px-6 lg:px-8">
           <Tabs.Panel value="Overview">
-            <CompanyOverview />
+            <CompanyOverview data={data} />
           </Tabs.Panel>
           <Tabs.Panel value="Basic Info">
-            <BasicInfoDetails />
+            <BasicInfoDetails data={basicInfo} />
           </Tabs.Panel>
           <Tabs.Panel value="Addresses">
-            <AddressesDetails />
+            <AddressesDetails data={{ mailingAddress, registeredAddress }} />
           </Tabs.Panel>
           <Tabs.Panel value="Contact">
-            <ContactDetails />
+            <ContactDetails data={primaryContactPerson} />
           </Tabs.Panel>
         </Tabs.Body>
       </Tabs>
       <div className="grid grid-cols-1 gap-y-6 md:hidden px-4 my-6">
-        <CompanyOverview />
-        <BasicInfoDetails />
-        <AddressesDetails />
-        <ContactDetails />
+        <CompanyOverview data={data} />
+        <BasicInfoDetails data={basicInfo} />
+        <AddressesDetails data={{ mailingAddress, registeredAddress }} />
+        <ContactDetails data={primaryContactPerson} />
       </div>
     </>
   );

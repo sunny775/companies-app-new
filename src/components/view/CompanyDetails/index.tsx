@@ -1,53 +1,16 @@
 "use client";
 
 import { FacebookIcon, LinkedinIcon } from "@/assets/BrandIcons";
-import { UpdateCompanyInput } from "@/lib/graphql/types";
+import { Company } from "@/lib/graphql/types";
 import { Briefcase, Building2, Edit, Globe, MapPin, Users } from "lucide-react";
 import IconButton from "../../atoms/IconButton";
 import { CompanyDetailsTabs } from "./Tabs/CompanyDetailsTabs";
 
-const companyData: UpdateCompanyInput & { id: string } = {
-  id: "COMP-2023-05678",
-  legalName: "Acme Technologies Inc.",
-  stateOfIncorporation: "California",
-  industry: "Software Development",
-  totalNumberOfEmployees: 150,
-  numberOfFullTimeEmployees: 120,
-  numberOfPartTimeEmployees: 30,
-  website: "https://acmetech.example.com",
-  linkedInCompanyPage: "https://linkedin.com/company/acmetech",
-  facebookCompanyPage: "https://facebook.com/acmetech",
-  otherInformation:
-    "Founded in 2015, focused on AI and cloud solutions with a global customer base across North America, Europe, and Asia. The company has received multiple industry awards for innovation.",
-  fax: "+1 (555) 123-4567",
-  phone: "(555) 987-6543",
-  email: "info@acmetech.example.com",
-  isMailingAddressDifferentFromRegisteredAddress: true,
-  registeredAddress: {
-    country: "United States",
-    state: "California",
-    city: "San Francisco",
-    street: "123 Innovation Avenue, Suite 500",
-    zipCode: "94105",
-  },
-  mailingAddress: {
-    country: "United States",
-    state: "California",
-    city: "Palo Alto",
-    street: "456 Tech Boulevard, Floor 3",
-    zipCode: "94301",
-  },
-  primaryContactPerson: {
-    firstName: "Sarah",
-    lastName: "Johnson",
-    phone: "(555) 765-4321",
-    email: "sarah.johnson@acmetech.example.com",
-  },
-};
+interface Props {
+  data: Company;
+}
 
-export default function CompanyDetails() {
-  const data = companyData;
-
+export default function CompanyDetails({ data }: Props) {
   return (
     <div className="bg-gray-50 dark:bg-background min-h-screen relative">
       <header className="bg-green-800/10 backdrop-blur-md">
@@ -57,9 +20,9 @@ export default function CompanyDetails() {
               <div className="flex flex-col md:flex-row items-center justify-center">
                 <div className="bg-surface-2/50 backdrop-blur-md p-3 rounded-lg shadow-md md:mr-4 my-4 md:my-0">
                   <Building2 className="text-blue-600 size-50 md:size-40 md:my-0" />
-                    <IconButton className="absolute -top-2 -right-2 bg-transparent dark:bg-transparent">
-                      <Edit size={15} />
-                    </IconButton>
+                  <IconButton className="absolute -top-2 -right-2 bg-transparent dark:bg-transparent">
+                    <Edit size={15} />
+                  </IconButton>
                 </div>
                 <div>
                   <h1 className="text-3xl font-bold leading-tight">{data.legalName}</h1>
@@ -109,7 +72,7 @@ export default function CompanyDetails() {
       </header>
 
       <main>
-        <CompanyDetailsTabs />
+        <CompanyDetailsTabs data={data} />
       </main>
     </div>
   );

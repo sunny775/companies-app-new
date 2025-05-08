@@ -10,11 +10,11 @@ import { uploadFile } from "./files.actions";
 
 export async function getCompany(id: string) {
   try {
-    const { data } = await getClient().query({
+    const { data, loading } = await getClient().query({
       query: GET_COMPANY,
       variables: { id },
     });
-    return { data: data.company };
+    return { data: data.company, loading };
   } catch (error) {
     return { error: apiError(error) };
   }
@@ -37,10 +37,7 @@ export async function getCompanies(companyIds: string[]) {
 }
 
 export async function createCompany(args: UpdateCompanyInput, file: File) {
-  await db.addCompanyId("test id");
-
-  return {company: {id: ""}, error: null}
-  /* try {
+  try {
     const { data: uploadResponse, error: uploadError } = await uploadFile(file);
 
     if (uploadError) throw uploadError;
@@ -66,7 +63,7 @@ export async function createCompany(args: UpdateCompanyInput, file: File) {
     console.log(error);
 
     return { error: apiError(error) };
-  } */
+  }
 }
 
 export async function updateCompany(input: UpdateCompanyInput) {

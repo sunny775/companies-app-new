@@ -1,4 +1,5 @@
 import IconButton from "@/components/atoms/IconButton";
+import { Company } from "@/lib/graphql/types";
 import { Clock, Users } from "lucide-react";
 
 const formatDate = (dateString: string): string => {
@@ -10,81 +11,39 @@ const formatDate = (dateString: string): string => {
   }).format(date);
 };
 
-const data = {
-  id: "COMP-2023-05678",
-  status: "active",
-  createdAt: "2023-08-15T10:30:00Z",
-  updatedAt: "2024-04-20T14:45:00Z",
-  basicInfo: {
-    legalName: "Acme Technologies Inc.",
-    stateOfIncorporation: "California",
-    industry: "Software Development",
-    totalNumberOfEmployees: 150,
-    numberOfFullTimeEmployees: 120,
-    numberOfPartTimeEmployees: 30,
-    website: "https://acmetech.example.com",
-    linkedInCompanyPage: "https://linkedin.com/company/acmetech",
-    facebookCompanyPage: "https://facebook.com/acmetech",
-    otherInformation:
-      "Founded in 2015, focused on AI and cloud solutions with a global customer base across North America, Europe, and Asia. The company has received multiple industry awards for innovation.",
-    fax: "+1 (555) 123-4567",
-    dialCode: "+1",
-    phone: "(555) 987-6543",
-    email: "info@acmetech.example.com",
-  },
-  address: {
-    isMailingAddressDifferentFromRegisteredAddress: true,
-    registeredAddress: {
-      country: "United States",
-      state: "California",
-      city: "San Francisco",
-      street: "123 Innovation Avenue, Suite 500",
-      zipCode: "94105",
+interface Props {
+  data: Company;
+}
+
+export function CompanyOverview({ data }: Props) {
+  const summaryItems: { label: string; value?: string | number }[] = [
+    { label: "Company ID", value: data.id },
+    { label: "Legal Name", value: data.legalName },
+    { label: "Industry", value: data.industry },
+    { label: "State of Incorporation", value: data.stateOfIncorporation },
+    {
+      label: "Primary Contact",
+      value: `${data.primaryContactPerson?.firstName} ${data.primaryContactPerson?.lastName}`,
     },
-    mailingAddress: {
-      country: "United States",
-      state: "California",
-      city: "Palo Alto",
-      street: "456 Tech Boulevard, Floor 3",
-      zipCode: "94301",
+    { label: "Primary Email", value: data.primaryContactPerson?.email },
+    { label: "Total Employees", value: data.totalNumberOfEmployees },
+    { label: "Headquarters", value: `${data.registeredAddress?.city}, ${data.registeredAddress?.state}` },
+  ];
+
+  const metrics = [
+    {
+      label: "Full Time Employees",
+      value: data.numberOfFullTimeEmployees,
+      icon: <Users className="text-blue-500" />,
+      description: "Total Number of Full Time Employees of the company",
     },
-  },
-  contact: {
-    firstName: "Sarah",
-    lastName: "Johnson",
-    dialCode: "+1",
-    phone: "(555) 765-4321",
-    email: "sarah.johnson@acmetech.example.com",
-  },
-};
-
-const summaryItems: { label: string; value: string | number }[] = [
-  { label: "Company ID", value: data.id },
-  { label: "Legal Name", value: data.basicInfo.legalName },
-  { label: "Industry", value: data.basicInfo.industry },
-  { label: "State of Incorporation", value: data.basicInfo.stateOfIncorporation },
-  { label: "Primary Contact", value: `${data.contact.firstName} ${data.contact.lastName}` },
-  { label: "Primary Email", value: data.contact.email },
-  { label: "Total Employees", value: data.basicInfo.totalNumberOfEmployees },
-  { label: "Headquarters", value: `${data.address.registeredAddress.city}, ${data.address.registeredAddress.state}` },
-];
-
-const metrics = [
-  {
-    label: "Full Time Employees",
-    value: data.basicInfo.numberOfFullTimeEmployees,
-    icon: <Users className="text-blue-500" />,
-    description: "Total Number of Full Time Employees of the company",
-  },
-  {
-    label: "Part Time Employees",
-    value: data.basicInfo.numberOfPartTimeEmployees,
-    icon: <Users className="text-blue-500" />,
-    description: "Total Number of Part Time Employees of the company",
-  },
-];
-
-export function CompanyOverview() {
+    {
+      label: "Part Time Employees",
+      value: data.numberOfPartTimeEmployees,
+      icon: <Users className="text-blue-500" />,
+      description: "Total Number of Part Time Employees of the company",
+    },
+  ];
   return (
     <div className="space-y-6">
       {/* Company Metrics */}
