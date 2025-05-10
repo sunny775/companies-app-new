@@ -7,6 +7,7 @@ import MenuExample from "../atoms/Menu/MenuExample";
 import Select from "../atoms/Select";
 import { StepperExample } from "../atoms/Stepper/StepperExample";
 import { TabsExample } from "../atoms/Tabs/TabsExample";
+import { ToastExample } from "../atoms/Toast/ToastExample";
 import { data } from "./data";
 
 // const data = ["Red", "Orange", "Yellow", "Green", "Cyan", "Blue", "Purple", "Pink", "Maroon", "Black", "White"];
@@ -20,6 +21,7 @@ export function Test() {
   return (
     <div>
       <main className="flex flex-col  gap-[32px] items-center justify-center">
+        <ToastExample />
         <div className="w-72 my-4">
           <Select
             defaultValue={value}

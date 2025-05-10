@@ -37,6 +37,30 @@
   --color-green-900: #00141a;
 
   --color-primary: var(--color-green-500);
+
+  --animate-fade-in: fade-in 0.3s ease-in-out forwards;
+  --animate-fade-out: fade-out 300ms ease-in-out forwards;
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateX(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes fade-out {
+    from {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateX(20px);
+    }
+  }
 }
 
 @media (prefers-color-scheme: dark) {
