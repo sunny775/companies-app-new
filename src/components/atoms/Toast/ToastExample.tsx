@@ -1,5 +1,5 @@
-import { ToastProvider } from "./ToastContainer";
-import { ToastPosition, ToastType } from "./ToastContext";
+import { ToastPosition, ToastType } from "./";
+import { ToastProvider } from "./ToastProvider";
 import { useToast } from "./useToast";
 
 const ToastDemo = () => {

@@ -3,39 +3,39 @@ import { createPortal } from "react-dom";
 import { Toast } from "./Toast";
 import { ToastContext, ToastContextValue, ToastItemType, ToastOptions, ToastPosition, ToastType } from "./ToastContext";
 
-interface ToastContainerProps {
+export interface ToastProviderProps {
   position?: ToastPosition;
   children: ReactNode;
 }
 
 const DEFAULT_DELAY = 5000;
 
-export const ToastProvider = ({ position = ToastPosition.TOP_RIGHT, children }: ToastContainerProps) => {
+const getPositionClass = (position: ToastPosition): string => {
+  switch (position) {
+    case ToastPosition.TOP_LEFT:
+      return "top-4 left-4";
+    case ToastPosition.TOP_CENTER:
+      return "top-4 left-1/2 transform -translate-x-1/2";
+    case ToastPosition.TOP_RIGHT:
+      return "top-4 right-4";
+    case ToastPosition.BOTTOM_LEFT:
+      return "bottom-4 left-4";
+    case ToastPosition.BOTTOM_CENTER:
+      return "bottom-4 left-1/2 transform -translate-x-1/2";
+    case ToastPosition.BOTTOM_RIGHT:
+      return "bottom-4 right-4";
+    default:
+      return "top-4 right-4";
+  }
+};
+
+export const ToastProvider = ({ position = ToastPosition.TOP_RIGHT, children }: ToastProviderProps) => {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
     return () => setMounted(false);
   }, []);
-
-  const getPositionClass = (): string => {
-    switch (position) {
-      case ToastPosition.TOP_LEFT:
-        return "top-4 left-4";
-      case ToastPosition.TOP_CENTER:
-        return "top-4 left-1/2 transform -translate-x-1/2";
-      case ToastPosition.TOP_RIGHT:
-        return "top-4 right-4";
-      case ToastPosition.BOTTOM_LEFT:
-        return "bottom-4 left-4";
-      case ToastPosition.BOTTOM_CENTER:
-        return "bottom-4 left-1/2 transform -translate-x-1/2";
-      case ToastPosition.BOTTOM_RIGHT:
-        return "bottom-4 right-4";
-      default:
-        return "top-4 right-4";
-    }
-  };
 
   const [toasts, setToasts] = useState<ToastItemType[]>([]);
 
@@ -68,7 +68,7 @@ export const ToastProvider = ({ position = ToastPosition.TOP_RIGHT, children }: 
   }
 
   const toastContainer = createPortal(
-    <div className={`fixed z-50 flex flex-col ${getPositionClass()}`}>
+    <div className={`fixed z-50 flex flex-col ${getPositionClass(position)}`}>
       {toasts.map((toast) => (
         <Toast
           key={toast.id}
