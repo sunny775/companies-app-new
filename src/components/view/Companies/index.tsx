@@ -4,7 +4,7 @@ import { getCompanies } from "@/app/actions/companies.actions";
 import apiError from "@/lib/apiError";
 import { Company } from "@/lib/graphql/types";
 import { useEffect, useState } from "react";
-import { CompaniesList } from "./List";
+import { Companies } from "./Companies";
 
 export default function CompaniesListPage() {
   const [companies, setCompanies] = useState<Company[]>();
@@ -35,5 +35,5 @@ export default function CompaniesListPage() {
   if (loading) return <div className="text-center py-6 text-gray-600">Loading companies...</div>;
   if (error) return <div className="text-center py-6 text-red-500">Error loading companies: {error.message}</div>;
 
-  return <CompaniesList />;
+  return <Companies />;
 }

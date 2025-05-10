@@ -14,6 +14,7 @@ import {
   Users,
   X,
 } from "lucide-react";
+import Link from "next/link";
 import { useMemo, useState } from "react";
 
 // Mock data for companies
@@ -165,7 +166,7 @@ const industries = ["All Industries", "Technology", "Manufacturing", "Software",
 const states = ["All States", "California", "Michigan", "Texas", "New York", "New Jersey"];
 
 export  function CompaniesList() {
-  const [companies, setCompanies] = useState(mockCompanies);
+  const [companies] = useState(mockCompanies);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortConfig, setSortConfig] = useState({
     key: "legalName",
@@ -177,11 +178,9 @@ export  function CompaniesList() {
     size: "All",
   });
   const [isFiltersVisible, setIsFiltersVisible] = useState(false);
-  const [selectedCompany, setSelectedCompany] = useState(null);
-  const [showCompanyDetails, setShowCompanyDetails] = useState(false);
 
   // Sort functionality
-  const requestSort = (key) => {
+  const requestSort = (key: string) => {
     let direction = "ascending";
     if (sortConfig.key === key && sortConfig.direction === "ascending") {
       direction = "descending";
@@ -190,7 +189,7 @@ export  function CompaniesList() {
   };
 
   // Sort indicator
-  const getSortIndicator = (columnName) => {
+  const getSortIndicator = (columnName: string) => {
     if (sortConfig.key !== columnName) return null;
 
     return sortConfig.direction === "ascending" ? (
@@ -235,12 +234,6 @@ export  function CompaniesList() {
         return 0;
       });
   }, [companies, searchTerm, sortConfig, filters]);
-
-  // View company details
-  const handleViewCompany = (company) => {
-    setSelectedCompany(company);
-    setShowCompanyDetails(true);
-  };
 
   // Reset filters
   const resetFilters = () => {
@@ -432,8 +425,7 @@ export  function CompaniesList() {
                   filteredCompanies.map((company) => (
                     <tr
                       key={company.id}
-                      className="hover:bg-gray-50 cursor-pointer"
-                      onClick={() => handleViewCompany(company)}
+                      className="hover:bg-gray-50"
                     >
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">
@@ -477,15 +469,12 @@ export  function CompaniesList() {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         <div className="flex items-center justify-end space-x-3">
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleViewCompany(company);
-                            }}
+                          <Link
+                            href={`/companies/${company.id}`}
                             className="text-blue-600 hover:text-blue-900"
                           >
                             View
-                          </button>
+                          </Link>
                           <div className="relative inline-block text-left">
                             <button
                               onClick={(e) => {
@@ -503,12 +492,12 @@ export  function CompaniesList() {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="6" className="px-6 py-12 text-center text-gray-500">
+                    <td colSpan={6} className="px-6 py-12 text-center text-gray-500">
                       <div className="flex flex-col items-center justify-center">
                         <Search className="h-12 w-12 text-gray-400 mb-4" />
                         <h3 className="text-lg font-medium text-gray-900 mb-1">No companies found</h3>
                         <p className="text-gray-500 max-w-md">
-                          We couldn't find any companies matching your search criteria. Try adjusting your filters or
+                          We couldnt find any companies matching your search criteria. Try adjusting your filters or
                           search term.
                         </p>
                         <button
@@ -546,310 +535,6 @@ export  function CompaniesList() {
         </div>
       </main>
 
-      {/* Company Details Modal */}
-      {showCompanyDetails && selectedCompany && (
-        <div className="fixed inset-0 overflow-y-auto z-50">
-          <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-            <div className="fixed inset-0 transition-opacity" aria-hidden="true">
-              <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
-            </div>
-
-            <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
-              &#8203;
-            </span>
-
-            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-3xl sm:w-full">
-              <div className="flex justify-between items-center px-6 py-4 bg-gray-50 border-b border-gray-200">
-                <h3 className="text-lg font-medium text-gray-900">{selectedCompany.legalName}</h3>
-                <button
-                  type="button"
-                  className="text-gray-400 hover:text-gray-500"
-                  onClick={() => setShowCompanyDetails(false)}
-                >
-                  <X className="h-6 w-6" />
-                </button>
-              </div>
-
-              <div className="px-6 py-5 space-y-6 max-h-screen overflow-y-auto">
-                {/* Company Overview */}
-                <div>
-                  <h4 className="text-base font-medium text-gray-900 mb-3">Company Overview</h4>
-                  <div className="bg-gray-50 rounded-lg p-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <div className="flex items-start">
-                        <Briefcase className="h-5 w-5 text-gray-400 mr-2 mt-0.5" />
-                        <div>
-                          <p className="text-sm font-medium text-gray-500">Legal Name</p>
-                          <p className="text-sm text-gray-900">{selectedCompany.legalName}</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div>
-                      <div className="flex items-start">
-                        <Globe className="h-5 w-5 text-gray-400 mr-2 mt-0.5" />
-                        <div>
-                          <p className="text-sm font-medium text-gray-500">Website</p>
-                          <p className="text-sm text-blue-600 hover:underline">{selectedCompany.website}</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div>
-                      <div className="flex items-start">
-                        <Users className="h-5 w-5 text-gray-400 mr-2 mt-0.5" />
-                        <div>
-                          <p className="text-sm font-medium text-gray-500">Employees</p>
-                          <p className="text-sm text-gray-900">
-                            {selectedCompany.totalNumberOfEmployees.toLocaleString()} total (
-                            {selectedCompany.numberOfFullTimeEmployees.toLocaleString()} full-time,{" "}
-                            {selectedCompany.numberOfPartTimeEmployees.toLocaleString()} part-time)
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    <div>
-                      <div className="flex items-start">
-                        <Phone className="h-5 w-5 text-gray-400 mr-2 mt-0.5" />
-                        <div>
-                          <p className="text-sm font-medium text-gray-500">Phone</p>
-                          <p className="text-sm text-gray-900">{selectedCompany.phone}</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div>
-                      <div className="flex items-start">
-                        <Mail className="h-5 w-5 text-gray-400 mr-2 mt-0.5" />
-                        <div>
-                          <p className="text-sm font-medium text-gray-500">Email</p>
-                          <p className="text-sm text-blue-600 hover:underline">{selectedCompany.email}</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div>
-                      <div className="flex items-start">
-                        <div className="h-5 w-5 flex items-center justify-center text-gray-400 mr-2">
-                          <span className="text-xs font-bold">IN</span>
-                        </div>
-                        <div>
-                          <p className="text-sm font-medium text-gray-500">Industry</p>
-                          <p className="text-sm text-gray-900">{selectedCompany.industry}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Address Information */}
-                <div>
-                  <h4 className="text-base font-medium text-gray-900 mb-3">Address Information</h4>
-                  <div className="bg-gray-50 rounded-lg p-4">
-                    {selectedCompany.registeredAddress ? (
-                      <div>
-                        <p className="text-sm font-medium text-gray-500 mb-1">Registered Address</p>
-                        <p className="text-sm text-gray-900 mb-4">
-                          {selectedCompany.registeredAddress.street && `${selectedCompany.registeredAddress.street}, `}
-                          {selectedCompany.registeredAddress.city}, {selectedCompany.registeredAddress.state},{" "}
-                          {selectedCompany.registeredAddress.country}
-                          {selectedCompany.registeredAddress.zipCode && ` ${selectedCompany.registeredAddress.zipCode}`}
-                        </p>
-
-                        {selectedCompany.mailingAddress &&
-                          selectedCompany.registeredAddress.isMailingAddressDifferentFromRegisteredAddress && (
-                            <div>
-                              <p className="text-sm font-medium text-gray-500 mb-1">Mailing Address</p>
-                              <p className="text-sm text-gray-900">
-                                {selectedCompany.mailingAddress.street && `${selectedCompany.mailingAddress.street}, `}
-                                {selectedCompany.mailingAddress.city}, {selectedCompany.mailingAddress.state},{" "}
-                                {selectedCompany.mailingAddress.country}
-                                {selectedCompany.mailingAddress.zipCode && ` ${selectedCompany.mailingAddress.zipCode}`}
-                              </p>
-                            </div>
-                          )}
-                      </div>
-                    ) : (
-                      <p className="text-sm text-gray-500">No address information available</p>
-                    )}
-                  </div>
-                </div>
-
-                {/* Contact Person */}
-                <div>
-                  <h4 className="text-base font-medium text-gray-900 mb-3">Primary Contact Person</h4>
-                  <div className="bg-gray-50 rounded-lg p-4">
-                    {selectedCompany.primaryContactPerson ? (
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                          <p className="text-sm font-medium text-gray-500">Name</p>
-                          <p className="text-sm text-gray-900">
-                            {selectedCompany.primaryContactPerson.firstName}{" "}
-                            {selectedCompany.primaryContactPerson.lastName}
-                          </p>
-                        </div>
-                        <div>
-                          <p className="text-sm font-medium text-gray-500">Email</p>
-                          <p className="text-sm text-blue-600 hover:underline">
-                            {selectedCompany.primaryContactPerson.email}
-                          </p>
-                        </div>
-                        <div>
-                          <p className="text-sm font-medium text-gray-500">Phone</p>
-                          <p className="text-sm text-gray-900">{selectedCompany.primaryContactPerson.phone}</p>
-                        </div>
-                      </div>
-                    ) : (
-                      <p className="text-sm text-gray-500">No primary contact person specified</p>
-                    )}
-                  </div>
-                </div>
-
-                {/* Company Insights - Add a visual component */}
-                <div>
-                  <h4 className="text-base font-medium text-gray-900 mb-3">Company Insights</h4>
-                  <div className="bg-gray-50 rounded-lg p-4">
-                    <div className="mb-6">
-                      <h5 className="text-sm font-medium text-gray-700 mb-2">Employee Distribution</h5>
-                      <div className="h-8 w-full bg-gray-200 rounded-full overflow-hidden">
-                        <div className="flex h-full">
-                          <div
-                            className="bg-blue-600"
-                            style={{
-                              width: `${
-                                (selectedCompany.numberOfFullTimeEmployees / selectedCompany.totalNumberOfEmployees) *
-                                100
-                              }%`,
-                            }}
-                          ></div>
-                          <div
-                            className="bg-blue-400"
-                            style={{
-                              width: `${
-                                (selectedCompany.numberOfPartTimeEmployees / selectedCompany.totalNumberOfEmployees) *
-                                100
-                              }%`,
-                            }}
-                          ></div>
-                        </div>
-                      </div>
-                      <div className="flex justify-between mt-2 text-xs text-gray-500">
-                        <div className="flex items-center">
-                          <div className="w-3 h-3 bg-blue-600 rounded-full mr-1"></div>
-                          <span>
-                            Full-time (
-                            {Math.round(
-                              (selectedCompany.numberOfFullTimeEmployees / selectedCompany.totalNumberOfEmployees) * 100
-                            )}
-                            %)
-                          </span>
-                        </div>
-                        <div className="flex items-center">
-                          <div className="w-3 h-3 bg-blue-400 rounded-full mr-1"></div>
-                          <span>
-                            Part-time (
-                            {Math.round(
-                              (selectedCompany.numberOfPartTimeEmployees / selectedCompany.totalNumberOfEmployees) * 100
-                            )}
-                            %)
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      <div className="bg-white p-3 rounded-md shadow-sm">
-                        <p className="text-sm font-medium text-gray-500">Industry Ranking</p>
-                        <p className="text-xl font-semibold text-gray-900">#3</p>
-                        <p className="text-xs text-gray-500">among {selectedCompany.industry} companies</p>
-                      </div>
-                      <div className="bg-white p-3 rounded-md shadow-sm">
-                        <p className="text-sm font-medium text-gray-500">Growth Rate</p>
-                        <p className="text-xl font-semibold text-green-600">+12.5%</p>
-                        <p className="text-xs text-gray-500">year over year</p>
-                      </div>
-                      <div className="bg-white p-3 rounded-md shadow-sm">
-                        <p className="text-sm font-medium text-gray-500">Risk Assessment</p>
-                        <p className="text-xl font-semibold text-blue-600">Low</p>
-                        <p className="text-xs text-gray-500">based on industry analysis</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Activity Timeline */}
-                <div>
-                  <h4 className="text-base font-medium text-gray-900 mb-3">Recent Activity</h4>
-                  <div className="bg-gray-50 rounded-lg p-4">
-                    <div className="flow-root">
-                      <ul className="divide-y divide-gray-200">
-                        <li className="py-3">
-                          <div className="flex items-start space-x-3">
-                            <div className="flex-shrink-0">
-                              <div className="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center">
-                                <Edit className="h-4 w-4 text-blue-600" />
-                              </div>
-                            </div>
-                            <div className="min-w-0 flex-1">
-                              <p className="text-sm text-gray-900">Profile updated</p>
-                              <p className="text-sm text-gray-500">Company details were updated by Admin</p>
-                            </div>
-                            <div className="flex-shrink-0 whitespace-nowrap text-sm text-gray-500">2 days ago</div>
-                          </div>
-                        </li>
-                        <li className="py-3">
-                          <div className="flex items-start space-x-3">
-                            <div className="flex-shrink-0">
-                              <div className="h-8 w-8 rounded-full bg-green-100 flex items-center justify-center">
-                                <Plus className="h-4 w-4 text-green-600" />
-                              </div>
-                            </div>
-                            <div className="min-w-0 flex-1">
-                              <p className="text-sm text-gray-900">Contact person added</p>
-                              <p className="text-sm text-gray-500">New primary contact person was assigned</p>
-                            </div>
-                            <div className="flex-shrink-0 whitespace-nowrap text-sm text-gray-500">1 week ago</div>
-                          </div>
-                        </li>
-                        <li className="py-3">
-                          <div className="flex items-start space-x-3">
-                            <div className="flex-shrink-0">
-                              <div className="h-8 w-8 rounded-full bg-purple-100 flex items-center justify-center">
-                                <Briefcase className="h-4 w-4 text-purple-600" />
-                              </div>
-                            </div>
-                            <div className="min-w-0 flex-1">
-                              <p className="text-sm text-gray-900">Company created</p>
-                              <p className="text-sm text-gray-500">Company profile was created in the system</p>
-                            </div>
-                            <div className="flex-shrink-0 whitespace-nowrap text-sm text-gray-500">1 month ago</div>
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="px-6 py-4 bg-gray-50 border-t border-gray-200 flex flex-wrap justify-end space-x-3">
-                <button
-                  type="button"
-                  className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                  onClick={() => setShowCompanyDetails(false)}
-                >
-                  Close
-                </button>
-                <button
-                  type="button"
-                  className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                >
-                  <Edit className="h-4 w-4 mr-2" />
-                  Edit Company
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Company Edit Form Modal - placeholder for future implementation */}
-
       {/* Status Bar */}
       <footer className="bg-white border-t border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
@@ -861,42 +546,6 @@ export  function CompaniesList() {
           </div>
         </div>
       </footer>
-
-      {/* Toast Notification Component - can be used for user feedback */}
-      <div className="fixed bottom-0 right-0 pb-4 pr-4 z-50 pointer-events-none">
-        <div className="max-w-sm w-full bg-white shadow-lg rounded-lg pointer-events-auto border-l-4 border-green-500 overflow-hidden">
-          <div className="p-4">
-            <div className="flex items-start">
-              <div className="flex-shrink-0">
-                <svg
-                  className="h-6 w-6 text-green-400"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-              </div>
-              <div className="ml-3 w-0 flex-1 pt-0.5">
-                <p className="text-sm font-medium text-gray-900">Company data loaded successfully!</p>
-                <p className="mt-1 text-sm text-gray-500">The list displays all available companies in the system.</p>
-              </div>
-              <div className="ml-4 flex-shrink-0 flex">
-                <button className="bg-white rounded-md inline-flex text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                  <span className="sr-only">Close</span>
-                  <X className="h-5 w-5" />
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }
