@@ -3,10 +3,11 @@ import { VariantProps } from "tailwind-variants";
 import { inputStyles } from "./input.styles";
 
 export type InputProps = ComponentProps<"input"> &
-  VariantProps<typeof inputStyles> & {
+  Omit<VariantProps<typeof inputStyles>, "iconLeft" | "iconRight"> & {
     error?: boolean;
     success?: boolean;
-    icon?: ReactNode;
+    iconLeft?: ReactNode;
+    iconRight?: ReactNode;
     containerProps?: ComponentProps<"div">;
     className?: string;
   };
@@ -16,7 +17,8 @@ export const Input = ({
   color,
   error,
   success,
-  icon,
+  iconLeft,
+  iconRight,
   disabled,
   containerProps,
   className,
@@ -25,7 +27,8 @@ export const Input = ({
   ...rest
 }: InputProps) => {
   const styles = inputStyles({
-    icon: !!icon,
+    iconLeft: !!iconLeft,
+    iconRight: !!iconRight,
     disabled,
     size,
     color: success ? "success" : error ? "error" : color,
@@ -36,7 +39,8 @@ export const Input = ({
 
   return (
     <div {...containerProps} className={containerClasses}>
-      {icon && <div className={styles.icon()}>{icon}</div>}
+      {!!iconLeft && <div className={styles.iconLeft()}>{iconLeft}</div>}
+      {!!iconRight && <div className={styles.iconRight()}>{iconRight}</div>}
       <input id={id} ref={ref} className={inputClasses} {...rest} />
     </div>
   );

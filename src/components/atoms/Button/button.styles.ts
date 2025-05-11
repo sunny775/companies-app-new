@@ -2,7 +2,7 @@ import { tv } from "tailwind-variants";
 
 export const buttonStyles = tv({
   slots: {
-    base: "align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none rounded-md shadow cursor-pointer active:scale-105 active:opacity-[0.85] focus:outline-0 text-gray-700 dark:text-gray-300",
+    base: "align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none rounded-md shadow cursor-pointer active:scale-102 active:opacity-[0.85] focus:outline-0 text-gray-700 dark:text-gray-300",
     spinner: "w-4 h-4",
     default: "",
     success: "",
@@ -30,7 +30,7 @@ export const buttonStyles = tv({
         default: "from-green-600 to-neon dark:from-black dark:to-green-600 shadow-green-600/50 dark:shadow-black",
         success: "from-green-600 to-green-400 shadow-green-600/50",
         error: "from-red-600 to-red-400 shadow-red-600/50",
-        info: "from-blue-600 to-blue-400 shadow-blue-600/50",
+        info: "from-blue-500 to-indigo-400 shadow-blue-600/50",
         gray: "from-gray-600 to-gray-400 shadow-gray-600/50",
       },
       text: {
@@ -50,8 +50,8 @@ export const buttonStyles = tv({
     },
     size: {
       sm: "py-2 px-4 text-xs",
-      md: "py-3 px-6 text-xs",
-      lg: "py-3.5 px-7 text-sm",
+      md: "py-2.5 px-6 text-xs",
+      lg: "py-3 px-7 text-sm",
     },
     fullWidth: {
       true: "block w-full",

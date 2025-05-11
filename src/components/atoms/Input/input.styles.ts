@@ -2,17 +2,21 @@ import { tv } from "tailwind-variants";
 
 export const inputStyles = tv({
     slots: {
-      base: "relative w-full min-w-[200px] text-gray-700 dark:text-gray-300",
+      base: "relative flex justify-center items-center w-full min-w-[200px] text-gray-700 dark:text-gray-300",
       input:
-        "peer h-full w-full rounded bg-transparent border text-sm font-light focus:outline-none focus:border placeholder:text-gray-300 dark:placeholder:text-gray-700 placeholder:text-xs placeholder:italic",
-      icon: "grid place-items-center absolute text-gray-500 top-2 right-2",
+        "peer h-full w-full rounded bg-transparent border text-sm font-light focus:outline-none focus:border placeholder-gray-500 focus:placeholder-gray-300 dark:focus:placeholder-gray-700 placeholder:text-xs placeholder:italic",
+      iconLeft: "grid place-items-center absolute text-gray-500 left-2",
+      iconRight: "grid place-items-center absolute text-gray-500 right-2",
     },
     variants: {
       size: {
         md: "",
         lg: "",
       },
-      icon: {
+      iconLeft: {
+        true: "",
+      },
+      iconRight: {
         true: "",
       },
       disabled: {
@@ -48,11 +52,18 @@ export const inputStyles = tv({
         },
       },
       {
-        icon: true,
+        iconLeft: true,
         class: {
-          input: "pr-9",
+          input: "pl-8",
         },
       },
+      {
+        iconRight: true,
+        class: {
+          input: "pr-8",
+        },
+      },
+      
     ],
     defaultVariants: {
       color: "default",

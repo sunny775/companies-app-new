@@ -2,7 +2,7 @@ import BrandLogo from "../BrandLogo";
 
 export default function Footer() {
   return (
-    <footer className="border-t border-gray-200 dark:border-gray-600">
+    <footer className="border-t border-border">
       <div className="w-full p-8">
         <BrandLogo className="text-lg" />
 
