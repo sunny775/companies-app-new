@@ -5,6 +5,9 @@ import { createContext, useContext } from "react";
 export interface CollapseContextType {
   isExpanded: boolean;
   toggleExpanded: () => void;
+  id: string;
+  contentId: string;
+  triggerId: string;
 }
 
 export const CollapseContext = createContext<CollapseContextType | undefined>(undefined);

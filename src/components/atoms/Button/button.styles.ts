@@ -64,12 +64,12 @@ export const buttonStyles = tv({
     {
       variant: ["ghost"],
       slots: ["default", "success", "error", "info", "gray"],
-      class: "border",
+      class: "border shadow-none",
     },
     {
       variant: ["outlined", "text"],
       slots: ["default", "success", "error", "info", "gray"],
-      class: "hover:opacity-85",
+      class: "hover:opacity-85 shadow-none",
     },
     {
       variant: ["outlined"],

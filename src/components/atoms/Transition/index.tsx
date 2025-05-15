@@ -83,7 +83,7 @@ const Transition = memo(
             transitionDuration: `${duration}ms`,
             ...style,
           },
-          className: cn("transition-all ease-out", mounted ? mount : unmount, className),
+          className: cn("transition-all ease-in-out", mounted ? mount : unmount, className),
         });
       })
     );

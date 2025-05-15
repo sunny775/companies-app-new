@@ -1,12 +1,13 @@
 "use client";
 
+import cn from "@/lib/cn";
 import { ChevronDown } from "lucide-react";
-import { ReactNode } from "react";
+import React, { ComponentProps, ElementType, ReactNode } from "react";
 import { tv } from "tailwind-variants";
 import { useCollapse } from "./CollapseContext";
 
 export const collapseTriggerStyles = tv({
-  base: "w-full flex justify-between items-center p-4 cursor-pointer bg-blue-600/5 transition-all rounded-lg",
+  base: "w-full flex justify-between items-center h-12 px-4 cursor-pointer bg-blue-600/5 transition-all",
   slots: {
     arrow: "rotate-0 transition-all",
   },
@@ -15,32 +16,48 @@ export const collapseTriggerStyles = tv({
     isExpanded: {
       true: {
         arrow: "rotate-180 mt-2",
-        base: "rounded-b-none"
+      },
+      false: {
+        base: "rounded-lg shadow-md",
       },
     },
   },
 });
 
 export interface CollapseTriggerProps {
-  title: string;
-  icon?: ReactNode;
+  arrow?: ReactNode;
   className?: string;
+  asChild?: boolean;
+  children: ReactNode;
 }
 
-export function CollapseTrigger({ title, icon, className }: CollapseTriggerProps) {
-  const { isExpanded, toggleExpanded } = useCollapse();
+export function CollapseTrigger({ arrow, className, asChild, children }: CollapseTriggerProps) {
+  const { isExpanded, toggleExpanded, contentId, triggerId } = useCollapse();
 
-  const styles = collapseTriggerStyles({
-    isExpanded,
-  });
+  const styles = collapseTriggerStyles({ isExpanded });
+
+  const triggerProps: ComponentProps<"button"> = {
+    onClick: toggleExpanded,
+    "aria-expanded": isExpanded,
+    "aria-controls": contentId,
+    id: triggerId,
+  };
+
+  if (asChild && React.isValidElement(children)) {
+    const child = children as React.ReactElement<ComponentProps<ElementType>>;
+    return React.cloneElement(child, {
+      ...child.props,
+      className: cn(child.props.className, className),
+      ...triggerProps,
+    });
+  }
 
   return (
-    <button className={styles.base({ className })} onClick={toggleExpanded}>
-      <div className="flex items-center">
-        {icon && <span className={"mr-3"}>{icon}</span>}
-        <h2 className="text-xl font-semibold">{title}</h2>
-      </div>
-      <ChevronDown className={styles.arrow()} />
+    <button type="button" className={styles.base({ className })} {...triggerProps}>
+      {children}
+      <span className={styles.arrow()} aria-hidden="true">
+        {arrow ?? <ChevronDown strokeWidth={1} />}
+      </span>
     </button>
   );
 }

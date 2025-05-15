@@ -64,9 +64,11 @@ export default function CompanyPreview({ data }: CompanyPreviewProps) {
       </header>
 
       <Collapse.Root defaultExpanded={true} className="mb-8">
-        <Collapse.Trigger title="Company Basic Information" icon={<Building2 />} className="bg-blue-600/5" />
+        <Collapse.Trigger className="bg-blue-600/5">
+          <Building2 strokeWidth={1} /> <span>Company Basic Information</span>
+        </Collapse.Trigger>
         <Collapse.Content>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4">
             {basicInfoSummary.map((item) => (
               <SummaryItem key={item.label} {...item} />
             ))}
@@ -80,9 +82,11 @@ export default function CompanyPreview({ data }: CompanyPreviewProps) {
       </Collapse.Root>
 
       <Collapse.Root className="mb-8">
-        <Collapse.Trigger title="Company Addresses" icon={<MapPin />} className="bg-green-600/5" />
+        <Collapse.Trigger className="bg-green-600/5">
+          <MapPin strokeWidth={1} /> <span>Company Addresses</span>
+        </Collapse.Trigger>
         <Collapse.Content>
-          <div>
+          <div className="p-4">
             <div className="mb-6">
               <h3 className="text-lg font-medium mb-4">Registered Address</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -107,9 +111,11 @@ export default function CompanyPreview({ data }: CompanyPreviewProps) {
       </Collapse.Root>
 
       <Collapse.Root className="mb-8">
-        <Collapse.Trigger title="Primary Contact" icon={<User />} className="bg-purple-500/5" />
+        <Collapse.Trigger className="bg-purple-500/5">
+          <User strokeWidth={1} /> <span>Primary Contact</span>
+        </Collapse.Trigger>
         <Collapse.Content>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4">
             {contactSummary.map((item) => (
               <SummaryItem key={item.label} {...item} />
             ))}

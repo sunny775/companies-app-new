@@ -1,27 +1,52 @@
 "use client";
 
 import cn from "@/lib/cn";
-import { ReactNode } from "react";
-import Transition, { TransitionType } from "../Transition";
+import { ReactNode, useEffect, useRef, useState } from "react";
 import { useCollapse } from "./CollapseContext";
 
 export interface CollapseContentProps {
   children: ReactNode;
   className?: string;
+  transitionDuration?: number;
 }
 
-export function CollapseContent({ children, className }: CollapseContentProps) {
-  const { isExpanded } = useCollapse();
+export function CollapseContent({ children, className, transitionDuration = 300 }: CollapseContentProps) {
+  const { isExpanded, contentId, triggerId } = useCollapse();
+  const contentRef = useRef<HTMLDivElement>(null);
 
-  const transiton: TransitionType = {
-    duration: 400,
-    mount: "opacity-100 translate-y-0",
-    unmount: "opacity-0 -translate-y-2",
-  };
+  const [height, setHeight] = useState<number | string>(isExpanded ? "auto" : 0);
+
+  useEffect(() => {
+    const contentHeight = contentRef.current?.scrollHeight;
+
+    if (isExpanded) {
+      setHeight(contentHeight || "auto");
+      const timer = setTimeout(() => {
+        setHeight("auto");
+      }, transitionDuration);
+
+      return () => clearTimeout(timer);
+    } else {
+      if (height === "auto") {
+        setHeight(contentRef.current?.scrollHeight || 0);
+      }
+
+      setTimeout(() => {
+        setHeight(0);
+      }, 50);
+    }
+  }, [isExpanded, transitionDuration, height]);
 
   return (
-    <Transition show={isExpanded} {...transiton}>
-      <div className={cn("p-4 dark:bg-gray-600/5 rounded-b-lg", className)}>{children}</div>
-    </Transition>
+    <div
+      ref={contentRef}
+      id={contentId}
+      role="region"
+      aria-labelledby={triggerId}
+      className={cn("overflow-hidden transition-all  ease-in-out", className)}
+      style={{ height, transitionDuration: `${transitionDuration}ms` }}
+    >
+      {children}
+    </div>
   );
 }
