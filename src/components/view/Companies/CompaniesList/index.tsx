@@ -16,7 +16,7 @@ export function CompaniesList({ resetFilters, filteredCompanies, requestSort, ge
     <div className="bg-surface shadow overflow-hidden rounded-lg">
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-border">
-          <thead className="bg-gray-600/5 dark:bg-gray-600/10">
+          <thead className="bg-gray-100 dark:bg-gray-600/10">
             <tr>
               <th
                 scope="col"
@@ -59,7 +59,7 @@ export function CompaniesList({ resetFilters, filteredCompanies, requestSort, ge
           <tbody className="bg-surface divide-y divide-border">
             {filteredCompanies.length > 0 ? (
               filteredCompanies.map((company) => (
-                <tr key={company.id} className="hover:bg-gray-600/5 dark:hover:bg-gray-600/10">
+                <tr key={company.id} className="hover:bg-gray-100 dark:hover:bg-gray-600/10">
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
                       <div className="flex-shrink-0 h-10 w-10 bg-gray-600/10 rounded-full flex items-center justify-center">

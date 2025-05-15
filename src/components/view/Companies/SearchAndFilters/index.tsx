@@ -29,7 +29,7 @@ export function SearchAndFilters({
   const [isFiltersVisible, setIsFiltersVisible] = useState(false);
 
   return (
-    <div className="bg-gray-600/5 dark:bg-gray-600/10 rounded-lg shadow mb-6">
+    <div className="bg-gray-100 dark:bg-gray-600/10 rounded-lg shadow mb-6">
       <div className="p-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           {/* Search */}
