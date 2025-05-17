@@ -47,7 +47,7 @@ export function CompanyOverview({ data }: Props) {
   return (
     <div className="space-y-6">
       {/* Company Metrics */}
-      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
         {metrics.map((item) => (
           <div key={item.value} className="bg-surface overflow-hidden shadow rounded-lg">
             <div className="p-5">
@@ -63,7 +63,7 @@ export function CompanyOverview({ data }: Props) {
                 </div>
               </div>
             </div>
-            <div className="bg-gray-50 dark:bg-surface-2 px-5 py-3 border-t border-border">
+            <div className="bg-surface-2 px-5 py-3 border-t border-border">
               <div className="text-sm text-muted">{item.description}</div>
             </div>
           </div>
@@ -98,7 +98,7 @@ export function CompanyOverview({ data }: Props) {
             ))}
           </div>
         </div>
-        <div className="bg-gray-50 dark:bg-surface-2 px-6 py-3 flex items-center justify-end border-t border-border">
+        <div className="bg-surface-2 px-6 py-3 flex items-center justify-end border-t border-border">
           <div className="flex items-center text-sm text-muted">
             <Clock className="mr-1.5 h-5 w-5" />
             Last updated on {formatDate(new Date().toDateString())}

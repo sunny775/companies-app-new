@@ -42,7 +42,7 @@ export const CompanyDetailsTabs = ({ data }: Props) => {
   return (
     <>
       <Tabs defaultValue="Overview" className="hidden md:block">
-        <div className=" bg-surface">
+        <div className=" bg-surface shadow">
           <div className="w-full flex justify-between items-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <Tabs.Header
               className="bg-transparent dark:bg-transparent p-0"
@@ -87,7 +87,7 @@ export const CompanyDetailsTabs = ({ data }: Props) => {
             </div>
           </div>
         </div>
-        <Tabs.Body className="mt-5 max-w-7xl mx-auto  px-4 sm:px-6 lg:px-8">
+        <Tabs.Body className="my-6 max-w-7xl mx-auto  px-4 sm:px-6 lg:px-8">
           <Tabs.Panel value="Overview">
             <CompanyOverview data={data} />
           </Tabs.Panel>

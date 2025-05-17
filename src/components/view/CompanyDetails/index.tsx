@@ -12,8 +12,8 @@ interface Props {
 
 export default function CompanyDetails({ data }: Props) {
   return (
-    <div className="bg-gray-50 dark:bg-background min-h-screen relative">
-      <header className="bg-green-800/10 backdrop-blur-md">
+    <div className="bg-background min-h-screen relative">
+      <header className="bg-surface-2 backdrop-blur-md shadow md:shadow-none">
         <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row items-center justify-between">
             <div>
@@ -70,10 +70,7 @@ export default function CompanyDetails({ data }: Props) {
           </div>
         </div>
       </header>
-
-      <main>
-        <CompanyDetailsTabs data={data} />
-      </main>
+      <CompanyDetailsTabs data={data} />
     </div>
   );
 }

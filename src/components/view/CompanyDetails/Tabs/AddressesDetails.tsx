@@ -1,6 +1,5 @@
-import Button from "@/components/atoms/Button";
 import { BasicAddress } from "@/lib/graphql/types";
-import { Download, MapPin } from "lucide-react";
+import { MapPin } from "lucide-react";
 
 interface Data {
   registeredAddress?: BasicAddress;
@@ -12,9 +11,16 @@ interface Props {
 }
 
 export function AddressesDetails({ data }: Props) {
+  const getMapLink = (address: BasicAddress) => {
+    const { street, city, zipCode, state, country } = address;
+
+    return `https://www.google.com/maps/place/${street?.trim()}, ${city?.trim()} ${zipCode?.trim()}, ${state?.trim()}, ${country?.trim()}`.replace(
+      / /g,
+      "+"
+    );
+  };
   return (
     <div className="space-y-6 w-full">
-      {/* Registered Address */}
       <div className="bg-surface shadow overflow-hidden sm:rounded-lg">
         <div className="px-4 py-5 sm:px-6 border-b border-border">
           <h3 className="text-lg leading-6 font-medium">
@@ -36,17 +42,15 @@ export function AddressesDetails({ data }: Props) {
             </address>
           </div>
         </div>
-        <div className="bg-gray-50 dark:bg-surface-2 px-4 py-4 sm:px-6">
-          <div className="flex items-center space-x-2">
-            <Button className="flex items-center">
-              <MapPin className="mr-1.5 h-4 w-4 text-muted" />
-              View on Map
-            </Button>
-            <Button className="flex items-center">
-              <Download className="mr-1.5 h-4 w-4 text-muted" />
-              Download
-            </Button>
-          </div>
+        <div className="bg-surface-2 border-t border-border px-4 py-4 sm:px-6">
+          <a
+            className="flex items-center"
+            target="_blank"
+            href={data.registeredAddress && getMapLink(data.registeredAddress)}
+          >
+            <MapPin className="mr-1.5 h-4 w-4 text-muted" />
+            View on Map
+          </a>
         </div>
       </div>
 
@@ -71,17 +75,15 @@ export function AddressesDetails({ data }: Props) {
             </address>
           </div>
         </div>
-        <div className="bg-surface-2 px-4 py-4 sm:px-6">
-          <div className="flex items-center space-x-2">
-            <Button className="flex items-center">
-              <MapPin className="mr-1.5 h-4 w-4 text-muted" />
-              View on Map
-            </Button>
-            <Button className="flex items-center">
-              <Download className="mr-1.5 h-4 w-4 text-muted" />
-              Download
-            </Button>
-          </div>
+        <div className="bg-surface-2 border-t border-border px-4 py-4 sm:px-6">
+          <a
+            className="flex items-center"
+            target="_blank"
+            href={data.mailingAddress && getMapLink(data.mailingAddress)}
+          >
+            <MapPin className="mr-1.5 h-4 w-4 text-muted" />
+            View on Map
+          </a>
         </div>
       </div>
     </div>
