@@ -1,6 +1,6 @@
+import cn from "@/lib/cn";
 import { ReactNode, useEffect, useState } from "react";
 import { TabsContext, TabsContextType } from "./TabsContext";
-import cn from "@/lib/cn";
 
 export interface TabsProps {
   children: ReactNode;
@@ -27,8 +27,7 @@ export const TabsRoot = ({
     }
   }, [value]);
 
-  const isControlled = value !== undefined;
-  const activeTab = isControlled ? value : internalValue;
+  // const isControlled = value !== undefined;
 
   const handleTabChange = (newValue: string): void => {
     setInternalValue(newValue);
@@ -39,7 +38,7 @@ export const TabsRoot = ({
   };
 
   const contextValue: TabsContextType = {
-    activeTab,
+    activeTab: internalValue,
     handleTabChange,
     orientation,
   };

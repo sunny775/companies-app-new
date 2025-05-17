@@ -72,7 +72,7 @@ export function SearchAndFilters({
           <div className="p-4 border-t border-border flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4 md:max-w-xl">
               <Select
-                defaultValue={filters.industry}
+                value={filters.industry}
                 searchQuery={industriesSearch}
                 setSearchQuery={setIndustriesSearch}
                 filteredOptions={industries}
@@ -94,7 +94,7 @@ export function SearchAndFilters({
               </Select>
 
               <Select
-                defaultValue={filters.state}
+                value={filters.state}
                 searchQuery={statesSearch}
                 setSearchQuery={setStatesSearch}
                 filteredOptions={states}

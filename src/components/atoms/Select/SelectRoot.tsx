@@ -14,6 +14,7 @@ export interface SelectRootProps {
   label?: string;
   onChange?: (value: string) => void;
   defaultValue?: string;
+  value?: string;
   disabled?: boolean;
   required?: boolean;
   lockstroll?: boolean;
@@ -27,6 +28,7 @@ export function SelectRoot({
   label = "Select an option",
   onChange = () => {},
   defaultValue,
+  value,
   disabled = false,
   required = false,
   children,
@@ -51,6 +53,12 @@ export function SelectRoot({
   id = id ?? defaultId;
 
   showLabel = showLabel ?? !!label;
+
+  useEffect(() => {
+    if (value !== undefined) {
+      setSelectedOption(value);
+    }
+  }, [value]);
 
   useEffect(() => {
     // Reset focused index when filtered options change
