@@ -1,8 +1,8 @@
 "use client";
+import cn from "@/lib/cn";
 import useScrollLock from "@/lib/hooks/useScrollLock";
 import { KeyboardEvent, MouseEvent, ReactNode, useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import { SelectContextProvider } from "./SelectContext";
-import cn from "@/lib/cn";
 
 export interface SelectRootProps {
   filteredOptions: string[];
@@ -33,7 +33,7 @@ export function SelectRoot({
   searchQuery,
   setSearchQuery,
   lockstroll,
-  className
+  className,
 }: SelectRootProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [selectedOption, setSelectedOption] = useState<string | null>(defaultValue || null);
@@ -49,6 +49,8 @@ export function SelectRoot({
   const defaultId = useId();
 
   id = id ?? defaultId;
+
+  showLabel = showLabel ?? !!label;
 
   useEffect(() => {
     // Reset focused index when filtered options change

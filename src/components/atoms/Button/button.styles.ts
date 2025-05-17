@@ -49,9 +49,9 @@ export const buttonStyles = tv({
       },
     },
     size: {
-      sm: "py-2 px-4 text-xs",
-      md: "py-2.5 px-6 text-xs",
-      lg: "py-3 px-7 text-sm",
+      sm: "h-8 px-4 text-xs",
+      md: "h-10 px-6 text-xs",
+      lg: "h-12 px-7 text-sm",
     },
     fullWidth: {
       true: "block w-full",

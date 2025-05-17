@@ -8,7 +8,7 @@ import { Companies } from "./Companies";
 
 export default function CompaniesListPage() {
   const [companies, setCompanies] = useState<Company[]>();
-  const [loading, setLoading] = useState(false);
+  const [, setLoading] = useState(false);
   const [error, setError] = useState<Error>();
 
   useEffect(() => {
@@ -32,7 +32,6 @@ export default function CompaniesListPage() {
     })();
   }, []);
 
-  if (loading) return <div className="text-center py-6 text-gray-600">Loading companies...</div>;
   if (error) return <div className="text-center py-6 text-red-500">Error loading companies: {error.message}</div>;
 
   return <Companies />;

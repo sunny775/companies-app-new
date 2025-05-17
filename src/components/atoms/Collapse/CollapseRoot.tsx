@@ -26,7 +26,7 @@ export function CollapseRoot({ defaultExpanded, children, className, id }: Colla
 
   return (
     <CollapseContext.Provider value={value}>
-      <div className={cn("overflow-hidden dark:bg-gray-600/5", { "rounded-lg shadow-md": isExpanded }, className)}>
+      <div className={cn("overflow-hidden dark:bg-gray-600/5", { "rounded-lg shadow-md overflow-visible": isExpanded }, className)}>
         {children}
       </div>
     </CollapseContext.Provider>

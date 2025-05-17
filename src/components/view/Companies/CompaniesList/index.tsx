@@ -1,8 +1,8 @@
+import Button from "@/components/atoms/Button";
 import { Company } from "@/lib/graphql/types";
-import { Briefcase, MoreHorizontal, Search } from "lucide-react";
+import { Briefcase, Search } from "lucide-react";
 import Link from "next/link";
 import { Pagination } from "./Pagination";
-import Button from "@/components/atoms/Button";
 
 interface ListProps {
   resetFilters: () => void;
@@ -39,16 +39,10 @@ export function CompaniesList({ resetFilters, filteredCompanies, requestSort, ge
               >
                 <div className="flex items-center">Employees {getSortIndicator("totalNumberOfEmployees")}</div>
               </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-muted uppercase tracking-wider"
-              >
+              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-muted uppercase tracking-wider">
                 Location
               </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-muted uppercase tracking-wider"
-              >
+              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-muted uppercase tracking-wider">
                 Contact
               </th>
               <th scope="col" className="relative px-6 py-3">
@@ -101,22 +95,9 @@ export function CompaniesList({ resetFilters, filteredCompanies, requestSort, ge
                     )}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <div className="flex items-center justify-end space-x-3">
-                      <Link href={`/companies/${company.id}`} className="text-blue-600 hover:text-blue-900">
-                        View
-                      </Link>
-                      <div className="relative inline-block text-left">
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            // Add dropdown functionality here
-                          }}
-                          className="text-gray-500 hover:text-gray-700"
-                        >
-                          <MoreHorizontal className="h-5 w-5" />
-                        </button>
-                      </div>
-                    </div>
+                    <Link href={`/companies/${company.id}`} className="text-blue-600 hover:text-blue-900">
+                      View
+                    </Link>
                   </td>
                 </tr>
               ))
@@ -130,11 +111,7 @@ export function CompaniesList({ resetFilters, filteredCompanies, requestSort, ge
                       We couldnt find any companies matching your search criteria. Try adjusting your filters or search
                       term.
                     </p>
-                    <Button
-                      onClick={resetFilters}
-                      variant="ghost"
-                      color="info"
-                    >
+                    <Button onClick={resetFilters} variant="ghost" color="info">
                       Reset filters
                     </Button>
                   </div>

@@ -35,7 +35,8 @@ export function CollapseContent({ children, className, transitionDuration = 300 
         setHeight(0);
       }, 50);
     }
-  }, [isExpanded, transitionDuration, height]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isExpanded, transitionDuration]);
 
   return (
     <div
@@ -43,7 +44,7 @@ export function CollapseContent({ children, className, transitionDuration = 300 
       id={contentId}
       role="region"
       aria-labelledby={triggerId}
-      className={cn("overflow-hidden transition-all  ease-in-out", className)}
+      className={cn("transition-all  ease-in-out", className)}
       style={{ height, transitionDuration: `${transitionDuration}ms` }}
     >
       {children}

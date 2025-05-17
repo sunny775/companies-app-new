@@ -19,7 +19,7 @@ export const dialogStyles = tv({
       md: "w-full md:w-3/4 lg:w-3/5 2xl:w-2/5 max-w-xl",
       lg: "w-full md:w-5/6 lg:w-3/4 2xl:w-3/5 max-w-2xl",
       xl: "w-full md:w-5/6 2xl:w-3/4 max-w-4xl",
-      xxl: "w-screen h-screen m-0 rounded-none",
+      xxl: "w-screen h-screen m-0",
     },
   },
   defaultVariants: {

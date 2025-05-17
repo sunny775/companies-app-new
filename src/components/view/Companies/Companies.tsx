@@ -1,5 +1,6 @@
+import cn from "@/lib/cn";
 import { Company } from "@/lib/graphql/types";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronUp } from "lucide-react";
 import { useMemo, useState } from "react";
 import { CompaniesList } from "./CompaniesList";
 import { Footer } from "./Footer";
@@ -154,6 +155,39 @@ const industries = ["All Industries", "Technology", "Manufacturing", "Software",
 // State options for filter
 const states = ["All States", "California", "Michigan", "Texas", "New York", "New Jersey"];
 
+const serializeDataForExprts = (data: Company[]) => {
+  const transformedData = data.map((company) => {
+    const {
+      legalName,
+      industry,
+      totalNumberOfEmployees,
+      numberOfFullTimeEmployees,
+      numberOfPartTimeEmployees,
+      website,
+      stateOfIncorporation,
+      phone,
+      email,
+      registeredAddress,
+      primaryContactPerson,
+    } = company;
+    return {
+      legalName,
+      industry,
+      totalNumberOfEmployees,
+      numberOfFullTimeEmployees,
+      numberOfPartTimeEmployees,
+      website,
+      stateOfIncorporation,
+      phone,
+      email,
+      Location: `${registeredAddress?.state}, ${registeredAddress?.country}`,
+      ContactPerson: `${primaryContactPerson?.email}`,
+    };
+  });
+
+  return JSON.stringify(transformedData);
+};
+
 export function Companies() {
   const [companies] = useState(mockCompanies);
   const [searchQuery, setSearchQuery] = useState("");
@@ -167,7 +201,6 @@ export function Companies() {
     size: "All",
   });
 
-  // Sort functionality
   const requestSort = (key: keyof Company) => {
     let direction = "ascending";
     if (sortConfig.key === key && sortConfig.direction === "ascending") {
@@ -176,18 +209,18 @@ export function Companies() {
     setSortConfig({ key, direction });
   };
 
-  // Sort indicator
   const getSortIndicator = (columnName: string) => {
     if (sortConfig.key !== columnName) return null;
 
-    return sortConfig.direction === "ascending" ? (
-      <ChevronUp className="inline-block w-4 h-4 ml-1" />
-    ) : (
-      <ChevronDown className="inline-block w-4 h-4 ml-1" />
+    return (
+      <ChevronUp
+        className={cn("inline-block w-4 h-4 ml-1 transition-all", {
+          "rotate-180": sortConfig.direction === "ascending",
+        })}
+      />
     );
   };
 
-  // Filter companies
   const filteredCompanies = useMemo(() => {
     return companies
       .filter((company) => {
@@ -201,18 +234,7 @@ export function Companies() {
           filters.state === "All States" ||
           (company.registeredAddress && company.registeredAddress.state === filters.state);
 
-        let matchesSize = true;
-        if (company.totalNumberOfEmployees) {
-          if (filters.size === "Small (<100)") {
-            matchesSize = company.totalNumberOfEmployees < 100;
-          } else if (filters.size === "Medium (100-1000)") {
-            matchesSize = company.totalNumberOfEmployees >= 100 && company.totalNumberOfEmployees <= 1000;
-          } else if (filters.size === "Large (>1000)") {
-            matchesSize = company.totalNumberOfEmployees > 1000;
-          }
-        }
-
-        return matchesSearch && matchesIndustry && matchesState && matchesSize;
+        return matchesSearch && matchesIndustry && matchesState;
       })
       .sort((a, b) => {
         const keyA = a[sortConfig.key] || "";
@@ -250,6 +272,7 @@ export function Companies() {
           setFilters={setFilters}
           resetFilters={resetFilters}
           filterOptions={{ industries, states }}
+          jsonInputForExports={serializeDataForExprts(mockCompanies)}
         />
         <CompaniesList
           resetFilters={resetFilters}
