@@ -90,7 +90,7 @@ export default function PhoneField<T extends FieldValues>({
           onChange={(value) => setDialCode(value)}
         >
           <Select.Trigger color={dialCodeError ? "error" : "default"} className="w-26 rounded-r-none  border-r-0">
-            {dialCode || "Dial Code"}
+            <span className="text-xs">{dialCode || "Dial Code"}</span>
           </Select.Trigger>
 
           <Select.Dropdown className="w-64">

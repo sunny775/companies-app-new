@@ -9,13 +9,13 @@ import { useSelect } from "./SelectContext";
 export const selectTriggerStyles = tv({
   base: "flex items-center justify-between gap-1 px-2 relative w-full h-10 bg-transparent rounded-md focus:outline-0 disabled:opacity-80 disabled:cursor-not-allowed transition-all border text-center text-sm font-light",
   slots: {
-    arrow: "size-4 rotate-0 transition-all text-gray-400 dark:text-gray-600 mb-1 mr-1",
+    arrow: "size-4 rotate-0 transition-all text-muted flex items-center justify-center",
   },
 
   variants: {
     open: {
       true: {
-        arrow: "rotate-180 mt-2 mb-0 mr-0",
+        arrow: "rotate-180 mr-1",
         base: "pr-1",
       },
     },
@@ -85,7 +85,7 @@ export function SelectTrigger({ className, children, arrow, color, success, erro
   return (
     <button type="button" className={styles.base({ className })} {...triggerProps}>
       {selectedOption ? <span>{selectedOption}</span> : <span>{children}</span>}
-      <span className={styles.arrow()}>{arrow ?? <ChevronDown strokeWidth={1} />}</span>
+      <span className={styles.arrow()}>{arrow ?? <ChevronDown />}</span>
     </button>
   );
 }

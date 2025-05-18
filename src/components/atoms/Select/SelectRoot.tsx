@@ -52,8 +52,6 @@ export function SelectRoot({
 
   id = id ?? defaultId;
 
-  showLabel = showLabel ?? !!label;
-
   useEffect(() => {
     if (value !== undefined) {
       setSelectedOption(value);

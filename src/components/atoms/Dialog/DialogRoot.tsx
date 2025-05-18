@@ -10,16 +10,16 @@ export const dialogStyles = tv({
     "relative bg-surface rounded-lg shadow-2xl text-gray-700 dark:text-gray-300 antialiased font-sans text-base font-light leading-relaxed",
     "outline-none p-0 m-auto fixed z-50",
     "top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
-    "max-h-[90vh] max-w-[90vw] overflow-auto",
+    "max-w-[90vw] overflow-hidden",
   ],
   variants: {
     size: {
-      xs: "w-full md:w-3/5 lg:w-2/5 2xl:w-1/4 max-w-md",
-      sm: "w-full md:w-2/3 lg:w-2/4 2xl:w-1/3 max-w-lg",
-      md: "w-full md:w-3/4 lg:w-3/5 2xl:w-2/5 max-w-xl",
-      lg: "w-full md:w-5/6 lg:w-3/4 2xl:w-3/5 max-w-2xl",
-      xl: "w-full md:w-5/6 2xl:w-3/4 max-w-4xl",
-      xxl: "w-screen h-screen m-0",
+      xs: "w-[calc(100%-24px)] md:w-3/5 lg:w-2/5 2xl:w-1/4 max-w-md",
+      sm: "w-[calc(100%-24px)] md:w-2/3 lg:w-2/4 2xl:w-1/3 max-w-lg",
+      md: "w-[calc(100%-24px)] md:w-3/4 lg:w-3/5 2xl:w-2/5 max-w-xl",
+      lg: "w-[calc(100%-24px)] md:w-5/6 lg:w-3/4 2xl:w-3/5 max-w-2xl",
+      xl: "w-[calc(100%-24px)] md:w-5/6 2xl:w-3/4 max-w-4xl",
+      xxl: "w-[calc(100%-24px)] h-[calc(100%-24px)]",
     },
   },
   defaultVariants: {

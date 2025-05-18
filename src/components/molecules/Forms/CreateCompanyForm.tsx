@@ -146,7 +146,7 @@ export default function CreateCompanyForm() {
   }
 
   return (
-    <div className="max-w-3xl p-6 mx-auto my-12 rounded-md shadow-md bg-surface">
+    <>
       <FormProgress
         steps={[...Array(steps.length).keys()]}
         activeStep={activeStep}
@@ -155,6 +155,6 @@ export default function CreateCompanyForm() {
         setIsFirstStep={setIsFirstStep}
       />
       {steps[activeStep]}
-    </div>
+    </>
   );
 }
