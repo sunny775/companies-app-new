@@ -17,10 +17,10 @@ const avatarStyles = tv({
     },
     size: {
       xs: "size-6",
-      sm: "size-9",
-      md: "size-12",
-      lg: "size-[58px]",
-      xl: "size-[74px]",
+      sm: "size-8",
+      md: "size-10",
+      lg: "size-12",
+      xl: "size-[58px]",
       xxl: "size-[110px]",
     },
     boderColor: {

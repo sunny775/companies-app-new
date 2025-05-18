@@ -1,6 +1,6 @@
 import { downloadImageFile } from "@/app/actions/files.actions";
+import Avatar from "@/components/atoms/Avatar";
 import { Briefcase } from "lucide-react";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 
 interface LogoProps {
@@ -33,13 +33,11 @@ export function CompanyLogo({ s3Key }: LogoProps) {
     loadImage();
   }, [s3Key, error, imageUrl]);
 
-  return (
-    <div className="flex-shrink-0 h-10 w-10 bg-gray-600/10 rounded-full flex items-center justify-center">
-      {imageUrl ? (
-        <Image src={imageUrl} alt="company logo" width={400} height={400} />
-      ) : (
-        <Briefcase className="h-5 w-5 text-muted" />
-      )}
+  return imageUrl ? (
+    <Avatar src={imageUrl} alt="company logo"  width={400} height={400} />
+  ) : (
+    <div className="flex-shrink-0 size-10 bg-gray-600/10 rounded-full flex items-center justify-center">
+      <Briefcase className="h-5 w-5 text-muted" />
     </div>
   );
 }
