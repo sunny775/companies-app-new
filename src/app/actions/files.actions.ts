@@ -2,10 +2,7 @@
 
 import apiError from "@/lib/apiError";
 import { getClient } from "@/lib/apolloClient";
-import {
-  GET_SIGNED_DOWNLOAD_URL,
-  GET_SIGNED_UPLOAD_URL,
-} from "@/lib/graphql/queries";
+import { GET_SIGNED_DOWNLOAD_URL, GET_SIGNED_UPLOAD_URL } from "@/lib/graphql/queries";
 import { SignedFileUploadInput } from "@/lib/graphql/types";
 
 export async function getSignedUploadUrl(input: SignedFileUploadInput) {
@@ -63,7 +60,9 @@ export async function uploadFile(file: File) {
   }
 }
 
-export async function downloadFile(s3Key: string) {
+export async function downloadImageFile(s3Key: string) {
+  if (!s3Key) return;
+
   try {
     const { data, error } = await getSignedDownloadUr(s3Key);
 
@@ -81,9 +80,14 @@ export async function downloadFile(s3Key: string) {
       throw new Error(`Download failed with status: ${response.status}`);
     }
 
-    const blob = await response.blob();
+    const arrayBuffer = await response.arrayBuffer();
 
-    return { data: blob };
+    const contentType = response.headers.get("content-type") || "image/jpeg";
+
+    const base64 = Buffer.from(arrayBuffer).toString("base64");
+    const dataUrl = `data:${contentType};base64,${base64}`;
+
+    return { dataUrl, contentType };
   } catch (error) {
     console.error("Error downloading file from S3:", error);
     return { error: apiError(error) };

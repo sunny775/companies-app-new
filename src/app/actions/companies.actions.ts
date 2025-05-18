@@ -28,6 +28,7 @@ export async function getCompanies(companyIds: string[]) {
     const { data, loading } = await getClient().query({
       query: GET_COMPANIES(companyIds),
     });
+    
     return { data: Object.values(data), loading };
   } catch (error) {
     console.log(error);

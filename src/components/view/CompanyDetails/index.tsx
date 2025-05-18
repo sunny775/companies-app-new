@@ -5,12 +5,20 @@ import { Company } from "@/lib/graphql/types";
 import { Briefcase, Building2, Edit, Globe, MapPin, Users } from "lucide-react";
 import IconButton from "../../atoms/IconButton";
 import { CompanyDetailsTabs } from "./Tabs/CompanyDetailsTabs";
+import Image from "next/image";
+
+interface ImageResponse {
+  error?: Error;
+  dataUrl?: string;
+  contentType?: string;
+}
 
 interface Props {
   data: Company;
+  logo?: ImageResponse;
 }
 
-export default function CompanyDetails({ data }: Props) {
+export default function CompanyDetails({ data, logo }: Props) {
   return (
     <div className="bg-background min-h-screen relative">
       <header className="bg-surface-2 backdrop-blur-md shadow md:shadow-none">
@@ -19,8 +27,12 @@ export default function CompanyDetails({ data }: Props) {
             <div>
               <div className="flex flex-col md:flex-row items-center justify-center">
                 <div className="bg-surface-2/50 backdrop-blur-md p-3 rounded-lg shadow-md md:mr-4 my-4 md:my-0">
-                  <Building2 className="text-blue-600 size-50 md:size-40 md:my-0" />
-                  <IconButton className="absolute -top-2 -right-2 bg-transparent dark:bg-transparent">
+                  {logo && logo?.dataUrl ? (
+                    <Image src={logo.dataUrl} alt="company logo" width={400} height={400} className="size-50 md:size-40" />
+                  ) : (
+                    <Building2 className="text-blue-600 size-50 md:size-40 md:my-0" />
+                  )}
+                  <IconButton className="absolute -top-2 -right-2 bg-surface-2 border border-border">
                     <Edit size={15} />
                   </IconButton>
                 </div>

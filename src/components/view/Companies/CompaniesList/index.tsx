@@ -1,7 +1,8 @@
 import Button from "@/components/atoms/Button";
 import { Company } from "@/lib/graphql/types";
-import { Briefcase, Search } from "lucide-react";
+import { Search } from "lucide-react";
 import Link from "next/link";
+import { CompanyLogo } from "./CompanyLogo";
 import { Pagination } from "./Pagination";
 
 interface ListProps {
@@ -56,9 +57,7 @@ export function CompaniesList({ resetFilters, filteredCompanies, requestSort, ge
                 <tr key={company.id} className="hover:bg-gray-100 dark:hover:bg-gray-600/10">
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
-                      <div className="flex-shrink-0 h-10 w-10 bg-gray-600/10 rounded-full flex items-center justify-center">
-                        <Briefcase className="h-5 w-5 text-muted" />
-                      </div>
+                      <CompanyLogo s3Key={company.logoS3Key} />
                       <div className="ml-4">
                         <div className="text-sm font-medium">{company.legalName}</div>
                         <div className="text-sm text-muted">{company.website}</div>

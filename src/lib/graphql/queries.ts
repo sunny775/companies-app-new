@@ -81,8 +81,8 @@ export const GET_SIGNED_UPLOAD_URL: TypedDocumentNode<GetSignedUploadUrlQuery, {
 `;
 
 export const GET_SIGNED_DOWNLOAD_URL: TypedDocumentNode<GetSignedDownloadUrlQuery, {s3Key: string}> = gql`
-  query GetSignedUploadUrl($input: SignedFileUploadInput!) {
-    signedDownloadUrl: getSignedUploadUrl(input: $input) {
+  query GetSignedDownloadUrl($s3Key: String!) {
+    signedDownloadUrl: getSignedDownloadUrl(s3Key: $s3Key) {
       url
       key
     }

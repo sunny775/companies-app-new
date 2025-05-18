@@ -1,15 +1,7 @@
 import IconButton from "@/components/atoms/IconButton";
+import { formatDate } from "@/lib/formatDate";
 import { Company } from "@/lib/graphql/types";
 import { Clock, Users } from "lucide-react";
-
-const formatDate = (dateString: string): string => {
-  const date = new Date(dateString);
-  return new Intl.DateTimeFormat("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  }).format(date);
-};
 
 interface Props {
   data: Company;
@@ -46,7 +38,6 @@ export function CompanyOverview({ data }: Props) {
   ];
   return (
     <div className="space-y-6">
-      {/* Company Metrics */}
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
         {metrics.map((item) => (
           <div key={item.value} className="bg-surface overflow-hidden shadow rounded-lg">
@@ -70,7 +61,6 @@ export function CompanyOverview({ data }: Props) {
         ))}
       </div>
 
-      {/* Summary Card */}
       <div className="bg-surface shadow rounded-lg overflow-hidden">
         <div className="px-6 py-5 border-b border-border">
           <h3 className="text-lg leading-6 font-medium">Company Summary</h3>
