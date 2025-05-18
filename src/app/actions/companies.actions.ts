@@ -20,7 +20,8 @@ export async function getCompany(id: string) {
   }
 }
 
-export async function getCompanies(companyIds: string[]) {
+export async function getCompanies() {
+  const companyIds = await db.getCompanyIds();
   if (!companyIds.length) {
     return { data: [], loading: false };
   }
@@ -28,7 +29,7 @@ export async function getCompanies(companyIds: string[]) {
     const { data, loading } = await getClient().query({
       query: GET_COMPANIES(companyIds),
     });
-    
+
     return { data: Object.values(data), loading };
   } catch (error) {
     console.log(error);

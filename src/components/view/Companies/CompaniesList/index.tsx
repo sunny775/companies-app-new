@@ -121,7 +121,7 @@ export function CompaniesList({ resetFilters, filteredCompanies, requestSort, ge
         </table>
       </div>
 
-      {/* Pagination - simplified for demonstration */}
+      {/* Pagination - simplified, just for demonstration */}
       <Pagination data={filteredCompanies} />
     </div>
   );

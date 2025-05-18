@@ -6,12 +6,7 @@ import { Briefcase, Building2, Edit, Globe, MapPin, Users } from "lucide-react";
 import IconButton from "../../atoms/IconButton";
 import { CompanyDetailsTabs } from "./Tabs/CompanyDetailsTabs";
 import Image from "next/image";
-
-interface ImageResponse {
-  error?: Error;
-  dataUrl?: string;
-  contentType?: string;
-}
+import { ImageResponse } from "@/lib/shared-types";
 
 interface Props {
   data: Company;
