@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import { tv } from "tailwind-variants";
 import { ToastType } from "./ToastContext";

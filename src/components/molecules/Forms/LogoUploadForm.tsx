@@ -1,12 +1,11 @@
 "use client";
-import Button from "@/components/atoms/Button";
 import { CloudUpload } from "lucide-react";
 import { ChangeEvent, FormEvent, useRef, useState } from "react";
 
 interface Props {
   onSubmit: (data: FileList | null) => void;
   defaultValue: FileList | null;
-  children?: React.ReactNode;
+  children: React.ReactNode;
 }
 export default function LogoUploadForm({ onSubmit, children, defaultValue }: Props) {
   const [files, setFiles] = useState<FileList | null>(defaultValue);
@@ -81,12 +80,7 @@ export default function LogoUploadForm({ onSubmit, children, defaultValue }: Pro
         </div>
       </div>
 
-      <div className="flex gap-2 my-4 justify-end">
-        {children}
-        <Button type="submit">
-          Next
-        </Button>
-      </div>
+      <div className="flex gap-2 my-4 justify-end">{children}</div>
     </form>
   );
 }

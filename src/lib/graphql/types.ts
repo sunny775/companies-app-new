@@ -73,7 +73,7 @@ export interface GetSignedDownloadUrlQuery {
 /** GraphQL Mutations */
 export interface UpdateCompanyMutation {
   updateCompany: {
-    company: { id: string };
+    company: { id: string, logoS3Key: string };
   };
 }
 

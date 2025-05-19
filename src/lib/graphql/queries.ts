@@ -2,7 +2,7 @@ import { gql, TypedDocumentNode } from "@apollo/client";
 import { GetCompaniesQuery, GetCompanyQuery, GetSignedDownloadUrlQuery, GetSignedUploadUrlQuery, SignedFileUploadInput } from "./types";
 
 export const COMPANY_INFO_FRAGMENT = gql`
-  fragment CompayFeilds on Company {
+  fragment CompanyFeilds on Company {
     id
     legalName
     stateOfIncorporation
@@ -44,7 +44,7 @@ export const COMPANY_INFO_FRAGMENT = gql`
 export const GET_COMPANY: TypedDocumentNode<GetCompanyQuery, {id: string}> = gql`
   query GetCompany($id: String!) {
     company: getCompany (id: $id) {
-      ...CompayFeilds
+      ...CompanyFeilds
     }
   }
   ${COMPANY_INFO_FRAGMENT}
@@ -56,7 +56,7 @@ export const GET_COMPANIES = (companyIds: string[]): TypedDocumentNode<GetCompan
       .map(
         (id, index) => `
         company${index}: getCompany(id: "${id}") {
-          ...CompayFeilds
+          ...CompanyFeilds
         }
       `
       )

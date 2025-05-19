@@ -1,4 +1,3 @@
-import Button from "@/components/atoms/Button";
 import FormField, { InputType } from "@/components/molecules/FormField/FormField";
 import TextareaField from "@/components/molecules/FormField/TextareaField";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -8,7 +7,7 @@ import { FormCompanyBasicInfo as CompanyBasicInfo, companyBasicInfoSchema } from
 
 interface Props {
   onSubmit: (data: CompanyBasicInfo) => void;
-  children?: React.ReactNode;
+  children: React.ReactNode;
   defaultValues?: CompanyBasicInfo;
 }
 
@@ -72,10 +71,7 @@ export default function CompanyDetailsForm({ onSubmit, defaultValues, children }
         error={!!errors["otherInformation"]}
         errorMessage={errors["otherInformation"]?.message}
       />
-      <div className="flex gap-2 my-4 justify-end">
-        {children}
-        <Button type="submit">Next</Button>
-      </div>
+      <div className="flex gap-2 my-4 justify-end">{children}</div>
     </form>
   );
 }

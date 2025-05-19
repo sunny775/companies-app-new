@@ -1,4 +1,3 @@
-import Button from "@/components/atoms/Button";
 import FormField, { InputType } from "@/components/molecules/FormField/FormField";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -7,7 +6,7 @@ import { FormContact as Contact, contactSchema } from "./schema/createCompany.sc
 
 interface Props {
   onSubmit: (data: Contact) => void;
-  children?: React.ReactNode;
+  children: React.ReactNode;
   defaultValues?: Contact;
 }
 
@@ -58,10 +57,7 @@ export default function ContactForm({ onSubmit, defaultValues, children }: Props
           )
         )}
       </fieldset>
-      <div className="flex gap-2 my-4 justify-end">
-        {children}
-        <Button type="submit">Next</Button>
-      </div>
+      <div className="flex gap-2 my-4 justify-end">{children}</div>
     </form>
   );
 }

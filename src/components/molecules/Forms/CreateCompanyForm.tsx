@@ -49,7 +49,9 @@ export default function CreateCompanyForm() {
       key="1"
       onSubmit={(data: FormCompanyBasicInfo) => handleNext("basicInfo", data)}
       defaultValues={formData.basicInfo}
-    />,
+    >
+      <Button type="submit">Next</Button>
+    </CompanyDetailsForm>,
     <AddressesForm
       key="2"
       onSubmit={(data: FormAddress) => handleNext("address", data)}
@@ -59,11 +61,13 @@ export default function CreateCompanyForm() {
       <Button onClick={handleBack} type="button">
         Back
       </Button>
+      <Button type="submit">Next</Button>
     </AddressesForm>,
     <ContactForm key="3" onSubmit={(data: FormContact) => handleNext("contact", data)} defaultValues={formData.contact}>
       <Button onClick={handleBack} type="button">
         Back
       </Button>
+      <Button type="submit">Next</Button>
     </ContactForm>,
     <LogoUploadForm
       key="4"
@@ -73,6 +77,7 @@ export default function CreateCompanyForm() {
       <Button onClick={handleBack} type="button">
         Back
       </Button>
+      <Button type="submit">Next</Button>
     </LogoUploadForm>,
     <div key="5" className="mt-12 mb-8 flex flex-col gap-4">
       <CompanyPreview data={formData} />

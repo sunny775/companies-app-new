@@ -1,3 +1,5 @@
+"use client";
+
 import { AlertTriangle, Bell, CheckCircle, Info, X, XCircle } from "lucide-react";
 import React, { useCallback, useEffect, useState } from "react";
 import { tv } from "tailwind-variants";

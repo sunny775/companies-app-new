@@ -1,4 +1,3 @@
-import Button from "@/components/atoms/Button";
 import FormField, { InputType } from "@/components/molecules/FormField/FormField";
 import { BasicAddressInput } from "@/lib/graphql/types";
 import useCountries from "@/lib/hooks/useCountries";
@@ -11,7 +10,7 @@ import { FormAddress as Address, addressSchema } from "./schema/createCompany.sc
 
 interface Props {
   onSubmit: (data: Address) => void;
-  children?: React.ReactNode;
+  children: React.ReactNode;
   defaultValues?: Address;
   isMailingAddressDifferent: boolean;
 }
@@ -163,10 +162,7 @@ export default function AddressesForm({ onSubmit, defaultValues, children }: Pro
           ))}
         </fieldset>
       )}
-      <div className="flex gap-2 my-4 justify-end">
-        {children}
-        <Button type="submit">Next</Button>
-      </div>
+      <div className="flex gap-2 my-4 justify-end">{children}</div>
     </form>
   );
 }
