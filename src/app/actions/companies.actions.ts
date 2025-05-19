@@ -74,17 +74,17 @@ export async function updateCompany(company: Company, file: File) {
 
     if (uploadError) throw uploadError;
 
+    const { id: companyId, ...updateCompanyInput } = company;
+
     const input: UpdateCompanyInput = {
-      ...company,
+      ...updateCompanyInput,
       logoS3Key: uploadResponse.s3Key,
     };
 
     const { data } = await getClient().mutate({
       mutation: UPDATE_COMPANY,
-      variables: { input, companyId: company.id },
+      variables: { input, companyId },
     });
-
-    console.log(data);
 
     return { company: data?.updateCompany.company };
   } catch (error) {

@@ -6,6 +6,7 @@ import Button from "@/components/atoms/Button";
 import Dialog from "@/components/atoms/Dialog";
 import IconButton from "@/components/atoms/IconButton";
 import Spinner from "@/components/atoms/loaders/Spinner";
+import { useToast } from "@/components/atoms/Toast";
 import LogoUploadForm from "@/components/molecules/Forms/LogoUploadForm";
 import { Company } from "@/lib/graphql/types";
 import { Edit } from "lucide-react";
@@ -25,6 +26,8 @@ export const EditLogoDialog = ({ setCompany, company }: Props) => {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
+   const toast = useToast();
+
   async function handleUpdateCompany(files: FileList | null) {
     setLoading(true);
 
@@ -41,7 +44,10 @@ export const EditLogoDialog = ({ setCompany, company }: Props) => {
         });
       }
 
-      console.log("Company Updated!", company);
+      toast.success("Company Update3d Successfully!")
+
+      setIsOpen(false);
+
     } catch (error) {
       console.log(error);
       setErrorMessage(() => (error instanceof Error ? error.message : "Error creating company"));
@@ -50,11 +56,9 @@ export const EditLogoDialog = ({ setCompany, company }: Props) => {
     }
   }
 
-  console.log(company)
-
   return (
     <>
-      <IconButton onClick={openDialog} className="absolute -top-2 -right-2 bg-surface-2 border border-border">
+      <IconButton onClick={openDialog} className="absolute -top-2 -right-2 bg-surface/80 border border-border">
         <Edit size={15} />
       </IconButton>
 
@@ -65,7 +69,7 @@ export const EditLogoDialog = ({ setCompany, company }: Props) => {
         aria-labelledby="dialog-title"
         className="border border-border/50"
       >
-        <Dialog.Header id="dialog-title">Add Company</Dialog.Header>
+        <Dialog.Header id="dialog-title">Upload New Logo</Dialog.Header>
         <Dialog.Body divider>
           <Alert variant="error" open={!!errorMessage} onClose={() => setErrorMessage(null)}>
             {errorMessage}
