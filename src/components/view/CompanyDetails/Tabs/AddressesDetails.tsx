@@ -25,7 +25,7 @@ export function AddressesDetails({ data }: Props) {
         <div className="px-4 py-5 sm:px-6 border-b border-border">
           <h3 className="text-lg leading-6 font-medium">
             <div className="flex items-center">
-              <MapPin className="mr-2 h-5 w-5 text-blue-600" />
+              <MapPin className="mr-2 h-5 w-5 text-info" />
               Registered Address
             </div>
           </h3>
@@ -58,7 +58,7 @@ export function AddressesDetails({ data }: Props) {
         <div className="px-4 py-5 sm:px-6 border-b border-border">
           <h3 className="text-lg leading-6 font-medium">
             <div className="flex items-center">
-              <MapPin className="mr-2 h-5 w-5 text-blue-600" />
+              <MapPin className="mr-2 h-5 w-5 text-info" />
               Mailing Address
             </div>
           </h3>

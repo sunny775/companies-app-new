@@ -3,7 +3,7 @@ import cn from "@/lib/cn";
 import Image from "next/image";
 import { globe } from "@/assets";
 
-export default function BrandLogo({ className }: { className?: string }) {
+export default function Logo({ className }: { className?: string }) {
   return (
     <Link href="/">
       <div

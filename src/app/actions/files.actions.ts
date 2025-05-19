@@ -80,14 +80,17 @@ export async function downloadImageFile(s3Key: string) {
       throw new Error(`Download failed with status: ${response.status}`);
     }
 
-    const arrayBuffer = await response.arrayBuffer();
+    /* const arrayBuffer = await response.arrayBuffer();
 
     const contentType = response.headers.get("content-type") || "image/jpeg";
 
     const base64 = Buffer.from(arrayBuffer).toString("base64");
     const dataUrl = `data:${contentType};base64,${base64}`;
 
-    return { dataUrl, contentType };
+    return { dataUrl, contentType };*/
+    const blob = await response.blob();
+
+    return { data: blob };
   } catch (error) {
     console.error("Error downloading file from S3:", error);
     return { error: apiError(error) };

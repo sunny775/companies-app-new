@@ -40,7 +40,7 @@ export function BasicInfoDetails({ data }: Props) {
                     href={item.value}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-blue-600 dark:text-blue-300"
+                    className="text-info"
                   >
                     {item.value.replace(/^https?:\/\//, "")}
                   </a>
@@ -56,7 +56,7 @@ export function BasicInfoDetails({ data }: Props) {
           <div className="sm:col-span-1">
             <dt className="text-sm font-medium text-muted">Email</dt>
             <dd className="mt-1 text-sm">
-              <a href={`mailto:${data.email}`} className="text-blue-600 dark:text-blue-300">
+              <a href={`mailto:${data.email}`} className="text-info">
                 {data.email}
               </a>
             </dd>

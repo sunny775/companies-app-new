@@ -24,7 +24,7 @@ export const CreateCompanyDialog = () => {
         onClose={closeDialog}
         size="xl"
         aria-labelledby="dialog-title"
-        className="border border-border/50 dark:border-border"
+        className="border border-border/50"
       >
         <Dialog.Header id="dialog-title">Add Company</Dialog.Header>
         <Dialog.Body divider>

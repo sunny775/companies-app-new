@@ -1,19 +1,17 @@
 "use client";
 
 import { FacebookIcon, LinkedinIcon } from "@/assets/BrandIcons";
+import { CompanyLogo } from "@/components/molecules/CompanyLogo/CompanyLogo";
 import { Company } from "@/lib/graphql/types";
 import { Briefcase, Building2, Edit, Globe, MapPin, Users } from "lucide-react";
 import IconButton from "../../atoms/IconButton";
 import { CompanyDetailsTabs } from "./Tabs/CompanyDetailsTabs";
-import Image from "next/image";
-import { ImageResponse } from "@/lib/shared-types";
 
 interface Props {
   data: Company;
-  logo?: ImageResponse;
 }
 
-export default function CompanyDetails({ data, logo }: Props) {
+export default function CompanyDetails({ data }: Props) {
   return (
     <div className="bg-background min-h-screen relative">
       <header className="bg-surface-2 backdrop-blur-md shadow md:shadow-none">
@@ -21,12 +19,12 @@ export default function CompanyDetails({ data, logo }: Props) {
           <div className="flex flex-col md:flex-row items-center justify-between">
             <div>
               <div className="flex flex-col md:flex-row items-center justify-center">
-                <div className="bg-surface-2/50 backdrop-blur-md p-3 rounded-lg shadow-md md:mr-4 my-4 md:my-0">
-                  {logo && logo?.dataUrl ? (
-                    <Image src={logo.dataUrl} alt="company logo" width={400} height={400} className="size-50 md:size-40" />
-                  ) : (
-                    <Building2 className="text-blue-600 size-50 md:size-40 md:my-0" />
-                  )}
+                <div className="rounded-lg md:mr-4 my-4 md:my-0 relative">
+                  <CompanyLogo
+                    s3Key={data.logoS3Key}
+                    className="size-50 md:size-40 rounded-lg"
+                    placeholderIcon={<Building2 className="text-info size-50 md:size-40" />}
+                  />
                   <IconButton className="absolute -top-2 -right-2 bg-surface-2 border border-border">
                     <Edit size={15} />
                   </IconButton>

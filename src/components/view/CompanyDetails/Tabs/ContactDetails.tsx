@@ -41,7 +41,7 @@ export function ContactDetails({ data }: Props) {
               <div className="sm:col-span-1">
                 <dt className="text-sm font-medium text-muted">Email</dt>
                 <dd className="mt-1 text-sm">
-                  <a href={`mailto:${data?.email}`} className="text-blue-600 dark:text-blue-300">
+                  <a href={`mailto:${data?.email}`} className="text-info">
                     {data?.email}
                   </a>
                 </dd>

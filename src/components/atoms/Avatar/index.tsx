@@ -1,6 +1,5 @@
-import React from "react";
-import { tv, VariantProps } from "tailwind-variants";
 import Image, { ImageProps } from "next/image";
+import { tv, VariantProps } from "tailwind-variants";
 
 const avatarStyles = tv({
   base: "relative inline-block object-cover object-center rounded-lg",
@@ -34,13 +33,11 @@ const avatarStyles = tv({
     shadow: true,
     size: "md",
     variant: "circular",
-    boderColor: "default"
+    boderColor: "default",
   },
 });
 
-export interface AvatarProps
-  extends ImageProps,
-    VariantProps<typeof avatarStyles> {}
+export interface AvatarProps extends ImageProps, VariantProps<typeof avatarStyles> {}
 
 export const Avatar = ({
   variant,

@@ -1,8 +1,8 @@
 import Button from "@/components/atoms/Button";
+import { CompanyLogo } from "@/components/molecules/CompanyLogo/CompanyLogo";
 import { Company } from "@/lib/graphql/types";
 import { Search } from "lucide-react";
 import Link from "next/link";
-import { CompanyLogo } from "./CompanyLogo";
 import { Pagination } from "./Pagination";
 
 interface ListProps {

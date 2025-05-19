@@ -26,13 +26,13 @@ export function CompanyOverview({ data }: Props) {
     {
       label: "Full Time Employees",
       value: data.numberOfFullTimeEmployees,
-      icon: <Users className="text-blue-500" />,
+      icon: <Users className="text-info" />,
       description: "Total Number of Full Time Employees of the company",
     },
     {
       label: "Part Time Employees",
       value: data.numberOfPartTimeEmployees,
-      icon: <Users className="text-blue-500" />,
+      icon: <Users className="text-info" />,
       description: "Total Number of Part Time Employees of the company",
     },
   ];
@@ -73,7 +73,7 @@ export function CompanyOverview({ data }: Props) {
                   <dl>
                     <dt className="text-sm font-medium text-muted">{item.label}</dt>
                     <dd className="mt-1 text-sm">
-                      <a href={`mailto:${item.value}`} className="text-blue-600 dark:text-blue-300">
+                      <a href={`mailto:${item.value}`} className="text-info">
                         {item.value}
                       </a>
                     </dd>

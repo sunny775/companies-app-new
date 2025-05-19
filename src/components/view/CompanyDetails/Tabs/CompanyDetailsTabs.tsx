@@ -74,7 +74,7 @@ export const CompanyDetailsTabs = ({ data }: Props) => {
                 </Menu.Trigger>
                 <Menu.Dropdown width="sm" placement="bottom-end">
                   <Menu.Item
-                    icon={<Bookmark className={cn("size-4", { "fill-blue-500 stroke-0": isBookmarked() })} />}
+                    icon={<Bookmark className={cn("size-4", { "fill-info stroke-0": isBookmarked() })} />}
                     onClick={() => addToBookmarks(params.companyId)}
                   >
                     {isBookmarked() ? "Bookmarked" : "Bookmark"}
