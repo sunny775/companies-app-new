@@ -44,7 +44,13 @@ export const ExportCompaniesDialog = ({ jsonInput }: Props) => {
         aria-labelledby="dialog-title"
         aria-describedby="dialog-description"
       >
-        {!!error && <Dialog.Body><Alert open variant="error">{error}</Alert></Dialog.Body>}
+        {!!error && (
+          <Dialog.Body>
+            <Alert open variant="error">
+              {error}
+            </Alert>
+          </Dialog.Body>
+        )}
         {csvData && (
           <>
             <Dialog.Header id="dialog-title">
@@ -64,7 +70,11 @@ export const ExportCompaniesDialog = ({ jsonInput }: Props) => {
                       </>
                     )}
                   </Button>
-                  <Button onClick={() => downloadCSV()} className="flex items-center space-x-1" color="info">
+                  <Button
+                    onClick={() => downloadCSV(`companies-${new Date().toISOString()}.csv`)}
+                    className="flex items-center space-x-1"
+                    color="info"
+                  >
                     <FileDown className="h-4 w-4" />
                     <span>Download CSV</span>
                   </Button>

@@ -27,8 +27,8 @@ interface FormData extends Partial<z.infer<typeof createCompanySchema>> {
   files: FileList | null;
 }
 
-interface CreateCompanyDialogProps{
-  setCompanies: Dispatch<SetStateAction<Company[]>>
+interface CreateCompanyDialogProps {
+  setCompanies: Dispatch<SetStateAction<Company[]>>;
 }
 
 function validateAndFormatFormData(formData: FormData) {
@@ -48,7 +48,7 @@ function validateAndFormatFormData(formData: FormData) {
   return { input };
 }
 
-export function CreateCompanyDialog({setCompanies}: CreateCompanyDialogProps) {
+export function CreateCompanyDialog({ setCompanies }: CreateCompanyDialogProps) {
   const [activeStep, setActiveStep] = useState(0);
   const [isLastStep, setIsLastStep] = useState(false);
   const [isFirstStep, setIsFirstStep] = useState(false);
@@ -135,6 +135,11 @@ export function CreateCompanyDialog({setCompanies}: CreateCompanyDialogProps) {
     }
   }
 
+  function resetForm() {
+    setFormData({ files: null });
+    setActiveStep(0);
+  }
+
   async function handleCreateCompany() {
     setLoading(true);
     console.log(formData);
@@ -153,15 +158,15 @@ export function CreateCompanyDialog({setCompanies}: CreateCompanyDialogProps) {
       if (error) throw error;
 
       if (company) {
-        setCompanies(prev=> {
-          return [company, ...prev]
-        })
+        setCompanies((prev) => {
+          return [company, ...prev];
+        });
       }
 
-       toast.success("Company Created Successfully!")
+      toast.success("Company Created Successfully!");
 
       setIsOpen(false);
-      console.log("Company Created!", company);
+      resetForm();
     } catch (error) {
       console.log(error);
       setErrorMessage(() => (error instanceof Error ? error.message : "Error creating company"));

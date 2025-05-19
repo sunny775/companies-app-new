@@ -40,7 +40,7 @@ export function CompanyOverview({ data }: Props) {
     <div className="space-y-6">
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
         {metrics.map((item) => (
-          <div key={item.value} className="bg-surface overflow-hidden shadow rounded-lg">
+          <div key={item.label} className="bg-surface overflow-hidden shadow rounded-lg">
             <div className="p-5">
               <div className="flex items-center">
                 <IconButton>{item.icon}</IconButton>

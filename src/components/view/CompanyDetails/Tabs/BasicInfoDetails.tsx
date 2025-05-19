@@ -47,7 +47,7 @@ export function BasicInfoDetails({ data }: Props) {
                 </dd>
               </div>
             ) : (
-              <div key={item.value} className="sm:col-span-1">
+              <div key={item.label} className="sm:col-span-1">
                 <dt className="text-sm font-medium text-muted">{item.label}</dt>
                 <dd className="mt-1 text-sm">{item.value}</dd>
               </div>
