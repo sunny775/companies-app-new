@@ -9,7 +9,6 @@ import { ExportCompaniesDialog } from "./ExportCompaniesDialog";
 export interface Filters {
   industry: string;
   state: string;
-  size: string;
 }
 
 interface SearchAndFiltersProps {

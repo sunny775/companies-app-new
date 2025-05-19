@@ -56,7 +56,6 @@ export function Companies({ data }: Props) {
   const [filters, setFilters] = useState({
     industry: "All Industries",
     state: "All States",
-    size: "All",
   });
 
   const requestSort = (key: keyof Company) => {
@@ -80,11 +79,13 @@ export function Companies({ data }: Props) {
   };
 
   const industries = [
+    "All Industries",
     ...new Set(
       companies.map((company) => company.industry).filter((industry): industry is string => Boolean(industry))
     ),
   ];
   const states = [
+    "All States",
     ...new Set(
       companies.map((company) => company.registeredAddress?.state).filter((state): state is string => Boolean(state))
     ),
@@ -124,14 +125,13 @@ export function Companies({ data }: Props) {
     setFilters({
       industry: "All Industries",
       state: "All States",
-      size: "All",
     });
   };
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <Header setCompanies={setCompanies} />
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="flex-1 max-w-[90vw] w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <SearchAndFilters
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
