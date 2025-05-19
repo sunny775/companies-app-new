@@ -63,65 +63,71 @@ export default function CompanyPreview({ data }: CompanyPreviewProps) {
         <p className="text-muted">Review your company information before submission</p>
       </header>
 
-      <Collapse.Root defaultExpanded={true} className="mb-8">
-        <Collapse.Trigger className="bg-blue-600/5">
-          <Building2 strokeWidth={1} /> <span>Company Basic Information</span>
-        </Collapse.Trigger>
-        <Collapse.Content>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4">
-            {basicInfoSummary.map((item) => (
-              <SummaryItem key={item.label} {...item} />
-            ))}
-            {basicInfo?.otherInformation && (
-              <div className="md:col-span-2">
-                <SummaryItem label="Additional Information" value={basicInfo?.otherInformation} fullWidth />
-              </div>
-            )}
-          </div>
-        </Collapse.Content>
-      </Collapse.Root>
-
-      <Collapse.Root className="mb-8">
-        <Collapse.Trigger className="bg-green-600/5">
-          <MapPin strokeWidth={1} /> <span>Company Addresses</span>
-        </Collapse.Trigger>
-        <Collapse.Content>
-          <div className="p-4">
-            <div className="mb-6">
-              <h3 className="text-lg font-medium mb-4">Registered Address</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {registeredAddressSummary.map((item) => (
-                  <SummaryItem key={item.label} {...item} />
-                ))}
-              </div>
+      <div className="rounded-lg shadow mb-6 overflow-hidden">
+        <Collapse.Root defaultExpanded={true} className="shadow-none">
+          <Collapse.Trigger className="bg-blue-600/5">
+            <Building2 strokeWidth={1} /> <span>Company Basic Information</span>
+          </Collapse.Trigger>
+          <Collapse.Content>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4">
+              {basicInfoSummary.map((item) => (
+                <SummaryItem key={item.label} {...item} />
+              ))}
+              {basicInfo?.otherInformation && (
+                <div className="md:col-span-2">
+                  <SummaryItem label="Additional Information" value={basicInfo?.otherInformation} fullWidth />
+                </div>
+              )}
             </div>
+          </Collapse.Content>
+        </Collapse.Root>
+      </div>
 
-            {address?.isMailingAddressDifferentFromRegisteredAddress && (
-              <div>
-                <h3 className="text-lg font-medium mb-4">Mailing Address</h3>
+      <div className="rounded-lg shadow mb-6 overflow-hidden">
+        <Collapse.Root>
+          <Collapse.Trigger className="bg-green-600/5">
+            <MapPin strokeWidth={1} /> <span>Company Addresses</span>
+          </Collapse.Trigger>
+          <Collapse.Content>
+            <div className="p-4">
+              <div className="mb-6">
+                <h3 className="text-lg font-medium mb-4">Registered Address</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {mailingAddressSummary.map((item) => (
+                  {registeredAddressSummary.map((item) => (
                     <SummaryItem key={item.label} {...item} />
                   ))}
                 </div>
               </div>
-            )}
-          </div>
-        </Collapse.Content>
-      </Collapse.Root>
 
-      <Collapse.Root className="mb-8">
-        <Collapse.Trigger className="bg-purple-500/5">
-          <User strokeWidth={1} /> <span>Primary Contact</span>
-        </Collapse.Trigger>
-        <Collapse.Content>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4">
-            {contactSummary.map((item) => (
-              <SummaryItem key={item.label} {...item} />
-            ))}
-          </div>
-        </Collapse.Content>
-      </Collapse.Root>
+              {address?.isMailingAddressDifferentFromRegisteredAddress && (
+                <div>
+                  <h3 className="text-lg font-medium mb-4">Mailing Address</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {mailingAddressSummary.map((item) => (
+                      <SummaryItem key={item.label} {...item} />
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </Collapse.Content>
+        </Collapse.Root>
+      </div>
+
+      <div className="rounded-lg shadow mb-6 overflow-hidden">
+        <Collapse.Root>
+          <Collapse.Trigger className="bg-purple-500/5">
+            <User strokeWidth={1} /> <span>Primary Contact</span>
+          </Collapse.Trigger>
+          <Collapse.Content>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4">
+              {contactSummary.map((item) => (
+                <SummaryItem key={item.label} {...item} />
+              ))}
+            </div>
+          </Collapse.Content>
+        </Collapse.Root>
+      </div>
     </div>
   );
 }

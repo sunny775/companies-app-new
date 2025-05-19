@@ -79,6 +79,6 @@ export interface UpdateCompanyMutation {
 
 export interface CreateCompanyMutation {
   createCompany: {
-    company: { id: string };
+    company: Company;
   };
 }

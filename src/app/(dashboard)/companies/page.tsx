@@ -8,5 +8,5 @@ export default async function Page() {
 
   if (loading) return <p className="text-center text-gray-600">Loading...</p>;
   if (error) return <p className="text-center text-red-500">Error loading companies</p>;
-  return <Companies companies={data} />;
+  return <Companies data={data} />;
 }

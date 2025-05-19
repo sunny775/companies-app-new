@@ -1,14 +1,16 @@
 import { gql, TypedDocumentNode } from "@apollo/client";
+import { COMPANY_INFO_FRAGMENT } from "./queries";
 import { CreateCompanyMutation, UpdateCompanyInput, UpdateCompanyMutation } from "./types";
 
 export const CREATE_COMPANY: TypedDocumentNode<CreateCompanyMutation, { input: UpdateCompanyInput }> = gql`
   mutation CreateCompany($input: UpdateCompanyInput!) {
     createCompany(input: $input) {
       company {
-        id
+        ...CompanyFeilds
       }
     }
   }
+  ${COMPANY_INFO_FRAGMENT}
 `;
 
 export const UPDATE_COMPANY: TypedDocumentNode<

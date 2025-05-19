@@ -43,10 +43,11 @@ const serializeDataForExprts = (data: Company[]) => {
 };
 
 interface Props {
-  companies: Company[];
+  data: Company[];
 }
 
-export function Companies({ companies }: Props) {
+export function Companies({ data }: Props) {
+  const [companies, setCompanies] = useState(data);
   const [searchQuery, setSearchQuery] = useState("");
   const [sortConfig, setSortConfig] = useState({
     key: "legalName" as keyof Company,
@@ -78,12 +79,16 @@ export function Companies({ companies }: Props) {
     );
   };
 
-  const industries = companies
-    .map((company) => company.industry)
-    .filter((industry): industry is string => Boolean(industry));
-  const states = companies
-    .map((company) => company.registeredAddress?.state)
-    .filter((state): state is string => Boolean(state));
+  const industries = [
+    ...new Set(
+      companies.map((company) => company.industry).filter((industry): industry is string => Boolean(industry))
+    ),
+  ];
+  const states = [
+    ...new Set(
+      companies.map((company) => company.registeredAddress?.state).filter((state): state is string => Boolean(state))
+    ),
+  ];
 
   const filteredCompanies = useMemo(() => {
     return companies
@@ -125,7 +130,7 @@ export function Companies({ companies }: Props) {
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
-      <Header />
+      <Header setCompanies={setCompanies} />
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <SearchAndFilters

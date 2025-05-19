@@ -6,10 +6,10 @@ import Dialog from "@/components/atoms/Dialog";
 import Spinner from "@/components/atoms/loaders/Spinner";
 import { useToast } from "@/components/atoms/Toast";
 import CompanyPreview from "@/components/view/CompanyPreview";
-import { UpdateCompanyInput } from "@/lib/graphql/types";
+import { Company, UpdateCompanyInput } from "@/lib/graphql/types";
 import { validateSchema } from "@/lib/zod";
 import { Plus } from "lucide-react";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { z } from "zod";
 import AddressesForm from "../Forms/AddressesForm";
 import CompanyDetailsForm from "../Forms/CompanyDetailsForm";
@@ -25,6 +25,10 @@ import {
 
 interface FormData extends Partial<z.infer<typeof createCompanySchema>> {
   files: FileList | null;
+}
+
+interface CreateCompanyDialogProps{
+  setCompanies: Dispatch<SetStateAction<Company[]>>
 }
 
 function validateAndFormatFormData(formData: FormData) {
@@ -44,7 +48,7 @@ function validateAndFormatFormData(formData: FormData) {
   return { input };
 }
 
-export function CreateCompanyDialog() {
+export function CreateCompanyDialog({setCompanies}: CreateCompanyDialogProps) {
   const [activeStep, setActiveStep] = useState(0);
   const [isLastStep, setIsLastStep] = useState(false);
   const [isFirstStep, setIsFirstStep] = useState(false);
@@ -149,8 +153,9 @@ export function CreateCompanyDialog() {
       if (error) throw error;
 
       if (company) {
-        // const companyIds = localStorage.companyIds;
-        // localStorage.companyIds = JSON.stringify([...JSON.parse(companyIds || "[]"), company.id]);
+        setCompanies(prev=> {
+          return [company, ...prev]
+        })
       }
 
        toast.success("Company Created Successfully!")
