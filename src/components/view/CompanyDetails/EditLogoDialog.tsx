@@ -44,7 +44,7 @@ export const EditLogoDialog = ({ setCompany, company }: Props) => {
         });
       }
 
-      toast.success("Company Update3d Successfully!")
+      toast.success("Company Updated Successfully!")
 
       setIsOpen(false);
 

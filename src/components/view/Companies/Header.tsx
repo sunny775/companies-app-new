@@ -1,4 +1,4 @@
-import { CreateCompanyDialog } from "./CreateCompanyDialog";
+import { CreateCompanyDialog } from "@/components/molecules/CreateCompanyDialog";
 
 export function Header() {
   return (

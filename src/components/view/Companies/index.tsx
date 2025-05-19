@@ -6,7 +6,7 @@ import { ChevronUp } from "lucide-react";
 import { useMemo, useState } from "react";
 import { CompaniesList } from "./CompaniesList";
 import { Footer } from "./Footer";
-import { Header } from "./Header/Header";
+import { Header } from "./Header";
 import { SearchAndFilters } from "./SearchAndFilters";
 
 const serializeDataForExprts = (data: Company[]) => {

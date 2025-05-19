@@ -2,18 +2,26 @@
 import { createCompany } from "@/app/actions/companies.actions";
 import Alert from "@/components/atoms/Alert";
 import Button from "@/components/atoms/Button";
+import Dialog from "@/components/atoms/Dialog";
 import Spinner from "@/components/atoms/loaders/Spinner";
+import { useToast } from "@/components/atoms/Toast";
 import CompanyPreview from "@/components/view/CompanyPreview";
 import { UpdateCompanyInput } from "@/lib/graphql/types";
 import { validateSchema } from "@/lib/zod";
+import { Plus } from "lucide-react";
 import { useState } from "react";
 import { z } from "zod";
-import AddressesForm from "./AddressesForm";
-import CompanyDetailsForm from "./CompanyDetailsForm";
-import ContactForm from "./ContactForm";
-import { FormProgress } from "./FormProgress";
-import LogoUploadForm from "./LogoUploadForm";
-import { FormAddress, FormCompanyBasicInfo, FormContact, createCompanySchema } from "./schema/createCompany.schema";
+import AddressesForm from "../Forms/AddressesForm";
+import CompanyDetailsForm from "../Forms/CompanyDetailsForm";
+import ContactForm from "../Forms/ContactForm";
+import { FormProgress } from "../Forms/FormProgress";
+import LogoUploadForm from "../Forms/LogoUploadForm";
+import {
+  FormAddress,
+  FormCompanyBasicInfo,
+  FormContact,
+  createCompanySchema,
+} from "../Forms/schema/createCompany.schema";
 
 interface FormData extends Partial<z.infer<typeof createCompanySchema>> {
   files: FileList | null;
@@ -36,13 +44,20 @@ function validateAndFormatFormData(formData: FormData) {
   return { input };
 }
 
-export default function CreateCompanyForm() {
+export function CreateCompanyDialog() {
   const [activeStep, setActiveStep] = useState(0);
   const [isLastStep, setIsLastStep] = useState(false);
   const [isFirstStep, setIsFirstStep] = useState(false);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState<FormData>({ files: null });
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const openDialog = () => setIsOpen(true);
+  const closeDialog = () => setIsOpen(false);
+
+  const toast = useToast();
 
   const steps = [
     <CompanyDetailsForm
@@ -116,9 +131,6 @@ export default function CreateCompanyForm() {
     }
   }
 
-  //function resetForm() {
-  //  setFormData({ files: null });
-  //}
   async function handleCreateCompany() {
     setLoading(true);
     console.log(formData);
@@ -140,7 +152,10 @@ export default function CreateCompanyForm() {
         // const companyIds = localStorage.companyIds;
         // localStorage.companyIds = JSON.stringify([...JSON.parse(companyIds || "[]"), company.id]);
       }
-      // resetForm();
+
+       toast.success("Company Created Successfully!")
+
+      setIsOpen(false);
       console.log("Company Created!", company);
     } catch (error) {
       console.log(error);
@@ -152,14 +167,33 @@ export default function CreateCompanyForm() {
 
   return (
     <>
-      <FormProgress
-        steps={[...Array(steps.length).keys()]}
-        activeStep={activeStep}
-        setActiveStep={setActiveStep}
-        setIsLastStep={setIsLastStep}
-        setIsFirstStep={setIsFirstStep}
-      />
-      {steps[activeStep]}
+      <Button onClick={openDialog} className="flex items-center gap-2">
+        <Plus className="w-5 h-5 mr-2" />
+        Add Company
+      </Button>
+
+      <Dialog
+        open={isOpen}
+        onClose={closeDialog}
+        size="xl"
+        aria-labelledby="dialog-title"
+        className="border border-border/50"
+      >
+        <Dialog.Header id="dialog-title">Add Company</Dialog.Header>
+        <Dialog.Body divider>
+          <FormProgress
+            steps={[...Array(steps.length).keys()]}
+            activeStep={activeStep}
+            setActiveStep={setActiveStep}
+            setIsLastStep={setIsLastStep}
+            setIsFirstStep={setIsFirstStep}
+          />
+          {steps[activeStep]}
+        </Dialog.Body>
+        <Dialog.Footer className="gap-2">
+          <Button onClick={closeDialog}>Cancel</Button>
+        </Dialog.Footer>
+      </Dialog>
     </>
   );
 }
