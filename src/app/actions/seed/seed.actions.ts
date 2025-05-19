@@ -1,17 +1,15 @@
 "use server";
 
+import { db } from "@/lib/db/companyIdDb";
 import fs from "fs";
 import { lookup } from "mime-types";
-import path, { basename, extname } from "path";
-import { createCompany } from "./companies.actions";
+import path, { basename, dirname, extname } from "path";
+import { fileURLToPath } from "url";
+import { createCompany } from "../companies.actions";
 import companyDatasets from "./companyDataset";
-import { db } from "@/lib/db/companyIdDb";
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-
 
 class LocalFileData {
   arrayBuffer: ArrayBuffer[];
