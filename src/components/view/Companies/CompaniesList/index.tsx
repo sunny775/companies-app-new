@@ -21,32 +21,32 @@ export function CompaniesList({ resetFilters, filteredCompanies, requestSort, ge
             <tr>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-muted uppercase tracking-wider cursor-pointer"
+                className="px-4 py-3 text-left text-xs font-medium text-muted uppercase tracking-wider cursor-pointer"
                 onClick={() => requestSort("legalName")}
               >
                 <div className="flex items-center">Company {getSortIndicator("legalName")}</div>
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-muted uppercase tracking-wider cursor-pointer"
+                className="px-4 py-3 text-left text-xs font-medium text-muted uppercase tracking-wider cursor-pointer"
                 onClick={() => requestSort("industry")}
               >
                 <div className="flex items-center">Industry {getSortIndicator("industry")}</div>
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-muted uppercase tracking-wider cursor-pointer"
+                className="px-4 py-3 text-left text-xs font-medium text-muted uppercase tracking-wider cursor-pointer"
                 onClick={() => requestSort("totalNumberOfEmployees")}
               >
                 <div className="flex items-center">Employees {getSortIndicator("totalNumberOfEmployees")}</div>
               </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-muted uppercase tracking-wider">
+              <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-muted uppercase tracking-wider">
                 Location
               </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-muted uppercase tracking-wider">
+              <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-muted uppercase tracking-wider">
                 Contact
               </th>
-              <th scope="col" className="relative px-6 py-3">
+              <th scope="col" className="relative px-4 py-3">
                 <span className="sr-only">Actions</span>
               </th>
             </tr>
@@ -55,7 +55,7 @@ export function CompaniesList({ resetFilters, filteredCompanies, requestSort, ge
             {filteredCompanies.length > 0 ? (
               filteredCompanies.map((company) => (
                 <tr key={company.id} className="hover:bg-gray-100 dark:hover:bg-gray-600/10">
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="p-4 whitespace-nowrap">
                     <div className="flex items-center">
                       <CompanyLogo s3Key={company.logoS3Key} />
                       <div className="ml-4">
@@ -64,36 +64,36 @@ export function CompaniesList({ resetFilters, filteredCompanies, requestSort, ge
                       </div>
                     </div>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="p-4 whitespace-nowrap">
                     <div className="text-sm">{company.industry}</div>
                     <div className="text-sm text-muted">{company.stateOfIncorporation}</div>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="p-4 whitespace-nowrap">
                     <div className="text-sm">{company.totalNumberOfEmployees?.toLocaleString()}</div>
                     <div className="text-sm text-muted">
                       {company.numberOfFullTimeEmployees?.toLocaleString()} FT /{" "}
                       {company.numberOfPartTimeEmployees?.toLocaleString()} PT
                     </div>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="p-4 whitespace-nowrap">
                     <div className="text-sm">
                       {company.registeredAddress?.city}, {company.registeredAddress?.state}
                     </div>
                     <div className="text-sm text-muted">{company.registeredAddress?.country}</div>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="p-4 whitespace-nowrap">
                     {company.primaryContactPerson ? (
-                      <div>
-                        <div className="text-sm">
+                      <div className="max-w-24">
+                        <div className="text-sm truncate">
                           {company.primaryContactPerson.firstName} {company.primaryContactPerson.lastName}
                         </div>
-                        <div className="text-sm text-muted">{company.primaryContactPerson.email}</div>
+                        <div className="text-sm text-muted truncate">{company.primaryContactPerson.email}</div>
                       </div>
                     ) : (
                       <div className="text-sm text-muted">No contact person</div>
                     )}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                  <td className="p-4 whitespace-nowrap text-right text-sm font-medium">
                     <Link href={`/companies/${company.id}`} className="text-blue-600 hover:text-blue-900">
                       View
                     </Link>
