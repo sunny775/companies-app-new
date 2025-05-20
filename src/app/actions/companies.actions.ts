@@ -6,7 +6,7 @@ import { db } from "@/lib/db/companyIdDb";
 import { CREATE_COMPANY, UPDATE_COMPANY } from "@/lib/graphql/mutations";
 import { GET_COMPANIES, GET_COMPANY } from "@/lib/graphql/queries";
 import { Company, UpdateCompanyInput } from "@/lib/graphql/types";
-import { uploadFile } from "./files.actions";
+import { uploadFile } from "./upload.actions";
 
 export async function getCompany(id: string) {
   try {

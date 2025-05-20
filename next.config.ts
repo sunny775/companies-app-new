@@ -4,8 +4,9 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: "https",
-        hostname: "upload.wikimedia.org",
+        protocol: 'https',
+        hostname: 'be2-documents-staging.s3.amazonaws.com',
+        pathname: '/**',
       },
     ],
   },
