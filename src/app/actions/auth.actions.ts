@@ -1,6 +1,6 @@
 "use server";
 
-import { signOut } from "@/lib/auth";
+import { signOut } from "@/lib/utils/auth";
 import { AuthError } from "next-auth";
 
 export async function logout() {

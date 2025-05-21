@@ -1,7 +1,7 @@
 import Input, { InputProps } from "@/components/atoms/Input";
 import Label, { LabelProps } from "@/components/atoms/Label";
-import cn from "@/lib/cn";
-import { splitCamelPascalCase } from "@/lib/splitCamelCasePascalCase";
+import cn from "@/lib/utils/cn";
+import { splitCamelPascalCase } from "@/lib/utils/splitCamelCasePascalCase";
 import { useId } from "react";
 import { FieldValues, Path, RegisterOptions, UseFormRegister } from "react-hook-form";
 

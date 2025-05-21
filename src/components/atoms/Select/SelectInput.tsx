@@ -1,5 +1,5 @@
 "use client";
-import cn from "@/lib/cn";
+import cn from "@/lib/utils/cn";
 import { Search, X } from "lucide-react";
 import { ChangeEvent } from "react";
 import { useSelect } from "./SelectContext";
@@ -9,7 +9,7 @@ export interface SelectInputProps {
   className?: string;
 }
 
-export  function SelectInput({ placeholder, className }: SelectInputProps) {
+export function SelectInput({ placeholder, className }: SelectInputProps) {
   const { searchQuery, setSearchQuery, searchInputRef, listboxId, searchId } = useSelect();
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>): void => {

@@ -1,6 +1,6 @@
 "use client";
 
-import cn from "@/lib/cn";
+import cn from "@/lib/utils/cn";
 import { ReactNode, useEffect, useRef, useState } from "react";
 import { useCollapse } from "./CollapseContext";
 
@@ -35,7 +35,7 @@ export function CollapseContent({ children, className, transitionDuration = 300 
         setHeight(0);
       }, 50);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isExpanded, transitionDuration]);
 
   return (

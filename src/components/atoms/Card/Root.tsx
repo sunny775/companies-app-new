@@ -1,4 +1,4 @@
-import cn from "@/lib/cn";
+import cn from "@/lib/utils/cn";
 import React from "react";
 import { tv, VariantProps } from "tailwind-variants";
 
@@ -54,8 +54,8 @@ const cardStyles = tv({
     {
       variant: ["filled", "gradient"],
       slots: ["success", "error", "info"],
-      class: "text-white"
-    }
+      class: "text-white",
+    },
   ],
   defaultVariants: {
     shadow: true,

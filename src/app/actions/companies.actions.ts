@@ -1,11 +1,11 @@
 "use server";
 
-import apiError from "@/lib/apiError";
-import { getClient } from "@/lib/apolloClient";
 import { db } from "@/lib/db/companyIdDb";
 import { CREATE_COMPANY, UPDATE_COMPANY } from "@/lib/graphql/mutations";
 import { GET_COMPANIES, GET_COMPANY } from "@/lib/graphql/queries";
 import { Company, UpdateCompanyInput } from "@/lib/graphql/types";
+import apiError from "@/lib/utils/apiError";
+import { getClient } from "@/lib/utils/apolloClient";
 import { uploadFile } from "./upload.actions";
 
 export async function getCompany(id: string) {

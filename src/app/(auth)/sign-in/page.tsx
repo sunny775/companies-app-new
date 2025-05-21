@@ -1,12 +1,9 @@
-import { redirect } from "next/navigation";
-import { signIn, auth, providerMap } from "@/lib/auth";
+import { providerMap, signIn } from "@/lib/utils/auth";
 import { AuthError } from "next-auth";
+import { redirect } from "next/navigation";
 
-export default async function SignInPage(props: {
-  searchParams: Promise<{ callbackUrl: string | undefined }>;
-}) {
-
-  const {callbackUrl} = await props.searchParams;
+export default async function SignInPage(props: { searchParams: Promise<{ callbackUrl: string | undefined }> }) {
+  const { callbackUrl } = await props.searchParams;
   const { NEXT_PUBLIC_SIGNIN_ERROR_URL: SIGNIN_ERROR_URL } = process.env;
   return (
     <div className="flex flex-col gap-2">

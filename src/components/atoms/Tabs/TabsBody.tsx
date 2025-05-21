@@ -1,5 +1,5 @@
-import cn from "@/lib/cn";
-import React, { ReactNode } from "react";
+import cn from "@/lib/utils/cn";
+import { ReactNode } from "react";
 
 export interface TabsBodyProps {
   children: ReactNode;
@@ -7,6 +7,5 @@ export interface TabsBodyProps {
 }
 
 export const TabsBody = ({ children, className }: TabsBodyProps) => {
-
   return <div className={cn("relative", className)}>{children}</div>;
 };

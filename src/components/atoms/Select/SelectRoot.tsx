@@ -1,6 +1,6 @@
 "use client";
-import cn from "@/lib/cn";
 import useScrollLock from "@/lib/hooks/useScrollLock";
+import cn from "@/lib/utils/cn";
 import { KeyboardEvent, MouseEvent, ReactNode, useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import { SelectContextProvider } from "./SelectContext";
 

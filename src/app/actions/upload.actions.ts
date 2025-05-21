@@ -1,9 +1,9 @@
 "use server";
 
-import apiError from "@/lib/apiError";
-import { getClient } from "@/lib/apolloClient";
 import { GET_SIGNED_UPLOAD_URL } from "@/lib/graphql/queries";
 import { SignedFileUploadInput } from "@/lib/graphql/types";
+import apiError from "@/lib/utils/apiError";
+import { getClient } from "@/lib/utils/apolloClient";
 
 export async function getSignedUploadUrl(input: SignedFileUploadInput) {
   try {

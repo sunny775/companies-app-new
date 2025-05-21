@@ -1,5 +1,5 @@
 import IconButton from "@/components/atoms/IconButton";
-import { formatDate } from "@/lib/formatDate";
+import { formatDate } from "@/lib/utils/formatDate";
 import { Company } from "@/lib/graphql/types";
 import { Clock, Users } from "lucide-react";
 

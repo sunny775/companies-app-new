@@ -1,5 +1,5 @@
 import Spinner from "@/components/atoms/loaders/Spinner";
-import cn from "@/lib/cn";
+import cn from "@/lib/utils/cn";
 import React from "react";
 import { VariantProps } from "tailwind-variants";
 import { buttonStyles } from "./button.styles";

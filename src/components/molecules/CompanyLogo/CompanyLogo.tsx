@@ -1,5 +1,5 @@
 import Avatar from "@/components/atoms/Avatar";
-import cn from "@/lib/cn";
+import cn from "@/lib/utils/cn";
 import { Briefcase } from "lucide-react";
 import { ReactNode } from "react";
 

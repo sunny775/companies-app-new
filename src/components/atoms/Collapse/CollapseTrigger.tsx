@@ -1,6 +1,6 @@
 "use client";
 
-import cn from "@/lib/cn";
+import cn from "@/lib/utils/cn";
 import { ChevronDown } from "lucide-react";
 import React, { ComponentProps, ElementType, ReactNode } from "react";
 import { tv } from "tailwind-variants";

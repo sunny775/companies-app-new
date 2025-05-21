@@ -1,6 +1,6 @@
-import apiError from "@/lib/apiError";
-import { getClient } from "@/lib/apolloClient";
 import { GET_SIGNED_DOWNLOAD_URL } from "@/lib/graphql/queries";
+import apiError from "@/lib/utils/apiError";
+import { getClient } from "@/lib/utils/apolloClient";
 import { NextRequest, NextResponse } from "next/server";
 
 async function getSignedDownloadUrl(s3Key: string) {

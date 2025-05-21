@@ -1,7 +1,7 @@
 "use client";
 
-import cn from "@/lib/cn";
 import { Company } from "@/lib/graphql/types";
+import cn from "@/lib/utils/cn";
 import { ChevronUp } from "lucide-react";
 import { useMemo, useState } from "react";
 import { CompaniesList } from "./CompaniesList";

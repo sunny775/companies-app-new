@@ -7,7 +7,7 @@ import Spinner from "@/components/atoms/loaders/Spinner";
 import { useToast } from "@/components/atoms/Toast";
 import CompanyPreview from "@/components/view/CompanyPreview";
 import { Company, UpdateCompanyInput } from "@/lib/graphql/types";
-import { validateSchema } from "@/lib/zod";
+import { validateSchema } from "@/lib/utils/zod";
 import { Plus } from "lucide-react";
 import { Dispatch, SetStateAction, useState } from "react";
 import { z } from "zod";

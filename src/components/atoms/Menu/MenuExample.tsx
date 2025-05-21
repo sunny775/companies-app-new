@@ -1,10 +1,10 @@
 "use client";
 
-import cn from "@/lib/cn";
+import cn from "@/lib/utils/cn";
 import { Bell, Copy, Edit, LogOut, MoreVertical, Settings, Trash, User } from "lucide-react";
 import { ComponentProps } from "react";
-import Menu from "./index";
 import IconButton from "../IconButton";
+import Menu from "./index";
 
 export default function MenuExample({ className, ...props }: ComponentProps<"div">) {
   return (
@@ -98,7 +98,9 @@ export default function MenuExample({ className, ...props }: ComponentProps<"div
         <h2 className="text-xl font-semibold">Icon Button Menu</h2>
         <Menu>
           <Menu.Trigger asChild>
-            <IconButton><MoreVertical className="h-5 w-5" /></IconButton>
+            <IconButton>
+              <MoreVertical className="h-5 w-5" />
+            </IconButton>
           </Menu.Trigger>
           <Menu.Dropdown width="sm">
             <Menu.Item icon={<Edit className="h-4 w-4" />}>Edit</Menu.Item>

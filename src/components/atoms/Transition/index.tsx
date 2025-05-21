@@ -1,4 +1,4 @@
-import cn from "@/lib/cn";
+import cn from "@/lib/utils/cn";
 import React, { CSSProperties, ElementType, memo, ReactNode, useEffect, useRef, useState } from "react";
 
 export interface TransitionType {
@@ -93,4 +93,3 @@ const Transition = memo(
 Transition.displayName = "Transition Component";
 
 export default Transition;
-

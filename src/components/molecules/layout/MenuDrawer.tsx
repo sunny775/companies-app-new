@@ -1,6 +1,6 @@
 "use client";
 import { logout } from "@/app/actions/auth.actions";
-import cn from "@/lib/cn";
+import cn from "@/lib/utils/cn";
 import { Home, LogOutIcon, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useActionState, useState } from "react";
@@ -8,6 +8,7 @@ import Button from "../../atoms/Button";
 import { buttonStyles } from "../../atoms/Button/button.styles";
 import Drawer from "../../atoms/Drawer";
 import IconButton from "../../atoms/IconButton";
+import ThemeToggle from "../ThemeToggle";
 
 const MenuDrawer = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -39,40 +40,36 @@ const MenuDrawer = () => {
         </Drawer.Header>
 
         <Drawer.Body>
-          <div className="flex flex-col gap-4 p-4">
+          <div className="flex flex-col gap-4">
             <Link
               href="/companies"
               title="Home"
-              className={cn(
-                linkStyles.base(),
-                linkStyles.default(),
-                "flex items-center gap-3 border-0  shadow-none hover:shadow-none hover:text-green-600"
-              )}
+              className={cn(linkStyles.base(), linkStyles.info(), "flex items-center gap-3")}
             >
               <Home className="size-5" />
               <span>Companies</span>
             </Link>
 
-            <form action={formAction} className="w-full">
-              <Button
-                disabled={isPending}
-                type="submit"
-                variant="ghost"
-                className="w-full flex items-center gap-3 border-0  shadow-none hover:shadow-none hover:text-green-600"
-              >
-                <LogOutIcon className="size-5" />
-                Sign Out
-              </Button>
-            </form>
+            <ThemeToggle />
+
             {errorMessage && <div>{errorMessage}</div>}
           </div>
         </Drawer.Body>
 
         <Drawer.Footer>
-          <Button variant="outlined" onClick={() => setIsOpen(false)}>
-            Cancel
-          </Button>
-          <Button onClick={() => setIsOpen(false)}>Apply</Button>
+          <form action={formAction}>
+            <Button
+              disabled={isPending}
+              type="submit"
+              variant="ghost"
+              color="error"
+              className="flex items-center gap-3"
+            >
+              <LogOutIcon className="size-5" />
+              Sign Out
+            </Button>
+          </form>
+          <Button onClick={() => setIsOpen(false)}>Cancel</Button>
         </Drawer.Footer>
       </Drawer>
     </>

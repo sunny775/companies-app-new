@@ -2,8 +2,8 @@ import countriesApiError, { getCountries } from "@/app/actions/countries.actions
 import Input from "@/components/atoms/Input";
 import Label from "@/components/atoms/Label";
 import Select from "@/components/atoms/Select";
-import cn from "@/lib/cn";
-import { splitCamelPascalCase } from "@/lib/splitCamelCasePascalCase";
+import cn from "@/lib/utils/cn";
+import { splitCamelPascalCase } from "@/lib/utils/splitCamelCasePascalCase";
 import { useEffect, useId, useState } from "react";
 import { FieldValues } from "react-hook-form";
 import { FormFieldProps, getNestedFieldName } from "./FormField";

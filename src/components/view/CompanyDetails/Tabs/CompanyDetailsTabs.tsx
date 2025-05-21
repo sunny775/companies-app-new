@@ -1,9 +1,9 @@
 import IconButton from "@/components/atoms/IconButton";
 import Menu from "@/components/atoms/Menu";
 import Tabs from "@/components/atoms/Tabs";
-import cn from "@/lib/cn";
 import { Company } from "@/lib/graphql/types";
 import { useLocalStorage } from "@/lib/hooks/useLocalStorage";
+import cn from "@/lib/utils/cn";
 import { Activity, Bookmark, Download, FileText, MapPin, MoreVertical, Printer, User } from "lucide-react";
 import { useParams } from "next/navigation";
 import { AddressesDetails } from "./AddressesDetails";

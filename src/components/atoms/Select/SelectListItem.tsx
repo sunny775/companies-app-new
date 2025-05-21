@@ -1,5 +1,5 @@
 "use client";
-import cn from "@/lib/cn";
+import cn from "@/lib/utils/cn";
 import { Check } from "lucide-react";
 import { MouseEventHandler, ReactNode } from "react";
 import { useSelect } from "./SelectContext";

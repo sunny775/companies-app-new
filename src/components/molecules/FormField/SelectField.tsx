@@ -1,7 +1,7 @@
 import Label, { LabelProps } from "@/components/atoms/Label";
 import Select from "@/components/atoms/Select";
-import cn from "@/lib/cn";
-import { splitCamelPascalCase } from "@/lib/splitCamelCasePascalCase";
+import cn from "@/lib/utils/cn";
+import { splitCamelPascalCase } from "@/lib/utils/splitCamelCasePascalCase";
 import { useId, useState } from "react";
 import { getNestedFieldName } from "./FormField";
 
