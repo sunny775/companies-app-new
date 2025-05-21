@@ -8,7 +8,6 @@ import Button from "../../atoms/Button";
 import { buttonStyles } from "../../atoms/Button/button.styles";
 import Drawer from "../../atoms/Drawer";
 import IconButton from "../../atoms/IconButton";
-import ThemeToggle from "../ThemeToggle";
 
 const MenuDrawer = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -49,8 +48,6 @@ const MenuDrawer = () => {
               <Home className="size-5" />
               <span>Companies</span>
             </Link>
-
-            <ThemeToggle />
 
             {errorMessage && <div>{errorMessage}</div>}
           </div>

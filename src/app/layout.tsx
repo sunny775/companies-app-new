@@ -1,7 +1,6 @@
 import { ToastProvider } from "@/components/atoms/Toast";
 import Footer from "@/components/molecules/layout/Footer";
 import Header from "@/components/molecules/layout/Header";
-import { themeScriptProps } from "@/lib/utils/getTheme";
 import type { Metadata } from "next";
 import { Rubik } from "next/font/google";
 import "./styles/globals.css";
@@ -22,10 +21,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head>
-        <script {...themeScriptProps} />
-      </head>
+    <html lang="en">
       <body className={`${rubik.className}  antialiased`}>
         <Header />
         <main className={"min-h-[calc(100vh-4rem)]"}>
