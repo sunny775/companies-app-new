@@ -9,10 +9,3 @@ import 'jest-extended'
     return <img alt="" {...props} />
   },
 })) */
-
-// Mock next/font
-/* jest.mock('next/font/google', () => ({
-  Inter: () => ({
-    className: 'mocked-inter-font',
-  }),
-})) */
