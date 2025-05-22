@@ -21,7 +21,7 @@ export const Button = ({ variant, size, color, fullWidth, className, children, l
 
   return (
     <button {...rest} disabled={rest.disabled ?? loading} className={classes} type={rest.type || "button"}>
-      {loading && <Spinner className={styles.spinner()} />}
+      {loading && <Spinner className={styles.spinner()}  />}
       {children}
     </button>
   );
