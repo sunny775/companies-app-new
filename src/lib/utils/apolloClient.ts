@@ -1,12 +1,12 @@
 import { from, HttpLink } from "@apollo/client";
-import { ApolloClient, InMemoryCache, registerApolloClient } from "@apollo/experimental-nextjs-app-support";
-
 import { removeTypenameFromVariables } from "@apollo/client/link/remove-typename";
+import { ApolloClient, InMemoryCache, registerApolloClient } from "@apollo/experimental-nextjs-app-support";
+import { GRAPHQL_API_ENDPOINT } from "../constants";
 
 const removeTypenameLink = removeTypenameFromVariables();
 
 const httpLink = new HttpLink({
-  uri: "https://be2-fe-task-us-east-1-staging.dcsdevelopment.me/graphql",
+  uri: GRAPHQL_API_ENDPOINT,
 });
 
 const link = from([removeTypenameLink, httpLink]);
