@@ -81,7 +81,7 @@ export const Toast = ({ id, content, type, onClose, autoClose }: ToastProps) => 
       <div className={styles.content()}>
         <ToastIcon type={type} />
         <div className="flex-grow">{content}</div>
-        <button onClick={handleClose} className={styles.closeBtn()}>
+        <button onClick={handleClose} className={styles.closeBtn()} title="close toast button">
           <X size={12} />
         </button>
       </div>

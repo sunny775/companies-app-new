@@ -90,7 +90,7 @@ export function SelectRoot({
   // Scroll focused option into view when focused index changes
   useEffect(() => {
     if (isOpen && focusedIndex >= 0 && optionsRef.current[focusedIndex]) {
-      optionsRef.current[focusedIndex]?.scrollIntoView({
+      optionsRef.current[focusedIndex]?.scrollIntoView?.({
         block: "nearest",
       });
     }

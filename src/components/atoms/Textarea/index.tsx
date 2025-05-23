@@ -1,4 +1,4 @@
-import { ComponentProps, ReactNode } from "react";
+import { ComponentProps } from "react";
 import { VariantProps } from "tailwind-variants";
 import { inputStyles } from "../Input/input.styles";
 
@@ -6,17 +6,16 @@ export type TextareaProps = ComponentProps<"textarea"> &
   VariantProps<typeof inputStyles> & {
     error?: boolean;
     success?: boolean;
-    icon?: ReactNode;
     containerProps?: ComponentProps<"div">;
     className?: string;
   };
 
 export const Textarea = ({
+  rows,
   size,
   color,
   error,
   success,
-  icon,
   disabled,
   containerProps,
   className,
@@ -25,7 +24,6 @@ export const Textarea = ({
   ...rest
 }: TextareaProps) => {
   const styles = inputStyles({
-    icon: !!icon,
     disabled,
     size,
     color: success ? "success" : error ? "error" : color,
@@ -36,8 +34,7 @@ export const Textarea = ({
 
   return (
     <div {...containerProps} className={containerClasses}>
-      {icon && <div className={styles.icon()}>{icon}</div>}
-      <textarea rows={5} id={id} ref={ref} className={textareaClasses} {...rest} />
+      <textarea {...rest} rows={rows || 5} id={id} ref={ref} className={textareaClasses} disabled={disabled} />
     </div>
   );
 };
