@@ -1,6 +1,6 @@
 "use client";
 
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useId, useState } from "react";
 import { createPortal } from "react-dom";
 import { Toast } from "./Toast";
 import { ToastContext, ToastContextValue, ToastItemType, ToastOptions, ToastPosition, ToastType } from "./ToastContext";
@@ -33,6 +33,8 @@ const getPositionClass = (position: ToastPosition): string => {
 
 export const ToastProvider = ({ position = ToastPosition.TOP_RIGHT, children }: ToastProviderProps) => {
   const [mounted, setMounted] = useState(false);
+
+  //const id = useId();
 
   useEffect(() => {
     setMounted(true);

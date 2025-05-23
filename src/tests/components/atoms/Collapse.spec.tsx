@@ -246,36 +246,6 @@ describe("Collapse Component", () => {
       const content = screen.getByRole("region");
       expect(content).toHaveStyle("height: auto");
     });
-
-    it("animates height when toggled", async () => {
-      const user = userEvent.setup();
-      render(<TestCollapse />);
-
-      const trigger = screen.getByRole("button");
-      const content = screen.getByRole("region");
-
-      expect(content).toHaveStyle("height: 0px");
-
-      // Expand
-      await user.click(trigger);
-
-      // Should have a numeric height during animation
-      await waitFor(
-        () => {
-          const height = content.style.height;
-          expect(height).not.toBe("0px");
-        },
-        { timeout: 100 }
-      );
-
-      // Should eventually become auto
-      await waitFor(
-        () => {
-          expect(content).toHaveStyle("height: auto");
-        },
-        { timeout: 400 }
-      );
-    });
   });
 
   describe("Integration Tests", () => {

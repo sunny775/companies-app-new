@@ -1,5 +1,4 @@
 import Alert, { AlertProps } from "@/components/atoms/Alert";
-import { IconButtonProps } from "@/components/atoms/IconButton";
 import { TransitionProps } from "@/components/atoms/Transition";
 import { render, screen, userEvent } from "@/tests/test-utils";
 import { ClassValue } from "clsx";
@@ -9,17 +8,6 @@ jest.mock("@/components/atoms/Transition", () => {
   return {
     __esModule: true,
     default: ({ show, children }: TransitionProps) => (show ? <div>{children}</div> : null),
-  };
-});
-
-jest.mock("@/components/atoms/IconButton", () => {
-  return {
-    __esModule: true,
-    default: ({ children, onClick, ...props }: IconButtonProps) => (
-      <button data-testid="close-button" onClick={onClick} {...props}>
-        {children}
-      </button>
-    ),
   };
 });
 

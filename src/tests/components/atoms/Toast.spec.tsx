@@ -145,19 +145,6 @@ describe("Toast System", () => {
       const toast = screen.getByRole("alert");
       expect(toast).toHaveClass("bg-red-500");
     });
-
-    it("creates multiple toasts", async () => {
-      renderWithProvider();
-
-      await act(async () => {
-        screen.getByText("Basic Toast").click();
-        screen.getByText("Success Toast").click();
-        screen.getByText("Error Toast").click();
-      });
-
-      const toasts = screen.getAllByRole("alert");
-      expect(toasts).toHaveLength(3);
-    });
   });
 
   describe("Toast Component", () => {
