@@ -1,4 +1,4 @@
-import { ToastPosition, ToastType } from "./";
+import { ToastPosition, ToastType } from ".";
 import { ToastProvider } from "./ToastProvider";
 import { useToast } from "./useToast";
 

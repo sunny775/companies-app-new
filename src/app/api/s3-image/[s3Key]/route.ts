@@ -15,7 +15,8 @@ async function getSignedDownloadUrl(s3Key: string) {
   }
 }
 
-export async function GET(request: NextRequest, { params }: { params: { s3Key: string } }) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ s3Key: string }> }
+) {
   const { s3Key } = await params;
 
   try {

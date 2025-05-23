@@ -1,13 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import DialogExample from "../atoms/Dialog/DialogExample";
-import DrawerExample from "../atoms/Drawer/DrawerExample";
-import MenuExample from "../atoms/Menu/MenuExample";
+import DialogExample from "../atoms/Dialog/Dialog.Example";
+import DrawerExample from "../atoms/Drawer/Drawer.Example";
+import MenuExample from "../atoms/Menu/Menu.Example";
 import Select from "../atoms/Select";
-import { StepperExample } from "../atoms/Stepper/StepperExample";
-import { TabsExample } from "../atoms/Tabs/TabsExample";
-import { ToastExample } from "../atoms/Toast/ToastExample";
+import { StepperExample } from "../atoms/Stepper/Stepper.Example";
+import { TabsExample } from "../atoms/Tabs/Tabs.Example";
+import { ToastExample } from "../atoms/Toast/Toast.Example";
 import { data } from "./data";
 
 // const data = ["Red", "Orange", "Yellow", "Green", "Cyan", "Blue", "Purple", "Pink", "Maroon", "Black", "White"];
