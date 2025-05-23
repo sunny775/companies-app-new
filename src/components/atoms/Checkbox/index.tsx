@@ -63,7 +63,7 @@ export const Checkbox = ({
 
   const styles = checkboxStyles({ color, disabled });
 
-  const rootStyles = styles.base({ className });
+  const rootStyles = styles.base();
 
   const containerClasses = styles.container({ className: containerProps?.className });
 
@@ -74,7 +74,7 @@ export const Checkbox = ({
   return (
     <div ref={ref} className={rootStyles}>
       <div {...containerProps} className={containerClasses}>
-        {label && (
+        {!!label && (
           <label {...labelProps} className={labelClasses} htmlFor={rest.id || checkboxId}>
             {label}
           </label>
@@ -84,10 +84,12 @@ export const Checkbox = ({
           ref={inputRef}
           type="checkbox"
           disabled={disabled}
-          className={styles.input()}
+          className={styles.input({className})}
           id={rest.id || checkboxId}
         />
-        <span className={iconContainerClasses}>{icon || <Check className="w-3.5 h-3.5" strokeWidth={3} />}</span>
+        <span {...iconProps} className={iconContainerClasses}>
+          {icon || <Check className="w-3.5 h-3.5" strokeWidth={3} />}
+        </span>
       </div>
     </div>
   );

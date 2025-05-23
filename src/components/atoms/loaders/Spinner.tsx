@@ -1,7 +1,9 @@
 import cn from "@/lib/utils/cn";
 import { ComponentProps } from "react";
 
-export default function Spinner({ className, ...props }: ComponentProps<"svg">) {
+export type Spinnerprops = ComponentProps<"svg">;
+
+export default function Spinner({ className, ...props }: Spinnerprops) {
   return (
     <svg
       viewBox="0 0 24 24"

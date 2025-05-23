@@ -25,9 +25,9 @@ export const Alert = ({
   animation,
   ...rest
 }: AlertProps) => {
-  const styles = alertStyles({ variant, className });
+  const styles = alertStyles({ variant });
 
-  const classes = styles.base();
+  const classes = styles.base({ className });
   const actionClasses = styles.action();
 
   const defaultAnimation = {
@@ -44,10 +44,16 @@ export const Alert = ({
   return (
     <Transition show={!!open} {...appliedAnimation}>
       <div {...rest} role="alert" className={classes}>
-        {icon && <div className="shrink-0">{icon}</div>}
-        <div className={cn("mr-12", { "ml-3": icon })}>{children}</div>
+        {!!icon && <div className="shrink-0">{icon}</div>}
+        <div className={cn("mr-12", { "ml-3": !!icon })}>{children}</div>
         {onClose && !action && (
-          <IconButton onClick={onClose} size="sm" variant={variant} className={actionClasses}>
+          <IconButton
+            onClick={onClose}
+            size="sm"
+            variant={variant}
+            className={actionClasses}
+            title="alert close button"
+          >
             <X className="size-5" />
           </IconButton>
         )}
