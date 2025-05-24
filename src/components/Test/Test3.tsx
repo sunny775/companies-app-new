@@ -32,7 +32,7 @@ export function Test3() {
   return (
     <div className="flex flex-col items-center justify-center gap-4">
       <CardTest />
-      <Checkbox />
+      <Checkbox label=" Is mailing address is different from registered address ?" />
       <Checkbox color="success" />
       <Checkbox color="error" />
       <input type="checkbox" />

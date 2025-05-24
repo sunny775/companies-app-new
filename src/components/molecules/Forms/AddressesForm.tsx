@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import SelectField from "../FormField/SelectField";
 import { FormAddress as Address, addressSchema } from "./schema/createCompany.schema";
+import Checkbox from "@/components/atoms/Checkbox";
 
 interface Props {
   onSubmit: (data: Address) => void;
@@ -105,14 +106,11 @@ export default function AddressesForm({ onSubmit, defaultValues, children }: Pro
         ))}
       </fieldset>
       <div className="my-8">
-        <input
-          type="checkbox"
+        <Checkbox
           id="isMailingAdressDifferent"
           {...register("isMailingAddressDifferentFromRegisteredAddress")}
+          label=" Is mailing address is different from registered address ?"
         />
-        <label htmlFor="isMailingAdressDifferent" className="ml-2">
-          Is mailing address is different from registered address ?
-        </label>
       </div>
 
       {isMailingAddressDifferent && (
