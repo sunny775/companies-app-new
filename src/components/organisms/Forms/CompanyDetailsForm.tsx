@@ -2,7 +2,7 @@ import FormField, { InputType } from "@/components/molecules/FormField/FormField
 import TextareaField from "@/components/molecules/FormField/TextareaField";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import PhoneFormField from "../FormField/PhoneField";
+import PhoneFormField from "../../molecules/FormField/PhoneField";
 import { FormCompanyBasicInfo as CompanyBasicInfo, companyBasicInfoSchema } from "./schema/createCompany.schema";
 
 interface Props {

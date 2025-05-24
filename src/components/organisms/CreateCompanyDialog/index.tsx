@@ -5,7 +5,7 @@ import Button from "@/components/atoms/Button";
 import Dialog from "@/components/atoms/Dialog";
 import Spinner from "@/components/atoms/loaders/Spinner";
 import { useToast } from "@/components/atoms/Toast";
-import CompanyPreview from "@/components/view/CompanyPreview";
+import CompanyPreview from "@/components/views/CompanyPreview";
 import { Company, UpdateCompanyInput } from "@/lib/graphql/types";
 import { validateSchema } from "@/lib/utils/zod";
 import { Plus } from "lucide-react";

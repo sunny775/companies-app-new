@@ -1,6 +1,6 @@
 "use client";
 
-import { createCompanySchema } from "@/components/molecules/Forms/schema/createCompany.schema";
+import { createCompanySchema } from "@/components/organisms/Forms/schema/createCompany.schema";
 import { Building2, MapPin, User } from "lucide-react";
 import { z } from "zod";
 import Collapse from "../../atoms/Collapse";

@@ -1,5 +1,5 @@
 import { getCompany } from "@/app/actions/companies.actions";
-import CompanyDetails from "@/components/view/CompanyDetails";
+import CompanyDetails from "@/components/views/CompanyDetails";
 export default async function CompanyProfile(props: { params: Promise<{ companyId: string }> }) {
   const params = await props.params;
 

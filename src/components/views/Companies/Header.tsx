@@ -1,4 +1,4 @@
-import { CreateCompanyDialog } from "@/components/molecules/CreateCompanyDialog";
+import { CreateCompanyDialog } from "@/components/organisms/CreateCompanyDialog";
 import { Company } from "@/lib/graphql/types";
 import { Dispatch, SetStateAction } from "react";
 

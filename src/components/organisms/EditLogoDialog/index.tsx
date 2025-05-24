@@ -7,7 +7,7 @@ import Dialog from "@/components/atoms/Dialog";
 import IconButton from "@/components/atoms/IconButton";
 import Spinner from "@/components/atoms/loaders/Spinner";
 import { useToast } from "@/components/atoms/Toast";
-import LogoUploadForm from "@/components/molecules/Forms/LogoUploadForm";
+import LogoUploadForm from "@/components/organisms/Forms/LogoUploadForm";
 import { Company } from "@/lib/graphql/types";
 import { Edit } from "lucide-react";
 import { Dispatch, SetStateAction, useState } from "react";
@@ -26,7 +26,7 @@ export const EditLogoDialog = ({ setCompany, company }: Props) => {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-   const toast = useToast();
+  const toast = useToast();
 
   async function handleUpdateCompany(files: FileList | null) {
     setLoading(true);
@@ -44,13 +44,12 @@ export const EditLogoDialog = ({ setCompany, company }: Props) => {
         });
       }
 
-      toast.success("Company Updated Successfully!")
+      toast.success("Company Updated Successfully!");
 
       setIsOpen(false);
-
     } catch (error) {
       console.log(error);
-      setErrorMessage(() => (error instanceof Error ? error.message : "Error creating company"));
+      setErrorMessage(() => (error instanceof Error ? error.message : "Error updating company"));
     } finally {
       setLoading(false);
     }

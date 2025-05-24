@@ -1,13 +1,13 @@
 "use client";
 import { logout } from "@/app/actions/auth.actions";
+import Button from "@/components/atoms/Button";
+import { buttonStyles } from "@/components/atoms/Button/button.styles";
+import Drawer from "@/components/atoms/Drawer";
+import IconButton from "@/components/atoms/IconButton";
 import cn from "@/lib/utils/cn";
 import { Home, LogOutIcon, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useActionState, useState } from "react";
-import Button from "../../atoms/Button";
-import { buttonStyles } from "../../atoms/Button/button.styles";
-import Drawer from "../../atoms/Drawer";
-import IconButton from "../../atoms/IconButton";
 
 const MenuDrawer = () => {
   const [isOpen, setIsOpen] = useState(false);

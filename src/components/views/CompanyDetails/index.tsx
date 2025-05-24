@@ -2,10 +2,10 @@
 
 import { FacebookIcon, LinkedinIcon } from "@/assets/BrandIcons";
 import { CompanyLogo } from "@/components/molecules/CompanyLogo/CompanyLogo";
+import { EditLogoDialog } from "@/components/organisms/EditLogoDialog";
 import { Company } from "@/lib/graphql/types";
 import { Briefcase, Building2, Globe, MapPin, Users } from "lucide-react";
 import { useState } from "react";
-import { EditLogoDialog } from "./EditLogoDialog";
 import { CompanyDetailsTabs } from "./Tabs/CompanyDetailsTabs";
 
 interface Props {
