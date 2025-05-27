@@ -1,14 +1,8 @@
 import * as fs from "fs/promises";
 import * as path from "path";
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
 
 /**
- * Minimal file-based Database for storing Company IDs 
+ * Minimal file-based Database for storing Company IDs
  */
 export class CompanyIdDb {
   private dbPath: string;
@@ -53,6 +47,21 @@ export class CompanyIdDb {
   }
 
   /**
+   * Refresh data from disk
+   */
+  /* private async refresh(): Promise<void> {
+    try {
+      const data = await fs.readFile(this.dbFile, "utf8");
+      this.companyIds = JSON.parse(data);
+    } catch (err) {
+      if ((err as NodeJS.ErrnoException).code !== "ENOENT") {
+        throw err;
+      }
+      this.companyIds = [];
+    }
+  } */
+
+  /**
    * Save current state to disk
    */
   private async save(): Promise<void> {
@@ -67,6 +76,7 @@ export class CompanyIdDb {
    * Get all company IDs
    */
   async getCompanyIds(): Promise<string[]> {
+    //await this.refresh();
     return [...this.companyIds];
   }
 
@@ -113,4 +123,13 @@ export class CompanyIdDb {
   }
 }
 
-export const db = await CompanyIdDb.createInstance(path.join(__dirname, "data"));
+let dbInstance: CompanyIdDb | null = null;
+
+export async function getDb(): Promise<CompanyIdDb> {
+  if (!dbInstance) {
+    const dataPath =  path.join(process.cwd(), "data")
+
+    dbInstance = await CompanyIdDb.createInstance(dataPath);
+  }
+  return dbInstance;
+}

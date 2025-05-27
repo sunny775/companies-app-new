@@ -1,6 +1,6 @@
 "use server";
 
-import { db } from "@/lib/db/companyIdDb";
+import { getDb } from "@/lib/db/companyIdDb";
 import { CREATE_COMPANY, UPDATE_COMPANY } from "@/lib/graphql/mutations";
 import { GET_COMPANIES, GET_COMPANY } from "@/lib/graphql/queries";
 import { Company, UpdateCompanyInput } from "@/lib/graphql/types";
@@ -21,6 +21,7 @@ export async function getCompany(id: string) {
 }
 
 export async function getCompanies() {
+  const db = await getDb();
   const companyIds = await db.getCompanyIds();
   if (!companyIds.length) {
     return { data: [], loading: false };
@@ -57,6 +58,8 @@ export async function createCompany(args: UpdateCompanyInput, file: File) {
     console.log(data);
 
     const company = data?.createCompany.company;
+
+    const db = await getDb();
 
     if (company) await db.addCompanyId(company?.id);
 
