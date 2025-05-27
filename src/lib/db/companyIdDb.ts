@@ -47,21 +47,6 @@ export class CompanyIdDb {
   }
 
   /**
-   * Refresh data from disk
-   */
-  /* private async refresh(): Promise<void> {
-    try {
-      const data = await fs.readFile(this.dbFile, "utf8");
-      this.companyIds = JSON.parse(data);
-    } catch (err) {
-      if ((err as NodeJS.ErrnoException).code !== "ENOENT") {
-        throw err;
-      }
-      this.companyIds = [];
-    }
-  } */
-
-  /**
    * Save current state to disk
    */
   private async save(): Promise<void> {
@@ -105,21 +90,6 @@ export class CompanyIdDb {
     }
 
     return newIds;
-  }
-
-  /**
-   * Remove a company ID
-   */
-  async removeCompanyId(id: string): Promise<boolean> {
-    const initialLength = this.companyIds.length;
-    this.companyIds = this.companyIds.filter((companyId) => companyId !== id);
-
-    if (this.companyIds.length !== initialLength) {
-      await this.save();
-      return true;
-    }
-
-    return false;
   }
 }
 

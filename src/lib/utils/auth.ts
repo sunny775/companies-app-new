@@ -3,7 +3,24 @@ import GitHub from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
 import { Provider } from "next-auth/providers/index";
 
-const providers: Provider[] = [GitHub, Google];
+const providers: Provider[] = [
+  GitHub({
+    authorization: {
+      params: {
+        prompt: "consent",
+      },
+    },
+  }),
+  Google({
+    authorization: {
+      params: {
+        prompt: "consent",
+        access_type: "offline",
+        response_type: "code",
+      },
+    },
+  }),
+];
 
 export const providerMap = providers.map((provider) => {
   if (typeof provider === "function") {
