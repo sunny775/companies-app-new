@@ -155,7 +155,7 @@ npm run lint            # ESLint with Next.js configuration
 ### Company Management
 
 #### Creating a New Company
-1. Navigate to `/companies` and click "ADD CCOMPANY" button
+1. Navigate to `/companies` and click "ADD COMPANY" button
 2. Complete the multi-step form process:
    - **Company Details**: Name, description, industry, size
    - **Contact Information**: Email, phone, website

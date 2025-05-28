@@ -7,6 +7,7 @@ import Spinner from "@/components/atoms/loaders/Spinner";
 import { useToast } from "@/components/atoms/Toast";
 import CompanyPreview from "@/components/views/CompanyPreview";
 import { Company, UpdateCompanyInput } from "@/lib/graphql/types";
+import cn from "@/lib/utils/cn";
 import { validateSchema } from "@/lib/utils/zod";
 import { Plus } from "lucide-react";
 import { Dispatch, SetStateAction, useState } from "react";
@@ -29,6 +30,7 @@ interface FormData extends Partial<z.infer<typeof createCompanySchema>> {
 
 interface CreateCompanyDialogProps {
   setCompanies: Dispatch<SetStateAction<Company[]>>;
+  className?: string;
 }
 
 function validateAndFormatFormData(formData: FormData) {
@@ -48,7 +50,7 @@ function validateAndFormatFormData(formData: FormData) {
   return { input };
 }
 
-export function CreateCompanyDialog({ setCompanies }: CreateCompanyDialogProps) {
+export function CreateCompanyDialog({ setCompanies, className }: CreateCompanyDialogProps) {
   const [activeStep, setActiveStep] = useState(0);
   const [isLastStep, setIsLastStep] = useState(false);
   const [isFirstStep, setIsFirstStep] = useState(false);
@@ -177,7 +179,7 @@ export function CreateCompanyDialog({ setCompanies }: CreateCompanyDialogProps) 
 
   return (
     <>
-      <Button onClick={openDialog} className="flex items-center gap-2">
+      <Button onClick={openDialog} className={cn("flex items-center justify-center gap-2", className)}>
         <Plus className="w-5 h-5 mr-2" />
         Add Company
       </Button>
