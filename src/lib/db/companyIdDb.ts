@@ -1,6 +1,13 @@
 import * as fs from "fs/promises";
 import * as path from "path";
 
+// Add this interface and declaration
+type GlobalWithDb =  {
+  __companyIdDb?: CompanyIdDb;
+} & typeof globalThis
+
+declare const global: GlobalWithDb;
+
 /**
  * Minimal file-based Database for storing Company IDs
  */
@@ -57,13 +64,17 @@ export class CompanyIdDb {
     }
   }
 
-  /**
-   * Get all company IDs
-   */
   async getCompanyIds(): Promise<string[]> {
-    //await this.refresh();
-    return [...this.companyIds];
+  try {
+    const data = await fs.readFile(this.dbFile, "utf8");
+    return JSON.parse(data);
+  } catch (err) {
+    if ((err as NodeJS.ErrnoException).code === "ENOENT") {
+      return [];
+    }
+    throw err;
   }
+}
 
   /**
    * Add a new company ID
@@ -93,13 +104,10 @@ export class CompanyIdDb {
   }
 }
 
-let dbInstance: CompanyIdDb | null = null;
-
 export async function getDb(): Promise<CompanyIdDb> {
-  if (!dbInstance) {
-    const dataPath =  path.join(process.cwd(), "data")
-
-    dbInstance = await CompanyIdDb.createInstance(dataPath);
+  if (!global.__companyIdDb) {
+    const dataPath = path.join(process.cwd(), "data");
+    global.__companyIdDb = await CompanyIdDb.createInstance(dataPath);
   }
-  return dbInstance;
+  return global.__companyIdDb;
 }

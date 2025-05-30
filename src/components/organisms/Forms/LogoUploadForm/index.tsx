@@ -1,16 +1,35 @@
 "use client";
 import { CloudUpload } from "lucide-react";
-import { ChangeEvent, FormEvent, useRef, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
+import { ImagePreview, ImagePreviewType } from "./ImagePreview";
 
 interface Props {
   onSubmit: (data: FileList | null) => void;
   defaultValue: FileList | null;
   children: React.ReactNode;
 }
+
 export default function LogoUploadForm({ onSubmit, children, defaultValue }: Props) {
   const [files, setFiles] = useState<FileList | null>(defaultValue);
+  const [imagePreview, setImagePreview] = useState<ImagePreviewType | null>(null);
 
   const inputRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    if (files?.length) {
+      const file = files[0];
+      setImagePreview({ url: URL.createObjectURL(file), name: file.name, size: file.size });
+    } else if (imagePreview) {
+      setImagePreview(null);
+      URL.revokeObjectURL(imagePreview.url);
+    }
+    return () => {
+      if (imagePreview) {
+        URL.revokeObjectURL(imagePreview.url);
+      }
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [files]);
 
   const open = () => {
     if (inputRef.current) {
@@ -21,6 +40,10 @@ export default function LogoUploadForm({ onSubmit, children, defaultValue }: Pro
 
   const reset = () => {
     setFiles(null);
+    if (imagePreview) {
+      setImagePreview(null);
+      URL.revokeObjectURL(imagePreview.url);
+    }
     if (inputRef.current) {
       inputRef.current.value = "";
     }
@@ -33,6 +56,8 @@ export default function LogoUploadForm({ onSubmit, children, defaultValue }: Pro
     if (files?.length) {
       if (files[0].size <= 2 * 1024 * 1024) {
         setFiles(files);
+        const file = files[0];
+        setImagePreview({ url: URL.createObjectURL(file), name: file.name, size: file.size });
       } else {
         alert("File too large! Max size is 2MB.");
         reset();
@@ -79,6 +104,8 @@ export default function LogoUploadForm({ onSubmit, children, defaultValue }: Pro
           </div>
         </div>
       </div>
+
+      <ImagePreview image={imagePreview} setImagePreview={setImagePreview} />
 
       <div className="flex gap-2 my-4 justify-end">{children}</div>
     </form>
