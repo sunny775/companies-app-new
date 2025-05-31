@@ -10,6 +10,8 @@ interface LogoProps {
 }
 
 export function CompanyLogo({ s3Key, className, placeholderIcon }: LogoProps) {
+  console.log(s3Key);
+  
   return s3Key ? (
     <Avatar
       src={`/api/s3-image/${s3Key}`}

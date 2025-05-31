@@ -1,4 +1,5 @@
 import { ToastProvider } from "@/components/atoms/Toast";
+import { ApolloWrapper } from "@/components/molecules/ApolloWrapper";
 import Footer from "@/components/molecules/layout/Footer";
 import Header from "@/components/molecules/layout/Header";
 import type { Metadata } from "next";
@@ -25,7 +26,9 @@ export default function RootLayout({
       <body className={`${rubik.className}  antialiased`}>
         <Header />
         <main className={"min-h-[calc(100vh-4rem)]"}>
-          <ToastProvider>{children}</ToastProvider>
+          <ApolloWrapper>
+            <ToastProvider>{children}</ToastProvider>
+          </ApolloWrapper>
         </main>
         <Footer />
       </body>

@@ -2,7 +2,7 @@
 
 import { getDb } from "@/lib/db/companyIdDb";
 import { CREATE_COMPANY, UPDATE_COMPANY } from "@/lib/graphql/mutations";
-import { GET_COMPANIES, GET_COMPANY } from "@/lib/graphql/queries";
+import { GET_COMPANY } from "@/lib/graphql/queries";
 import { Company, UpdateCompanyInput } from "@/lib/graphql/types";
 import apiError from "@/lib/utils/apiError";
 import { getClient } from "@/lib/utils/apolloClient";
@@ -14,6 +14,7 @@ export async function getCompany(id: string) {
       query: GET_COMPANY,
       variables: { id },
     });
+    console.log(data);
     return { data: data.company, loading };
   } catch (error) {
     return { error: apiError(error) };
@@ -23,18 +24,24 @@ export async function getCompany(id: string) {
 export async function getCompanies() {
   const db = await getDb();
   const companyIds = await db.getCompanyIds();
+
   if (!companyIds.length) {
     return { data: [], loading: false };
   }
+
   try {
-    const { data, loading } = await getClient().query({
-      query: GET_COMPANIES(companyIds),
-    });
+    const results = await Promise.all(
+      companyIds.map(async (id) => {
+        const { data } = await getClient().query({
+          query: GET_COMPANY,
+          variables: { id },
+        });
+        return data.company;
+      })
+    );
 
-    return { data: Object.values(data), loading };
+    return { data: results, loading: false };
   } catch (error) {
-    console.log(error);
-
     return { error: apiError(error) };
   }
 }
@@ -55,9 +62,10 @@ export async function createCompany(args: UpdateCompanyInput, file: File) {
       variables: { input },
     });
 
-    console.log(data);
-
     const company = data?.createCompany.company;
+
+    //delete
+    console.log(data);
 
     const db = await getDb();
 
@@ -84,10 +92,26 @@ export async function updateCompany(company: Company, file: File) {
       logoS3Key: uploadResponse.s3Key,
     };
 
-    const { data } = await getClient().mutate({
+    const client = getClient();
+
+    const { data } = await client.mutate({
       mutation: UPDATE_COMPANY,
       variables: { input, companyId },
     });
+
+    if (data) {
+      console.log("Cache before eviction:", client.cache.extract());
+      console.log("Cache update failed, evicting all company queries");
+      client.cache.evict({
+        /* fieldName: "getCompany",*/
+        id: client.cache.identify({
+          __typename: "Company",
+          id: data.updateCompany.company.id,
+        }),
+      });
+      client.cache.gc();
+      console.log("After before eviction:", client.cache.extract());
+    }
 
     return { company: data?.updateCompany.company };
   } catch (error) {

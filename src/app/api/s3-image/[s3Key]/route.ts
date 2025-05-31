@@ -47,7 +47,6 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     return new NextResponse(imageData, {
       headers: {
         "Content-Type": contentType,
-        "Cache-Control": "public, max-age=31536000", // Cache for 1 year
       },
     });
   } catch (error) {

@@ -1,5 +1,5 @@
 import { gql, TypedDocumentNode } from "@apollo/client";
-import { GetCompaniesQuery, GetCompanyQuery, GetSignedDownloadUrlQuery, GetSignedUploadUrlQuery, SignedFileUploadInput } from "./types";
+import { GetCompanyQuery, GetSignedDownloadUrlQuery, GetSignedUploadUrlQuery, SignedFileUploadInput } from "./types";
 
 export const COMPANY_INFO_FRAGMENT = gql`
   fragment CompanyFeilds on Company {
@@ -41,16 +41,16 @@ export const COMPANY_INFO_FRAGMENT = gql`
   }
 `;
 
-export const GET_COMPANY: TypedDocumentNode<GetCompanyQuery, {id: string}> = gql`
+export const GET_COMPANY: TypedDocumentNode<GetCompanyQuery, { id: string }> = gql`
   query GetCompany($id: String!) {
-    company: getCompany (id: $id) {
+    company: getCompany(id: $id) {
       ...CompanyFeilds
     }
   }
   ${COMPANY_INFO_FRAGMENT}
 `;
 
-export const GET_COMPANIES = (companyIds: string[]): TypedDocumentNode<GetCompaniesQuery> => gql`
+/* export const GET_COMPANIES = (companyIds: string[]): TypedDocumentNode<GetCompaniesQuery> => gql`
   query GetCompanies {
     ${companyIds
       .map(
@@ -63,15 +63,15 @@ export const GET_COMPANIES = (companyIds: string[]): TypedDocumentNode<GetCompan
       .join("\n")}
   }
   ${COMPANY_INFO_FRAGMENT}
+`; */
+
+export const GET_COMPANY_IDS: TypedDocumentNode<{ companyIds: string[] }> = gql`
+  query GetCompanyIds {
+    companyIds @client
+  }
 `;
 
-export const GET_COMPANY_IDS: TypedDocumentNode<{companyIds: string[]}> =gql`
-query GetCompanyIds {
-  companyIds @client
-}
-`;
-
-export const GET_SIGNED_UPLOAD_URL: TypedDocumentNode<GetSignedUploadUrlQuery, {input: SignedFileUploadInput}> = gql`
+export const GET_SIGNED_UPLOAD_URL: TypedDocumentNode<GetSignedUploadUrlQuery, { input: SignedFileUploadInput }> = gql`
   query GetSignedUploadUrl($input: SignedFileUploadInput!) {
     signedUploadUrl: getSignedUploadUrl(input: $input) {
       url
@@ -80,7 +80,7 @@ export const GET_SIGNED_UPLOAD_URL: TypedDocumentNode<GetSignedUploadUrlQuery, {
   }
 `;
 
-export const GET_SIGNED_DOWNLOAD_URL: TypedDocumentNode<GetSignedDownloadUrlQuery, {s3Key: string}> = gql`
+export const GET_SIGNED_DOWNLOAD_URL: TypedDocumentNode<GetSignedDownloadUrlQuery, { s3Key: string }> = gql`
   query GetSignedDownloadUrl($s3Key: String!) {
     signedDownloadUrl: getSignedDownloadUrl(s3Key: $s3Key) {
       url
