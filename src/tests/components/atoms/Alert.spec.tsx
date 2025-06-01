@@ -1,10 +1,10 @@
-import Alert, { AlertProps } from "@/components/atoms/Alert";
-import { TransitionProps } from "@/components/atoms/Transition";
+import Alert, { AlertProps } from "@/components/ui/atoms/Alert";
+import { TransitionProps } from "@/components/ui/atoms/Transition";
 import { render, screen, userEvent } from "@/tests/test-utils";
 import { ClassValue } from "clsx";
 import { Info } from "lucide-react";
 
-jest.mock("@/components/atoms/Transition", () => {
+jest.mock("@/components/ui/atoms/Transition", () => {
   return {
     __esModule: true,
     default: ({ show, children }: TransitionProps) => (show ? <div>{children}</div> : null),

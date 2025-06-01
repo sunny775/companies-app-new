@@ -4,8 +4,8 @@ import Dialog, {
   DialogHeader,
   DialogProps,
   Dialog as DialogRoot,
-} from "@/components/atoms/Dialog";
-import { TransitionProps } from "@/components/atoms/Transition";
+} from "@/components/ui/atoms/Dialog";
+import { TransitionProps } from "@/components/ui/atoms/Transition";
 import { render, screen, userEvent } from "@/tests/test-utils";
 import React from "react";
 
@@ -17,7 +17,7 @@ jest.mock("@/lib/hooks/useScrollLock", () => ({
   }),
 }));
 
-jest.mock("@/components/atoms/Transition", () => {
+jest.mock("@/components/ui/atoms/Transition", () => {
   return function MockTransition({ show, children, className, ...props }: TransitionProps) {
     return show ? (
       <div className={className} data-testid="transition" {...props}>

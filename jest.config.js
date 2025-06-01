@@ -10,7 +10,7 @@ const config = {
   testEnvironment: "jsdom",
   testPathIgnorePatterns: ["<rootDir>/.next/", "<rootDir>/node_modules/", "<rootDir>/out/"],
   collectCoverageFrom: [
-    "src/components/atoms/**/*.{js,jsx,ts,tsx}",
+    "src/components/ui/atoms/**/*.{js,jsx,ts,tsx}",
     "!src/components/**/*.Example.tsx",
   ],
   coverageThreshold: {
@@ -20,7 +20,7 @@ const config = {
       lines: 80,
       statements: 80,
     },
-    "src/components/atoms": {
+    "src/components/ui/atoms": {
       branches: 70,
       functions: 80,
       lines: 85,
@@ -32,7 +32,6 @@ const config = {
     "\\.(jpg|jpeg|png|gif|webp|svg)$": "<rootDir>/src/tests/__mocks__/fileMock.ts",
     // Handle your @/* alias
     "^@/(.*)$": "<rootDir>/src/$1",
-    "^@/components/(.*)$": "<rootDir>/src/components/$1",
     "^@/app/(.*)$": "<rootDir>/src/app/$1",
     "^@/lib/(.*)$": "<rootDir>/src/lib/$1",
     "^@/assets/(.*)$": "<rootDir>/src/assets/$1",
@@ -44,14 +43,6 @@ const config = {
   testMatch: ["<rootDir>/src/**/*.spec.(ts|tsx)"],
   testTimeout: 90000,
   verbose: true,
-  transform: {
-    "^.+.tsx?$": [
-      "ts-jest",
-      {
-        tsconfig: "<rootDir>/src/tests/tsconfig.json",
-      },
-    ],
-  },
 };
 
 export default createJestConfig(config);

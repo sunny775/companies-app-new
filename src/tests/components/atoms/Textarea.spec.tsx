@@ -1,5 +1,5 @@
 import { render, screen, userEvent } from '@/tests/test-utils';
-import { Textarea } from '@/components/atoms/Textarea';
+import { Textarea } from '@/components/ui/atoms/Textarea';
 
 describe('Textarea Component', () => {
   

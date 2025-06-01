@@ -1,10 +1,10 @@
 import React from "react";
 import { render, screen, userEvent } from "@/tests/test-utils";
-import Tabs, { Tab, TabPanel, TabsBody, TabsHeader, Tabs as TabsRoot } from "@/components/atoms/Tabs";
+import Tabs, { Tab, TabPanel, TabsBody, TabsHeader, Tabs as TabsRoot } from "@/components/ui/atoms/Tabs";
 import { ClassValue } from "clsx";
-import { ButtonProps } from "@/components/atoms/Button";
+import { ButtonProps } from "@/components/ui/atoms/Button";
 
-jest.mock("@/components/atoms/Button", () => {
+jest.mock("@/components/ui/atoms/Button", () => {
   return function MockButton({ children, className, onClick, ...props }: ButtonProps) {
     return (
       <button className={className} onClick={onClick} {...props}>

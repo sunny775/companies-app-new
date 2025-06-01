@@ -1,4 +1,4 @@
-import Card, { CardBody, CardFooter, CardHeader, Card as CardRoot } from "@/components/atoms/Card";
+import Card, { CardBody, CardFooter, CardHeader, Card as CardRoot } from "@/components/ui/atoms/Card";
 import { render, screen } from "@/tests/test-utils";
 
 jest.mock("@/lib/utils/cn", () => ({

@@ -1,5 +1,5 @@
 import { render, screen } from '@/tests/test-utils';
-import Label from '@/components/atoms/Label';
+import Label from '@/components/ui/atoms/Label';
 
 describe('Label', () => {
   it('renders with default styles', () => {

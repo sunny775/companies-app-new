@@ -1,7 +1,7 @@
-import { ToastProvider } from "@/components/atoms/Toast";
-import { ApolloWrapper } from "@/components/molecules/ApolloWrapper";
-import Footer from "@/components/molecules/layout/Footer";
-import Header from "@/components/molecules/layout/Header";
+import { ApolloWrapper } from "@/components/ApolloWrapper";
+import { ToastProvider } from "@/components/ui/atoms/Toast";
+import Footer from "@/components/ui/molecules/layout/Footer";
+import Header from "@/components/ui/molecules/layout/Header";
 import type { Metadata } from "next";
 import { Rubik } from "next/font/google";
 import "./styles/globals.css";

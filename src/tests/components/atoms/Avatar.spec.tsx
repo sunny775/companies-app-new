@@ -1,4 +1,4 @@
-import Avatar, { AvatarProps } from "@/components/atoms/Avatar";
+import Avatar, { AvatarProps } from "@/components/ui/atoms/Avatar";
 import { render, screen } from "@/tests/test-utils";
 import { ClassValue } from "clsx";
 import { ComponentProps } from "react";

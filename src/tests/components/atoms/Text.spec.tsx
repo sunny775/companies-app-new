@@ -1,4 +1,4 @@
-import Text, { AsType } from "@/components/atoms/Text";
+import Text, { AsType } from "@/components/ui/atoms/Text";
 import { render, screen } from "@/tests/test-utils";
 import React from "react";
 

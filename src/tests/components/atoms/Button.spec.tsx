@@ -1,9 +1,9 @@
-import Button, { ButtonProps } from "@/components/atoms/Button";
-import { Spinnerprops } from "@/components/atoms/loaders/Spinner";
+import Button, { ButtonProps } from "@/components/ui/atoms/Button";
+import { Spinnerprops } from "@/components/ui/atoms/loaders/Spinner";
 import { render, screen, userEvent } from "@/tests/test-utils";
 import { ClassValue } from "clsx";
 
-jest.mock("@/components/atoms/loaders/Spinner", () => {
+jest.mock("@/components/ui/atoms/loaders/Spinner", () => {
   return {
     __esModule: true,
     default: ({ className, ...props }: Spinnerprops) => <svg data-testid="spinner" className={className} {...props} />,

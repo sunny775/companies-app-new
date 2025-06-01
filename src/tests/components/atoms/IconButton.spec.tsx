@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@/tests/test-utils';
-import IconButton, { IconButtonProps } from '@/components/atoms/IconButton';
+import IconButton, { IconButtonProps } from '@/components/ui/atoms/IconButton';
 
 const TestIcon = () => <svg data-testid="test-icon">Icon</svg>;
 

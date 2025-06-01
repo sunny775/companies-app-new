@@ -1,4 +1,4 @@
-import Menu from "@/components/atoms/Menu";
+import Menu from "@/components/ui/atoms/Menu";
 import { render, screen, userEvent } from "@/tests/test-utils";
 
 Object.defineProperty(HTMLElement.prototype, "scrollIntoView", {

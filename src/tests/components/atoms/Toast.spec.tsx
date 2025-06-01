@@ -1,6 +1,6 @@
-import { ToastPosition } from "@/components/atoms/Toast/ToastContext";
-import { ToastProvider } from "@/components/atoms/Toast/ToastProvider";
-import { useToast } from "@/components/atoms/Toast/useToast";
+import { ToastPosition } from "@/components/ui/atoms/Toast/ToastContext";
+import { ToastProvider } from "@/components/ui/atoms/Toast/ToastProvider";
+import { useToast } from "@/components/ui/atoms/Toast/useToast";
 import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 

@@ -1,6 +1,6 @@
 import { github, google } from "@/assets";
-import Button from "@/components/atoms/Button";
-import Logo from "@/components/molecules/Logo";
+import Button from "@/components/ui/atoms/Button";
+import Logo from "@/components/ui/molecules/Logo";
 import { providerMap, signIn } from "@/lib/utils/auth";
 import { AuthError } from "next-auth";
 import Image from "next/image";

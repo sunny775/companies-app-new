@@ -1,5 +1,5 @@
 import { render, screen, userEvent } from '@/tests/test-utils';
-import { Input } from '@/components/atoms/Input';
+import { Input } from '@/components/ui/atoms/Input';
 
 describe('Input Component', () => {
 

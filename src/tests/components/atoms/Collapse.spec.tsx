@@ -5,7 +5,7 @@ import Collapse, {
   Collapse as CollapseRoot,
   CollapseTrigger,
   CollapseTriggerProps,
-} from "@/components/atoms/Collapse";
+} from "@/components/ui/atoms/Collapse";
 import { render, screen, waitFor } from "@/tests/test-utils";
 import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";

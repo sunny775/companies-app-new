@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import Spinner from '@/components/atoms/loaders/Spinner';
+import Spinner from '@/components/ui/atoms/loaders/Spinner';
 
 describe('Spinner', () => {
   it('renders svg with default classes', () => {

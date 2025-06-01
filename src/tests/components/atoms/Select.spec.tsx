@@ -6,7 +6,7 @@ import Select, {
   SelectRoot,
   SelectRootProps,
   SelectTrigger,
-} from "@/components/atoms/Select";
+} from "@/components/ui/atoms/Select";
 import { render, screen, userEvent } from "@/tests/test-utils";
 import React from "react";
 import { ClassValue } from "tailwind-variants";

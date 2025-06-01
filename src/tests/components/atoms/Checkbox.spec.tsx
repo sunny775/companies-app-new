@@ -1,4 +1,4 @@
-import Checkbox from "@/components/atoms/Checkbox";
+import Checkbox from "@/components/ui/atoms/Checkbox";
 import "@testing-library/jest-dom";
 import { render, screen, userEvent } from '@/tests/test-utils'
 import { LucideProps, Star } from "lucide-react";

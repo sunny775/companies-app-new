@@ -1,7 +1,10 @@
-import { getCompany } from "@/app/actions/companies.actions";
-import CompanyDetails from "@/components/views/CompanyDetails";
-import { Custom404 } from "@/components/views/Custom404/Custom404";
+import CompanyDetails from "@/components/ui/views/CompanyDetails";
+import { CompanyDetailsSkeleton } from "@/components/ui/views/Skeleton/Companydetails";
+import { GET_COMPANY } from "@/lib/graphql/queries";
+import { Company } from "@/lib/graphql/types";
+import { getClient, PreloadQuery } from "@/lib/utils/apolloClient";
 import { Metadata } from "next";
+import { Suspense } from "react";
 
 type Props = {
   params: Promise<{ companyId: string }>;
@@ -11,30 +14,37 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const companyId = (await params).companyId;
 
-  const { data } = await getCompany(companyId);
+  let company: Company | null = null;
+
+  try {
+    const { data } = await getClient().query({
+      query: GET_COMPANY,
+      variables: { id: companyId },
+    });
+    company = data.company;
+  } catch (error) {
+    console.error(error);
+  }
 
   return {
-    title: data?.legalName,
-    description: data?.otherInformation || data?.legalName,
+    title: company?.legalName,
+    description: company?.otherInformation || company?.legalName,
   };
 }
 
 export default async function CompanyProfile(props: { params: Promise<{ companyId: string }> }) {
   const params = await props.params;
 
-  const { data: company, loading, error } = await getCompany(params.companyId);
-
-  if (loading) return <p className="text-center text-gray-600">Loading...</p>;
-
-  if (error) {
-    const errorMsg = error.message.toLowerCase();
-
-    if (errorMsg.includes("company not found") || errorMsg.includes("invalid input syntax for type uuid")) {
-      return <Custom404 />;
-    }
-
-    return <p className="text-center text-red-500">{errorMsg}</p>;
-  }
-
-  return <CompanyDetails data={company} />;
+  return (
+    <PreloadQuery
+      query={GET_COMPANY}
+      variables={{
+        id: params.companyId,
+      }}
+    >
+      <Suspense fallback={<CompanyDetailsSkeleton />}>
+        <CompanyDetails />
+      </Suspense>
+    </PreloadQuery>
+  );
 }

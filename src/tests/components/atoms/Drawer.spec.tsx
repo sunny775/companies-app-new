@@ -5,8 +5,8 @@ import Drawer, {
   DrawerHeader,
   Drawer as DrawerRoot,
   useDrawer,
-} from "@/components/atoms/Drawer";
-import { TransitionProps } from "@/components/atoms/Transition";
+} from "@/components/ui/atoms/Drawer";
+import { TransitionProps } from "@/components/ui/atoms/Transition";
 import { fireEvent, render, screen } from "@/tests/test-utils";
 import React from "react";
 
@@ -21,7 +21,7 @@ jest.mock("@/lib/hooks/useScrollLock", () => ({
   })),
 }));
 
-jest.mock("@/components/atoms/Transition", () => ({
+jest.mock("@/components/ui/atoms/Transition", () => ({
   __esModule: true,
   default: ({ show, children, className }: TransitionProps) =>
     show ? <div className={className}>{children}</div> : null,

@@ -1,26 +1,17 @@
-import { ReactElement } from 'react'
-import { render, RenderOptions } from '@testing-library/react'
-import { ToastProvider } from '@/components/atoms/Toast'
+import { ToastProvider } from "@/components/ui/atoms/Toast";
+import { render, RenderOptions } from "@testing-library/react";
+import { ReactElement } from "react";
 
-// Create a custom render function that includes all providers
 const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
-  
-  return (
-     <ToastProvider>{children}</ToastProvider>
-  )
-}
+  return <ToastProvider>{children}</ToastProvider>;
+};
 
-const customRender = (
-  ui: ReactElement,
-  options?: Omit<RenderOptions, 'wrapper'>,
-) => render(ui, { wrapper: AllTheProviders, ...options })
+const customRender = (ui: ReactElement, options?: Omit<RenderOptions, "wrapper">) =>
+  render(ui, { wrapper: AllTheProviders, ...options });
 
-export * from '@testing-library/react'
-export { customRender as render }
-export { default as userEvent } from '@testing-library/user-event'
-
-// export const mockSearchParams = new URLSearchParams()
-// export const mockPathname = '/'
+export * from "@testing-library/react";
+export { default as userEvent } from "@testing-library/user-event";
+export { customRender as render };
 
 export const mockNextNavigation = {
   useRouter: () => ({
@@ -32,24 +23,24 @@ export const mockNextNavigation = {
     prefetch: jest.fn(),
   }),
   useSearchParams: () => new URLSearchParams(),
-  usePathname: () => '/',
+  usePathname: () => "/",
   useParams: () => ({}),
   notFound: jest.fn(),
   redirect: jest.fn(),
-}
+};
 
 export const mockNextImage = {
   __esModule: true,
   default: (props = {}) => {
     // eslint-disable-next-line @next/next/no-img-element
-    return <img alt="" {...props} />
+    return <img alt="" {...props} />;
   },
-}
+};
 
 export const mockMatchMedia = (matches = false) => {
-  Object.defineProperty(window, 'matchMedia', {
+  Object.defineProperty(window, "matchMedia", {
     writable: true,
-    value: jest.fn().mockImplementation(query => ({
+    value: jest.fn().mockImplementation((query) => ({
       matches,
       media: query,
       onchange: null,

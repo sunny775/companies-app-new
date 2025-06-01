@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import Stepper, { Step, Stepper as StepperRoot } from "@/components/atoms/Stepper";
+import Stepper, { Step, Stepper as StepperRoot } from "@/components/ui/atoms/Stepper";
 import { UseMergeRefsProps } from "@/lib/hooks/useMergeRefs";
 
 // Mock the useMergedRefs hook

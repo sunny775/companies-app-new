@@ -1,5 +1,5 @@
 import { gql, TypedDocumentNode } from "@apollo/client";
-import { GetCompanyQuery, GetSignedDownloadUrlQuery, GetSignedUploadUrlQuery, SignedFileUploadInput } from "./types";
+import { GetCompaniesQuery, GetCompanyQuery, GetSignedDownloadUrlQuery, GetSignedUploadUrlQuery, SignedFileUploadInput } from "./types";
 
 export const COMPANY_INFO_FRAGMENT = gql`
   fragment CompanyFeilds on Company {
@@ -50,7 +50,7 @@ export const GET_COMPANY: TypedDocumentNode<GetCompanyQuery, { id: string }> = g
   ${COMPANY_INFO_FRAGMENT}
 `;
 
-/* export const GET_COMPANIES = (companyIds: string[]): TypedDocumentNode<GetCompaniesQuery> => gql`
+export const GET_COMPANIES = (companyIds: string[]): TypedDocumentNode<GetCompaniesQuery> => gql`
   query GetCompanies {
     ${companyIds
       .map(
@@ -63,7 +63,7 @@ export const GET_COMPANY: TypedDocumentNode<GetCompanyQuery, { id: string }> = g
       .join("\n")}
   }
   ${COMPANY_INFO_FRAGMENT}
-`; */
+`;
 
 export const GET_COMPANY_IDS: TypedDocumentNode<{ companyIds: string[] }> = gql`
   query GetCompanyIds {
