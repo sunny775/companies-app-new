@@ -6,10 +6,9 @@ import { GET_COMPANIES } from "@/lib/graphql/queries";
 import { Company } from "@/lib/graphql/types";
 import { useLocalStorage } from "@/lib/hooks/useLocalStorage";
 import cn from "@/lib/utils/cn";
-import { useQuery } from "@apollo/client";
+import { useSuspenseQuery } from "@apollo/client";
 import { ChevronUp } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
-import { CompaniesListSkeleton } from "../Skeleton/CompaniesList";
+import { useMemo, useState } from "react";
 import { CompaniesList } from "./CompaniesList";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
@@ -50,9 +49,9 @@ const serializeDataForExprts = (data: Company[]) => {
 
 export function Companies() {
   const [companyIds, setCompanyIds] = useLocalStorage("companyIds", initialCompanyIds);
-  const { data, error } = useQuery(GET_COMPANIES(companyIds));
+  const { data, error } = useSuspenseQuery(GET_COMPANIES(companyIds));
 
-  const [companies, setCompanies] = useState<Company[]>([]);
+  const [companies, setCompanies] = useState<Company[]>(Object.values(data));
 
   const [searchQuery, setSearchQuery] = useState("");
   const [sortConfig, setSortConfig] = useState({
@@ -63,12 +62,6 @@ export function Companies() {
     industry: "All Industries",
     state: "All States",
   });
-
-  useEffect(() => {
-    if (data) {
-      setCompanies(Object.values(data));
-    }
-  }, [data]);
 
   const requestSort = (key: keyof Company) => {
     let direction = "ascending";
@@ -151,8 +144,6 @@ export function Companies() {
         <Alert variant="error">{error.message}</Alert>
       </div>
     );
-
-  if (!companies.length) return <CompaniesListSkeleton />;
 
   return (
     <div className="flex flex-col min-h-screen bg-background">

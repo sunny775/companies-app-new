@@ -1,5 +1,7 @@
 import { Companies } from "@/components/ui/views/Companies";
+import { CompaniesListSkeleton } from "@/components/ui/views/Skeleton/CompaniesList";
 import { Metadata } from "next";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Companies App | Companies List",
@@ -7,5 +9,9 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-  return <Companies />;
+  return (
+    <Suspense fallback={<CompaniesListSkeleton />}>
+      <Companies />;
+    </Suspense>
+  );
 }
