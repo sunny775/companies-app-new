@@ -40,7 +40,7 @@ export function SearchAndFilters({
 
   return (
     <div className="bg-gray-100 dark:bg-gray-600/10 rounded-lg shadow mb-6">
-      <Collapse.Root className="mb-8 shadow-none">
+      <Collapse.Root className="shadow-none">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-4">
           <Input
             type="text"
