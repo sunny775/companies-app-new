@@ -14,10 +14,10 @@ interface ListProps {
 
 export function CompaniesList({ resetFilters, filteredCompanies, requestSort, getSortIndicator }: ListProps) {
   return (
-    <div className="bg-surface shadow overflow-hidden rounded-lg">
+    <div className="shadow overflow-hidden rounded-lg backdrop-blur-sm border border-border/50 dark:border-border">
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-border">
-          <thead className="bg-gray-100 dark:bg-gray-600/10">
+          <thead className="bg-gray-600/10">
             <tr>
               <th
                 scope="col"
@@ -51,10 +51,10 @@ export function CompaniesList({ resetFilters, filteredCompanies, requestSort, ge
               </th>
             </tr>
           </thead>
-          <tbody className="bg-surface divide-y divide-border">
+          <tbody className="bg-surface/50 divide-y divide-border">
             {filteredCompanies.length > 0 ? (
               filteredCompanies.map((company) => (
-                <tr key={company.id} className="hover:bg-gray-100 dark:hover:bg-gray-600/10">
+                <tr key={company.id} className="hover:bg-gray-600/5">
                   <td className="p-4 whitespace-nowrap">
                     <div className="flex items-center">
                       <CompanyLogo s3Key={company.logoS3Key} />

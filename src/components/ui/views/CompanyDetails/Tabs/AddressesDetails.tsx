@@ -21,7 +21,7 @@ export function AddressesDetails({ data }: Props) {
   };
   return (
     <div className="space-y-6 w-full">
-      <div className="bg-surface shadow overflow-hidden sm:rounded-lg">
+      <div className="bg-background/20 backdrop-blur-sm border border-border/50 dark:border-border shadow overflow-hidden sm:rounded-lg">
         <div className="px-4 py-5 sm:px-6 border-b border-border">
           <h3 className="text-lg leading-6 font-medium">
             <div className="flex items-center">
@@ -54,7 +54,7 @@ export function AddressesDetails({ data }: Props) {
         </div>
       </div>
 
-      <div className="bg-surface shadow overflow-hidden sm:rounded-lg">
+      <div className="bg-background/20 backdrop-blur-sm border border-border/50 dark:border-border shadow overflow-hidden sm:rounded-lg">
         <div className="px-4 py-5 sm:px-6 border-b border-border">
           <h3 className="text-lg leading-6 font-medium">
             <div className="flex items-center">

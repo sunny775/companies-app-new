@@ -39,8 +39,8 @@ export function SearchAndFilters({
   const states = filterOptions.states.filter((option) => option.toLowerCase().includes(statesSearch.toLowerCase()));
 
   return (
-    <div className="bg-gray-100 dark:bg-gray-600/10 rounded-lg shadow mb-6">
-      <Collapse.Root className="shadow-none">
+    <div className="rounded-lg shadow-sm mb-6 bg-background/90 border border-border">
+      <Collapse.Root className="shadow-none rounded-lg">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-4">
           <Input
             type="text"
@@ -80,7 +80,7 @@ export function SearchAndFilters({
                 className="w-full"
               >
                 <Select.Trigger>Select Industry</Select.Trigger>
-                <Select.Dropdown>
+                <Select.Dropdown className="bg-background">
                   <Select.Input />
                   <Select.List>
                     {industries.map((option, i) => (
@@ -102,7 +102,7 @@ export function SearchAndFilters({
                 className="w-full"
               >
                 <Select.Trigger>Select State</Select.Trigger>
-                <Select.Dropdown>
+                <Select.Dropdown className="bg-background">
                   <Select.Input />
                   <Select.List>
                     {states.map((option, i) => (

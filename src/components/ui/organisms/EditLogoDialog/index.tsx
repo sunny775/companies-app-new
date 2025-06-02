@@ -89,7 +89,7 @@ export const EditLogoDialog = () => {
         onClose={closeDialog}
         size="xl"
         aria-labelledby="dialog-title"
-        className="border border-border/50"
+        className="border border-border/50 bg-background"
       >
         <Dialog.Header id="dialog-title">Upload New Logo</Dialog.Header>
         <Dialog.Body divider>

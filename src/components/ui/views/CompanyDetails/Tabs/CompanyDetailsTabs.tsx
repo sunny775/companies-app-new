@@ -42,7 +42,7 @@ export const CompanyDetailsTabs = ({ data }: Props) => {
   return (
     <>
       <Tabs defaultValue="Overview" className="hidden md:block">
-        <div className=" bg-surface shadow">
+        <div className=" bg-background/90 shadow-sm">
           <div className="w-full flex justify-between items-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <Tabs.Header
               className="bg-transparent dark:bg-transparent p-0"
@@ -72,7 +72,7 @@ export const CompanyDetailsTabs = ({ data }: Props) => {
                     <MoreVertical className="h-5 w-5" />
                   </IconButton>
                 </Menu.Trigger>
-                <Menu.Dropdown width="sm" placement="bottom-end">
+                <Menu.Dropdown width="sm" placement="bottom-end" className="bg-background">
                   <Menu.Item
                     icon={<Bookmark className={cn("size-4", { "fill-info stroke-0": isBookmarked() })} />}
                     onClick={() => addToBookmarks(params.companyId)}

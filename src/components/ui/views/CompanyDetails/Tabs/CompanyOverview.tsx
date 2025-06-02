@@ -40,7 +40,7 @@ export function CompanyOverview({ data }: Props) {
     <div className="space-y-6">
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
         {metrics.map((item) => (
-          <div key={item.label} className="bg-surface overflow-hidden shadow rounded-lg">
+          <div key={item.label} className="bg-background/20 backdrop-blur-sm border border-border/50 dark:border-border overflow-hidden shadow rounded-lg">
             <div className="p-5">
               <div className="flex items-center">
                 <IconButton>{item.icon}</IconButton>
@@ -61,7 +61,7 @@ export function CompanyOverview({ data }: Props) {
         ))}
       </div>
 
-      <div className="bg-surface shadow rounded-lg overflow-hidden">
+      <div className="bg-background/20 backdrop-blur-sm border border-border/50 dark:border-border shadow rounded-lg overflow-hidden">
         <div className="px-6 py-5 border-b border-border">
           <h3 className="text-lg leading-6 font-medium">Company Summary</h3>
         </div>

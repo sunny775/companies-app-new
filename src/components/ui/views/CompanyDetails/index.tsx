@@ -16,7 +16,7 @@ export default function CompanyDetails() {
   } = useSuspenseQuery(GET_COMPANY, { variables: { id: params.companyId } });
 
   return (
-    <div className="bg-background min-h-screen relative">
+    <div className="min-h-screen relative">
       <header className="bg-surface-2 backdrop-blur-md shadow md:shadow-none">
         <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row items-center justify-between">

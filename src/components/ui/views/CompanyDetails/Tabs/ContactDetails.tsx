@@ -6,7 +6,7 @@ interface Props {
 
 export function ContactDetails({ data }: Props) {
   return (
-    <div className="bg-surface shadow overflow-hidden sm:rounded-lg">
+    <div className="bg-background/20 backdrop-blur-sm border border-border/50 dark:border-border shadow overflow-hidden sm:rounded-lg">
       <div className="px-4 py-5 sm:px-6 border-b border-border">
         <h3 className="text-lg leading-6 font-medium">Primary Contact Information</h3>
         <p className="mt-1 max-w-2xl text-sm text-muted">Main point of contact for this company.</p>

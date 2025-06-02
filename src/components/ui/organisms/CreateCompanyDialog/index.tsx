@@ -198,7 +198,7 @@ export function CreateCompanyDialog({ onCompanyCreated, className }: CreateCompa
         onClose={closeDialog}
         size="xl"
         aria-labelledby="dialog-title"
-        className="border border-border/50"
+        className="border border-border/50 bg-background"
       >
         <Dialog.Header id="dialog-title">Add Company</Dialog.Header>
         <Dialog.Body divider>

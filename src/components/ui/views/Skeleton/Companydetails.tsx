@@ -15,7 +15,7 @@ const SkeletonCircle = ({ className }: { className?: string }) => (
 
 export function CompanyDetailsSkeleton() {
   return (
-    <div className="bg-background min-h-screen">
+    <div className="min-h-screen">
       {/* Header */}
       <header className="bg-surface-2 backdrop-blur-md shadow md:shadow-none">
         <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
@@ -58,7 +58,7 @@ export function CompanyDetailsSkeleton() {
       </header>
 
       {/* Tabs Navigation */}
-      <div className="hidden md:block bg-surface shadow">
+      <div className="hidden md:block bg-background/90 shadow">
         <div className="w-full flex justify-between items-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex">
             {[
@@ -89,7 +89,7 @@ export function CompanyDetailsSkeleton() {
         <div className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {[1, 2].map((item) => (
-              <div key={item} className="bg-surface shadow rounded-lg p-6">
+              <div key={item} className="bg-background/20 backdrop-blur-sm shadow rounded-lg p-6">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-3">
                     <SkeletonCircle className="w-10 h-10" />
@@ -104,7 +104,7 @@ export function CompanyDetailsSkeleton() {
             ))}
           </div>
 
-          <div className="bg-surface shadow rounded-lg">
+          <div className="bg-background/20 backdrop-blur-sm shadow rounded-lg">
             <div className="p-6 border-b border-border">
               <SkeletonText className="w-48 h-6" />
             </div>

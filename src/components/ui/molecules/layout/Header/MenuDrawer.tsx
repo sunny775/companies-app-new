@@ -28,7 +28,7 @@ const MenuDrawer = () => {
       >
         <Menu className="stroke-1" />
       </IconButton>
-      <Drawer isOpen={isOpen} onClose={() => setIsOpen(false)} size="md">
+      <Drawer isOpen={isOpen} onClose={() => setIsOpen(false)} size="md" className="bg-background">
         <Drawer.Header>
           <h2 id="drawer-title" className="text-lg font-semibold">
             MENU

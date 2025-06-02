@@ -1,7 +1,7 @@
 export const CompaniesListSkeleton = () => {
   return (
-    <div className="flex flex-col min-h-screen bg-background">
-      <header className="bg-gray-100 dark:bg-gray-600/10 shadow">
+    <div className="flex flex-col min-h-screen">
+      <header className="bg-gray-600/5 shadow backdrop-blur-sm">
         <div className="max-w-[90vw] w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex justify-center sm:justify-between items-center animate-pulse">
             <div className="h-8 bg-gray-200 dark:bg-gray-800/50 rounded-lg w-32 hidden sm:block"></div>
@@ -12,7 +12,7 @@ export const CompaniesListSkeleton = () => {
 
       <main className="flex-1 max-w-[90vw] w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Search and Filters */}
-        <div className="bg-gray-100 dark:bg-gray-600/10 rounded-lg shadow mb-6">
+        <div className="bg-background rounded-lg shadow mb-6">
           <div className="animate-pulse">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-4">
               <div className="md:max-w-xl w-full">
@@ -28,10 +28,10 @@ export const CompaniesListSkeleton = () => {
         </div>
 
         {/* Companies Table */}
-        <div className="bg-surface shadow overflow-hidden rounded-lg">
+        <div className="shadow overflow-hidden rounded-lg backdrop-blur-sm">
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-border">
-              <thead className="bg-gray-100 dark:bg-gray-600/10">
+              <thead className="bg-gray-600/10">
                 <tr className="animate-pulse">
                   <th className="px-4 py-3 text-left">
                     <div className="h-4 bg-gray-200 dark:bg-gray-800/50 rounded w-20"></div>
@@ -54,7 +54,7 @@ export const CompaniesListSkeleton = () => {
                 </tr>
               </thead>
 
-              <tbody className="bg-surface divide-y divide-border">
+              <tbody className="bg-surface/50 divide-y divide-border">
                 {Array.from({ length: 8 }).map((_, index) => (
                   <tr key={index} className="animate-pulse">
                     <td className="p-4 whitespace-nowrap">
@@ -118,7 +118,7 @@ export const CompaniesListSkeleton = () => {
         </div>
       </main>
 
-      <footer className="bg-gray-100 dark:bg-gray-600/10 border-t border-border animate-pulse">
+      <footer className="bg-gray-600/5 backdrop-blur-sm border-t border-border animate-pulse">
         <div className="max-w-[90vw] w-full mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex justify-between items-center">
             <div className="h-4 bg-gray-200 dark:bg-gray-800/50 rounded w-32"></div>

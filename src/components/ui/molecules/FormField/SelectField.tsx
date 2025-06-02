@@ -71,7 +71,7 @@ export default function SelectField({
           {placeholder || "Select an option"}
         </Select.Trigger>
 
-        <Select.Dropdown>
+        <Select.Dropdown className="bg-background">
           <Select.Input />
           <Select.List>
             {data.map((option) => (

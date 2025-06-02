@@ -3,7 +3,7 @@ import { Company } from "@/lib/graphql/types";
 
 export function Pagination({ data }: { data: Company[] }) {
   return (
-    <nav className="bg-gray-100 dark:bg-gray-600/10 px-4 py-3 flex items-center justify-between border-t border-border sm:px-6">
+    <nav className="bg-gray-600/10 px-4 py-3 flex items-center justify-between border-t border-border sm:px-6">
       <div className="hidden sm:block">
         <p className="text-sm flex gap-1">
           <span className="text-muted">Showing</span>
