@@ -1,6 +1,8 @@
-# Companies Management Application ( TASK 2), Assignment Version Number: FE-2024-12-i
+# Companies Management Application
 
 A modern, feature-rich React/Next.js application for managing company information. Built with React, Next.js, TypeScript, Apollo GraphQL, and tailwind css. It offers a seamless user experience with fast loading times, server rendering capabilites, and a modern design.
+
+**Re-usable components ( src/components/ui/atoms) built entirely from the scratch without dependence on third part libraries. This is to pitch my deep undeertanding of the fundamentals**
 
 
 ## 🌟 FEATURES
@@ -241,18 +243,3 @@ npm run lint            # ESLint with Next.js configuration
 - **Dynamic Routes**: `[companyId]` for company-specific pages
 - **API Routes**: Custom endpoints for S3 integration and authentication
 - **Middleware**: Route protection and request handling
-
-
-## 📝 TASK 2 REQUIREMENTS FULFILLMENT
-
-✅ **GraphQL Integration**: Full implementation with Apollo Client  
-✅ **Login Screen**: Custom authentication without backend dependency  
-✅ **Access Control**: Protected routes for unauthorized users  
-✅ **URL Pre-filling**: Company data population via companyID parameter  
-✅ **File Upload**: Logo upload with preview and format validation  
-✅ **File Restrictions**: JPEG/PNG only, 2MB maximum size  
-✅ **Complete Form Fields**: All input fields utilized as required  
-✅ **Logical Grouping**: User-friendly field organization  
-✅ **Company Listing**: Comprehensive company management page  
-✅ **Error Handling**: Graceful error management throughout  
-✅ **SSR Framework**: Next.js with server-side rendering capabilities
